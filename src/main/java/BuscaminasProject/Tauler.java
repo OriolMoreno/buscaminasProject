@@ -2,13 +2,17 @@ package BuscaminasProject;
 
 public class Tauler {
 
-	public int tauler[][];
+	private int tauler[][];
 
+	public Tauler(int n_bombes){
+		
+	}
 	
-	 public boolean inicialize(int n_bombes) {
-		//Metode que crea el tauler a la estructura de dades del array de tauler, clocant tantes bombes com es passin per referència. 
-		 //Retorna true si s'ha creat correctament
-		return true; 
-	};
+	public int getCasella(int x, int y) {
+		return -1;
+	}
+	
+	//printTauler?
+	
 		
 }

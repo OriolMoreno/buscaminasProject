@@ -2,21 +2,22 @@ package BuscaminasProject;
 
 public class Joc {
 
-	public int taulerConegut[][];
+	private Historial historial;
 	
-	public void actualitzaVista()
-	{
+	private Partida partida; 
+	
+	public boolean novaPartida() {
+		
+		return false;
+	}
+	
+	public void guardarPartida() {
+		
+	}
+	
+	public void showHistorial() { //mvc??
 		
 	}
 	
 	
-	public int queConteCassella()
-	{
-	
-		//Metode que retorna el que hi ha a la casella
-		//si no hi ha res retorna el num de bombes proximes
-		//Si hi ha bomba retorna -1
-		
-		return 0;
-	}
 }
