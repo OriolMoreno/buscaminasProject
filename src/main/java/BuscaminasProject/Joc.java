@@ -16,7 +16,7 @@ public class Joc {
 	}
 	
 	public void showHistorial() { //mvc??
-		
+		int prova_comit=0;
 	}
 	
 	
