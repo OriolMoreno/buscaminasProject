@@ -3,58 +3,62 @@ package BuscaminasProject;
 public class MockTauler implements Tauler {
 	
 	
-	private int tauler[][];
+	private int tauler[][]= {
+			{0, 1, 0, 0, 0, 0, 0, 0},
+			{0, 0, 1, 0, 1, 0, 0, 0},
+			{0, 0, 0, 1, 0, 0, 1, 0},
+			{0, 1, 0, 1, 0, 0, 1, 1},
+			{0, 0, 0, 0, 0, 1, 0, 1},
+			{0, 0, 1, 0, 1, 0, 1, 0},
+			{0, 1, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 1, 0, 0},
+			{0, 1, 0, 1, 1, 1, 0, 0}
+	};
 
 	
 	public MockTauler(){
-		this.tauler = this.generateTauler();
+		tauler = this.generateTauler();
 	}
 	
 	public int getWidth() {
-		return tauler[0].length;
+		return 8;
 	}
 	
 	public int getHeight() {
-		return tauler.length;
+		return 9;
 	}
 	
 	public int getCasella(int x, int y) {
-		return tauler[x][y];
+		try {
+			return tauler[y][x];	
+		}catch(IndexOutOfBoundsException e) {
+			return -1;
+		}
+		
 	}
 	
 	public int[][] generateTauler() {
-		int t[][] = {
-				{0, 1, 0, 0, 0, 0, 0, 0},
-				{0, 0, 1, 0, 1, 0, 0, 0},
-				{0, 0, 0, 1, 0, 0, 1, 0},
-				{0, 1, 0, 1, 0, 0, 1, 1},
-				{0, 0, 0, 0, 0, 1, 0, 1},
-				{0, 0, 1, 0, 1, 0, 1, 0},
-				{0, 1, 0, 0, 0, 0, 0, 0},
-				{0, 0, 0, 0, 0, 1, 0, 0},
-				{0, 1, 0, 1, 1, 1, 0, 1}
-		};
-		return t;
+		return tauler;
 	}
 	
 	public int getNumeroBombesAdjecents(int x, int y) {
-		int total = 0;
-		if(this.getCasella(x, y) == 0) {
-			if(x > 0 && y > 0 && x < this.getWidth() && y < this.getHeight() { //no estem al contorn
-				for(int i = -1; i < 2; i++) {
-					for(int j = -1; j < 2; j++) {
-						if(this.getCasella(x+i, y+j) == 1) {
-							total++;
-						}
-					}
-				}
-			}else {
-				
-			}	
-		}else {
-			total = -1;
+		int adj[][] = {
+				{1, -1,  2,  2,  1,  1,  0,  0},
+				{1,  2, -1,  3, -1,  2,  1,  1},
+				{1,  2,  4, -1,  3,  3, -1,  3},
+				{1, -1,  3, -1,  3,  3, -1, -1},
+				{1,  2,  3,  3,  3, -1,  5, -1},
+				{1,  2, -1,  2, -1,  3, -1,  2},
+				{1, -1,  2,  2,  2,  3,  2,  1},
+				{2,  2,  3,  2,  4, -1,  2,  0},
+				{1, -1,  2, -1, -1, -1,  2,  0}
+		};
+		try {
+			return adj[y][x];
+		}catch (IndexOutOfBoundsException e) {
+			return -1;
 		}
-		return total;
+		
 	}
 
 }
