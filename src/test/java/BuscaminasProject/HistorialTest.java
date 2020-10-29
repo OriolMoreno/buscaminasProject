@@ -9,6 +9,7 @@ public class HistorialTest {
 
 	@Before
 	public void setUp() throws Exception {
+		
 	}
 
 	@Test
