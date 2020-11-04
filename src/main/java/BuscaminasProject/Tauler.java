@@ -1,18 +1,11 @@
 package BuscaminasProject;
 
-public class Tauler {
+public interface Tauler {
 
-	private int tauler[][];
-
-	public Tauler(int n_bombes){
-		
-	}
-	
-	public int getCasella(int x, int y) {
-		return -1;
-	}
-	
-	//printTauler?
-	
-		
+	//public int tauler[][];
+	public int getWidth();
+	public int getHeight();
+	public int getCasella(int x, int y);
+	public int[][] generateTauler();
+	public int getNumeroBombesAdjecents(int x, int y);
 }
