@@ -53,7 +53,7 @@ public class TaulerTest {
 	
 	@Test 
 	public void testGetNumeroBombesAdjecents() {
-		MockTauler t = new MockTauler();
+		MockTauler t = new MockTauler(); // Tauler t sense mock pero cridatn constructor Mock
 		int res_1 = t.getNumeroBombesAdjecents(1, 0); // bomba
 		assertEquals(res_1, -1);
 		int res_2 = t.getNumeroBombesAdjecents(1, 1); // dos bombes adjacents

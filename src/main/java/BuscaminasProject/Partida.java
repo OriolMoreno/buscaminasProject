@@ -1,6 +1,6 @@
 package BuscaminasProject;
 
-public class Partida {//classe controlador/model???
+public class Partida {//classe model
 
 	private Tauler tauler;
 	private int n_bombes;

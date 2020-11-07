@@ -19,5 +19,7 @@ public class Joc {
 		
 	}
 	
+	//MockLlegirInputs(){} A2 -- 
+	
 	
 }
