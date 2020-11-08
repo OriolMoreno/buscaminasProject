@@ -50,6 +50,13 @@ public class TaulerTest {
 		assertEquals(t.getCasella(6, 2), 1);
 	}
 	
+	@Test
+	public void testCountBombes() {
+		Tauler t = new Tauler();
+		int res = t.countBombes();
+		assertEquals(res, 20);
+	}
+	
 	
 	@Test 
 	public void testGetNumeroBombesAdjecents() {

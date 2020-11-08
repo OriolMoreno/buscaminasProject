@@ -25,6 +25,7 @@ public class Tauler {
 	}
 	
 	public int[][] generateTauler(){
+		//TODO
 		int t[][] = {
 				{}
 		};
@@ -44,6 +45,16 @@ public class Tauler {
 				{0, 1, 0, 1, 1, 1, 0, 0}
 		};
 		return t;
+	}
+	
+	public int countBombes() {
+		int nBombes = 0;
+		for(int i = 0; i < this.getWidth(); i++) {
+			for(int j = 0; j < this.getHeight(); j++) {
+				nBombes += this.getCasella(i, j);
+			}
+		}
+		return nBombes;
 	}
 	
 	public int getNumeroBombesAdjecents(int x, int y) {
