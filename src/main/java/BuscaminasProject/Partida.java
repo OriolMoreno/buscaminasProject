@@ -22,4 +22,8 @@ public class Partida {//classe model
 		return -1;
 	}
 	
+	public Partida getPartida() {
+		return new Partida();
+	}
+	
 }
