@@ -2,6 +2,8 @@ package BuscaminasProject;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,7 +15,7 @@ public class MockInputTest {
 
 	@Test
 	public void testReadNextMoviment() {
-		MockInput io = new MockInput("C:\\Users\\Oriol\\Desktop\\Test\\buscaminasProject\\src\\test\\resources\\partida_1.txt");
+		MockInput io = new MockInput(".\\src\\test\\resources\\partida_1.txt");
 		String s = io.readNextMoviment();
 		assertEquals(s, "A1");
 		s = io.readNextMoviment();
@@ -32,7 +34,7 @@ public class MockInputTest {
 	
 	@Test
 	public void testGetNumeroMoviments() {
-		MockInput io = new MockInput("C:\\Users\\Oriol\\Desktop\\Test\\buscaminasProject\\src\\test\\resources\\partida_1.txt");
+		MockInput io = new MockInput(".\\src\\test\\resources\\partida_1.txt");
 		int res = io.getNumeroMoviments();
 		assertEquals(6, res);
 		

@@ -1,6 +1,6 @@
 package BuscaminasProject;
 
-public class Tauler {
+public class Tauler {//MODEL
 
 	public int tauler[][];
 	

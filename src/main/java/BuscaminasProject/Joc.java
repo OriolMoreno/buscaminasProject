@@ -1,6 +1,6 @@
 package BuscaminasProject;
 
-public class Joc {
+public class Joc { //CONTROLADOR
 
 	private Historial historial;
 	
