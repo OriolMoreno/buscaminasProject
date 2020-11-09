@@ -12,16 +12,46 @@ public class PartidaTest {
 	}
 
 	@Test
-	public void testPartida() { //preguntar si s'ha de fer test dels constructors
+	public void testPartida() { 
 		fail("Not yet implemented");
 	}
 	
 	@Test
-	public void testJugarPartida() {
+	public void testProcessaMoviment() {
 		MockInput io = new MockInput(".\\src\\test\\resources\\partida_1.txt");
 		Partida p = new Partida();
 		
 	}
+	
+	
+	
+	
+
+	
+	@Test
+	public void testInputToCoords() { 
+		fail("Not yet implemented");
+	}
+	
+	
+	@Test
+	public void testGetValueOfTauler() { 
+		fail("Not yet implemented");
+	}
+	
+	
+	
+	@Test
+	public void testCheckGameIsWin() { 
+		fail("Not yet implemented");
+	}
+	
+	
+	@Test
+	public void  testUpdateVistaTauler() { 
+		fail("Not yet implemented");
+	}
+	
 	
 	@Test
 	public void testGetTauler() {
