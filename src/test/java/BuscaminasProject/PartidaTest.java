@@ -284,9 +284,9 @@ public class PartidaTest {
 	
 	
 	@Test
-	public void  testUpdateVistaTauler() { 
+	public void  testUpdateVistaTaulerWithOutFlag() { 
 		Partida p = new Partida();
-		
+		boolean bombaTrobada=false;
 		//PARTICIÓ EQUIVALENT DE CASOS SENSE FLAG
 		//TEST CASE CASELLA JA DESTAPADA SENSE FLAG
 		int vistaInicial[][] = {
@@ -315,7 +315,9 @@ public class PartidaTest {
 		};
 		
 		
-		p.updateVistaTauler(0, 6, 0);
+		bombaTrobada=p.updateVistaTauler(0, 6, 0);
+		assertEquals(bombaTrobada, false);
+		
 		
 		for (int i=0; i<p.taulerReal.tauler.length;i++){
 			for (int j=0; j<p.taulerReal.tauler[0].length;j++){
@@ -352,7 +354,8 @@ public class PartidaTest {
 		};
 		
 		
-		p.updateVistaTauler(0, 1, 0);
+		bombaTrobada=p.updateVistaTauler(0, 1, 0);
+		assertEquals(bombaTrobada, true);
 		
 		for (int i=0; i<p.taulerReal.tauler.length;i++){
 			for (int j=0; j<p.taulerReal.tauler[0].length;j++){
@@ -361,10 +364,10 @@ public class PartidaTest {
 		}
 		
 		
-		//TEST CASE AMB ZEROS AL VOLTANT (Però sense expandirse a més d'una branca)
+		//TEST CASE AMB ZEROS AL VOLTANT ( SENSE SELECCIONAR CAP CASELLA A ZERO)
 		int vistaInicial3[][] = {
 				{-2,-2,-2,-2, 1, 1, 0, 0},
-				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2, 2, 1, 1},
 				{-2,-2,-2,-2,-2,-2,-2,-2},
 				{-2,-2,-2,-2,-2,-2,-2,-2},	
 				{-2,-2,-2,-2,-2,-2,-2,-2},				
@@ -377,18 +380,18 @@ public class PartidaTest {
 		
 		int expectedTaulerVista3[][] = {
 				{-2,-2,-2,-2, 1, 1, 0, 0},
-				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2, 2, 1, 1},
 				{-2,-2,-2,-2,-2,-2,-2,-2},
 				{-2,-2,-2,-2,-2,-2,-2,-2},	
 				{-2,-2,-2,-2,-2,-2,-2,-2},				
 				{-2,-2,-2,-2,-2,-2,-2,-2},
 				{-2,-2,-2,-2,-2,-2,-2,-2},
-				{-2,-2,-2,-2,-2,-2, 2, 0},
-				{-2,-2,-2,-2,-2,-2,-2, 0},
+				{-2,-2,-2,-2,-2,-2, 2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
 		};
 		
-		
-		p.updateVistaTauler(7, 6, 0);
+		bombaTrobada=p.updateVistaTauler(7, 6, 0);
+		assertEquals(bombaTrobada, false);
 		
 		for (int i=0; i<p.taulerReal.tauler.length;i++){
 			for (int j=0; j<p.taulerReal.tauler[0].length;j++){
@@ -397,7 +400,7 @@ public class PartidaTest {
 		}
 		
 		
-		//TEST CASE AMB ZEROS AL VOLTANT (Però sense expandirse a més d'una branca)
+		//TEST CASE AMB ZEROS AL VOLTANT ( SENSE SELECCIONAR CAP CASELLA A ZERO) 2
 		int vistaInicial4[][] = {
 				{-2,-2,-2,-2, 1,-2,-2,-2},
 				{-2,-2,-2,-2,-2,-2,-2,-2},
@@ -412,7 +415,7 @@ public class PartidaTest {
 		p.taulerVista= vistaInicial4;
 		
 		int expectedTaulerVista4[][] = {
-				{-2,-2,-2,-2, 1, 1, 0, 0},
+				{-2,-2,-2,-2, 1, 1, -2,-2},
 				{-2,-2,-2,-2,-2,-2,-2,-2},
 				{-2,-2,-2,-2,-2,-2,-2,-2},
 				{-2,-2,-2,-2,-2,-2,-2,-2},	
@@ -424,16 +427,243 @@ public class PartidaTest {
 		};
 		
 		
-		p.updateVistaTauler(0, 5, 0);
+		bombaTrobada=p.updateVistaTauler(0, 5, 0);
+		assertEquals(bombaTrobada, false);
 		
 		for (int i=0; i<p.taulerReal.tauler.length;i++){
 			for (int j=0; j<p.taulerReal.tauler[0].length;j++){
 				assertEquals(p.taulerVista[i][j], expectedTaulerVista4[i][j]);
 			}
 		}
+		
+		
+		//TEST CASE AMB ZEROS AL VOLTANT SELECCIONANT NA CASELLA A ZERO
+		int vistaInicial5[][] = {
+				{-2,-2,-2,-2, 1,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},	
+				{-2,-2,-2,-2,-2,-2,-2,-2},				
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2, 2, 0},
+				{-2,-2,-2,-2,-2,-2,-2, 0},
+			};
+		p.taulerVista= vistaInicial5;
+		
+		int expectedTaulerVista5[][] = {
+				{-2,-2,-2,-2, 1, 1, 0, 0},
+				{-2,-2,-2,-2,-2, 2, 1, 1},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},	
+				{-2,-2,-2,-2,-2,-2,-2,-2},				
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2, 2, 0},
+				{-2,-2,-2,-2,-2,-2,-2, 0},
+		};
+		
+		
+		bombaTrobada=p.updateVistaTauler(0, 6, 0);
+		assertEquals(bombaTrobada, false);
+		
+		for (int i=0; i<p.taulerReal.tauler.length;i++){
+			for (int j=0; j<p.taulerReal.tauler[0].length;j++){
+				assertEquals(p.taulerVista[i][j], expectedTaulerVista5[i][j]);
+			}
+		}
 	}
 	
-	
+	@Test
+	public void  testUpdateVistaTaulerWithFlag() { 
+		Partida p = new Partida();
+		boolean bombaTrobada=false;
+		//PARTICIÓ EQUIVALENT DE CASOS SENSE FLAG
+		//TEST CASE CASELLA JA DESTAPADA SENSE FLAG
+		int vistaInicial[][] = {
+				{-2,-2,-2,-2, 1, 1, 0, 0},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},	
+				{-2,-2,-2,-2,-2,-2,-2,-2},				
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+			};
+		p.taulerVista= vistaInicial;
+		
+		int expectedTaulerVista[][] = {
+				{-2,-2,-2,-2, 1, 1, 0, 0},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},	
+				{-2,-2,-2,-2,-2,-2,-2,-2},				
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+		};
+		
+		
+		bombaTrobada=p.updateVistaTauler(0, 6, 1);
+		assertEquals(bombaTrobada, false);
+		
+		
+		for (int i=0; i<p.taulerReal.tauler.length;i++){
+			for (int j=0; j<p.taulerReal.tauler[0].length;j++){
+				assertEquals(p.taulerVista[i][j], expectedTaulerVista[i][j]);
+			}
+		}
+
+		
+		
+		//TEST CASE CASELLA SENSE ZEROS AL VOLTANT
+		int vistaInicial2[][] = {
+				{-2,-2,-2,-2, 1, 1, 0, 0},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},	
+				{-2,-2,-2,-2,-2,-2,-2,-2},				
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+			};
+		p.taulerVista= vistaInicial2;
+		
+		int expectedTaulerVista2[][] = {
+				{-2, 9,-2,-2, 1, 1, 0, 0},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},	
+				{-2,-2,-2,-2,-2,-2,-2,-2},				
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+		};
+		
+		
+		bombaTrobada=p.updateVistaTauler(0, 1, 1);
+		assertEquals(bombaTrobada, false);
+		
+		for (int i=0; i<p.taulerReal.tauler.length;i++){
+			for (int j=0; j<p.taulerReal.tauler[0].length;j++){
+				assertEquals(p.taulerVista[i][j], expectedTaulerVista2[i][j]);
+			}
+		}
+		
+		
+		//TEST CASE AMB ZEROS AL VOLTANT ( SENSE SELECCIONAR CAP CASELLA A ZERO)
+		int vistaInicial3[][] = {
+				{-2,-2,-2,-2, 1, 1, 0, 0},
+				{-2,-2,-2,-2,-2, 2, 1, 1},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},	
+				{-2,-2,-2,-2,-2,-2,-2,-2},				
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+			};
+		p.taulerVista= vistaInicial3;
+		
+		int expectedTaulerVista3[][] = {
+				{-2,-2,-2,-2, 1, 1, 0, 0},
+				{-2,-2,-2,-2,-2, 2, 1, 1},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},	
+				{-2,-2,-2,-2,-2,-2,-2,-2},				
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2, 9,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+		};
+		
+		bombaTrobada=p.updateVistaTauler(7, 6, 1);
+		assertEquals(bombaTrobada, false);
+		
+		for (int i=0; i<p.taulerReal.tauler.length;i++){
+			for (int j=0; j<p.taulerReal.tauler[0].length;j++){
+				assertEquals(p.taulerVista[i][j], expectedTaulerVista3[i][j]);
+			}
+		}
+		
+		
+		//TEST CASE AMB ZEROS AL VOLTANT ( SENSE SELECCIONAR CAP CASELLA A ZERO) 2
+		int vistaInicial4[][] = {
+				{-2,-2,-2,-2, 1,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},	
+				{-2,-2,-2,-2,-2,-2,-2,-2},				
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2, 2, 0},
+				{-2,-2,-2,-2,-2,-2,-2, 0},
+			};
+		p.taulerVista= vistaInicial4;
+		
+		int expectedTaulerVista4[][] = {
+				{-2,-2,-2,-2, 1, 9, -2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},	
+				{-2,-2,-2,-2,-2,-2,-2,-2},				
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2, 2, 0},
+				{-2,-2,-2,-2,-2,-2,-2, 0},
+		};
+		
+		
+		bombaTrobada=p.updateVistaTauler(0, 5, 1);
+		assertEquals(bombaTrobada, false);
+		
+		for (int i=0; i<p.taulerReal.tauler.length;i++){
+			for (int j=0; j<p.taulerReal.tauler[0].length;j++){
+				assertEquals(p.taulerVista[i][j], expectedTaulerVista4[i][j]);
+			}
+		}
+		
+		
+		//TEST CASE AMB ZEROS AL VOLTANT SELECCIONANT NA CASELLA A ZERO
+		int vistaInicial5[][] = {
+				{-2,-2,-2,-2, 1,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},	
+				{-2,-2,-2,-2,-2,-2,-2,-2},				
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2, 2, 0},
+				{-2,-2,-2,-2,-2,-2,-2, 0},
+			};
+		p.taulerVista= vistaInicial5;
+		
+		int expectedTaulerVista5[][] = {
+				{-2,-2,-2,-2, 1,-2, 9,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},	
+				{-2,-2,-2,-2,-2,-2,-2,-2},				
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2, 2, 0},
+				{-2,-2,-2,-2,-2,-2,-2, 0},
+		};
+		
+		
+		bombaTrobada=p.updateVistaTauler(0, 6, 1);
+		assertEquals(bombaTrobada, false);
+		
+		for (int i=0; i<p.taulerReal.tauler.length;i++){
+			for (int j=0; j<p.taulerReal.tauler[0].length;j++){
+				assertEquals(p.taulerVista[i][j], expectedTaulerVista5[i][j]);
+			}
+		}
+	}
 	//@Test
 	public void testGetTauler() {
 		fail("Not yet implemented");
