@@ -6,12 +6,12 @@ import java.util.regex.Pattern;
 
 public class Partida {//MODEL
 
-	private Tauler taulerReal;
+	public Tauler taulerReal;
 	/**
 	 * a taulerVista hi haura a cada casella el numero de bombes adjacents, res si no s'ha 'clickat'
 	 * i algun simbol per marcar si hi ha posat una 'bandera' marcant que hi ha una bomba
 	 */
-	private int[][] taulerVista;
+	public int[][] taulerVista;
 	private int bombesTotals;
 	
 	public Partida(){
@@ -21,25 +21,15 @@ public class Partida {//MODEL
 	}
 	
 	public void generateVista(){
-		//TO DO
+		//is a method that creates a matrix of the same size of tauler and inicializes it to -2
+		//This matrix will be actualized every time the player makes a movment
 		
-	}
-	
-	public void mockGenerateVista(){
-		int adj[][] = {
-				{0,  0,  2,  2,  1,  1,  0,  0},
-				{1,  2, -1,  3, -1,  2,  1,  1},
-				{1,  2,  4, -1,  3,  3, -1,  3},
-				{1, -1,  3, -1,  3,  3, -1, -1},
-				{1,  2,  3,  3,  3, -1,  5, -1},
-				{1,  2, -1,  2, -1,  3, -1,  2},
-				{1, -1,  2,  2,  2,  3,  2,  1},
-				{2,  2,  3,  2,  4, -1,  2,  0},
-				{1, -1,  2, -1, -1, -1,  2,  0}
-		};
+		int adj[][] = {		};
 		taulerVista=adj;
 
 	}
+	
+
 	
 	
 	public int processaMoviment(String input) { //return false if bomb is hit
