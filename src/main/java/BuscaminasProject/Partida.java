@@ -121,6 +121,15 @@ public class Partida {//MODEL
 		//Method that analyzes if the game is win
 		//if it's win returns true
 		//is it's not still win returns false
+		int nBombes = 0;
+		for(int i = 0; i < taulerVista.length; i++) {
+			for(int j = 0; j < taulerVista[0].length; j++) {
+				if ( taulerVista[i][j]==-2 && taulerReal.tauler[i][j]==1)
+				{
+					return false;
+				}
+			}
+		}
 		
 		return true;
 	}
