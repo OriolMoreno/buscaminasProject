@@ -16,6 +16,26 @@ public class PartidaTest {
 		fail("Not yet implemented");
 	}
 	
+	
+	@Test
+	public void testGenerateVista() { 
+		Partida p = new Partida();
+		
+		assertEquals(p.taulerReal.tauler[0].length, p.taulerVista[0].length);
+		assertEquals(p.taulerReal.tauler.length, p.taulerVista.length);
+		
+		for (int i=0; i<p.taulerReal.tauler.length;i++){
+			for (int j=0; j<p.taulerReal.tauler[0].length;j++){
+				assertEquals(p.taulerVista[i][j], -2);
+			}
+		}
+		
+
+	}
+	
+	
+	
+	
 	//@Test
 	public void testProcessaMoviment() {
 		MockInput io = new MockInput(".\\src\\test\\resources\\partida_1.txt");
@@ -24,7 +44,7 @@ public class PartidaTest {
 	}
 	
 	
-	
+
 	
 
 	
