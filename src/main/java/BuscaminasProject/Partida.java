@@ -17,7 +17,6 @@ public class Partida {//MODEL
 	public Partida(){
 		taulerReal = new Tauler();
 		bombesTotals = taulerReal.countBombes();
-		this.taulerVista=taulerReal.tauler;
 		generateVista();
 	}
 	
@@ -28,7 +27,7 @@ public class Partida {//MODEL
 	
 	public void mockGenerateVista(){
 		int adj[][] = {
-				{1, -1,  2,  2,  1,  1,  0,  0},
+				{0,  0,  2,  2,  1,  1,  0,  0},
 				{1,  2, -1,  3, -1,  2,  1,  1},
 				{1,  2,  4, -1,  3,  3, -1,  3},
 				{1, -1,  3, -1,  3,  3, -1, -1},
@@ -113,7 +112,7 @@ public class Partida {//MODEL
 		//The information taht recibes is in the ranges of the tauler content 
 		//because this validation was done in the method inputToCords
 
-		return taulerVista[coordx][coordy];
+		return taulerReal.adjMatrix[coordx][coordy];
 	}
 	
 	public boolean checkGameIsWin()
