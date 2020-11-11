@@ -24,8 +24,16 @@ public class Partida {//MODEL
 		//is a method that creates a matrix of the same size of tauler and inicializes it to -2
 		//This matrix will be actualized every time the player makes a movment
 		
-		int adj[][] = {		};
-		taulerVista=adj;
+		taulerVista = new int[taulerReal.getHeight()][taulerReal.getWidth()];
+
+		for (int i=0; i<taulerReal.getHeight();i++)
+		{
+			for (int j=0; j<taulerReal.getWidth();j++)
+			{
+				taulerVista[i][j] = -2;
+			}
+		}
+
 
 	}
 	
@@ -137,6 +145,9 @@ public class Partida {//MODEL
 	public int getBombesTotals() {
 		return -1;
 	}
+	
+	
+	
 	
 	
 }
