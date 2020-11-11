@@ -230,10 +230,10 @@ public class PartidaTest {
 			assertEquals(aux[2], -1);
 		}
 	}
-	//@Test
+	@Test
 	public void testGetValueOfTauler() { 
 		Partida p = new Partida();
-		
+		p.mockGenerateVista();
 		
 		//La única partició son els cassos de proba amb valors coorectes ja que en el metode inputToCords ja 
 		// s'ha validat que les coordenades siguin pertanyents al tauler de la partida
