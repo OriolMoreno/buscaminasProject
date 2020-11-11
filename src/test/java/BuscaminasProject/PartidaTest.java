@@ -7,20 +7,20 @@ import org.junit.Test;
 
 public class PartidaTest {
 
-	@Before
+	//@Before
 	public void setUp() throws Exception {
 	}
 
-	@Test
+	//@Test
 	public void testPartida() { 
 		fail("Not yet implemented");
 	}
 	
-	@Test
+	//@Test
 	public void testProcessaMoviment() {
 		MockInput io = new MockInput(".\\src\\test\\resources\\partida_1.txt");
 		Partida p = new Partida();
-		
+		fail("Not yet implemented");
 	}
 	
 	
@@ -29,92 +29,232 @@ public class PartidaTest {
 
 	
 	@Test
-	public void testInputToCoords() 
-	{ 
+	public void testInputToCoordsWithoutFlag() { 
 		Partida p = new Partida();
 		
+		//CONJUNT DE TESTOS SENSE FLAG
+		//Test de resultats esperats
+		int aux[]= {-1,-1,-1};
+
+		aux=p.inputToCoords("A1");
+		assertEquals(aux[0], 0);
+		assertEquals(aux[1], 0);
+		assertEquals(aux[2], 0);
 		
-		String listAuxInput[]= {"1A","3D","4B","6F"};
-		int listAuxCoorectResult[][]= {{0,0},{2,3},{3,2},{5,5}};
+		aux=p.inputToCoords("D3");
+		assertEquals(aux[0], 3);
+		assertEquals(aux[1], 2);
+		assertEquals(aux[2], 0);
 		
-		for (int i = 0; i < listAuxInput.length; i++) 
+		aux=p.inputToCoords("B4");
+		assertEquals(aux[0], 1);
+		assertEquals(aux[1], 3);
+		assertEquals(aux[2], 0);
+		
+		aux=p.inputToCoords("F6");
+		assertEquals(aux[0], 5);
+		assertEquals(aux[1], 5);
+		assertEquals(aux[2], 0);
+		
+		
+		//PARTICIÓ EQUIVALENT RESULTATS CORRECTES MINÚSUCLAS
+		String listAuxInput1[]= {"a1","d3","b4","f6","i8"};
+		int expectedResult[][]= {{0,0},{3,2},{1,3},{5,5},{8,7}};
+
+		for (int i = 0; i < listAuxInput1.length; i++) 
 		{
-			assertEquals(p.inputToCoords(listAuxInput(i), listAuxCoorectResult[i]));
+			aux=p.inputToCoords(listAuxInput1[i]);
+			assertEquals(aux[0], expectedResult[i][0]);
+			assertEquals(aux[1], expectedResult[i][1]);
+			assertEquals(aux[2], 0);
 		}
 		
+		int errorReturn[]= {-1,-1,-1};
 		
-		int errorReturn[]= {-1,-1};
-		
-		//ERRORS PER COORD ALFABET
-		String listAuxInput2[]= {"1J","1Z","1$","1�","0A","-4A","1a","3d","4b","6f"};
+		//PARTICIÓ EQUIVALENT ERROR EN COORD ALFABET (amb valors límits  i frontera)
+		String listAuxInput2[]= {"J1","Z1","$1","€1"};
 		
 		for (int i = 0; i < listAuxInput2.length; i++) 
 		{
-			assertEquals(p.inputToCoords(listAuxInput2(i), errorReturn));
+			aux=p.inputToCoords(listAuxInput2[i]);
+			assertEquals(aux[0], -1);
+			assertEquals(aux[1], -1);
+			assertEquals(aux[2], -1);
+		}
+
+		//PARTICIÓ EQUIVALENT ERROR EN COORD NUMERICA (amb valors límits  i frontera)
+		String listAuxInput3[]= {"A0","A-4","A10","A100"};
+		
+		for (int i = 0; i < listAuxInput3.length; i++) 
+		{
+			aux=p.inputToCoords(listAuxInput3[i]);
+			assertEquals(aux[0], -1);
+			assertEquals(aux[1], -1);
+			assertEquals(aux[2], -1);
+		}
+
+		//PARTICIÓ EQUIVALENT ERRORS PER VALORS MOLT GRANS O MOLT PETITS 	(amb valors límits  i frontera)
+		String listAuxInput4[]= {"1111111111111111111111111111111111111111111111111111111111111111111","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "$$$$$$$$$$$$$$$$$$$$$$$$"," ",""};
+		
+		for (int i = 0; i < listAuxInput4.length; i++) 
+		{
+			aux=p.inputToCoords(listAuxInput4[i]);
+			assertEquals(aux[0], -1);
+			assertEquals(aux[1], -1);
+			assertEquals(aux[2], -1);
 		}
 		
-		//ERRORS PER COORD NUMERICA	
-		String listAuxInput2[]= {"0A","-4A","10A","100A"};
+		//PARTICIÓ EQUIVALENT INERCANVI DE COORDS 
+		String listAuxInput5[]= {"1A","3D","4B","6F"};
 		
-		for (int i = 0; i < listAuxInput2.length; i++) 
+		for (int i = 0; i < listAuxInput5.length; i++) 
 		{
-			assertEquals(p.inputToCoords(listAuxInput2(i), errorReturn));
-		}
-		
-		//ERRORS PER VALORS MOLT EXTRANYS
-		String listAuxInput2[]= {"11111111111111111111111","AAAAAAAAAAAAAAAAAAAAAAAA"};
-		
-		for (int i = 0; i < listAuxInput2.length; i++) 
-		{
-			assertEquals(p.inputToCoords(listAuxInput2(i), errorReturn));
-		}
-		
-		//ERRORS PER INERCANVI DE COORDS 	
-		String listAuxInput2[]= {"1A","DR","B4","6F"};
-		
-		for (int i = 0; i < listAuxInput2.length; i++) 
-		{
-			assertEquals(p.inputToCoords(listAuxInput2(i), errorReturn));
+			aux=p.inputToCoords(listAuxInput5[i]);
+			assertEquals(aux[0], -1);
+			assertEquals(aux[1], -1);
+			assertEquals(aux[2], -1);
 		}
 				
+	
 		//ERRORS PER CASSOS EXTRANGS
-		String listAuxInput2[]= {"1A1","A11","11A","AA1","A1A","1AA"};
+		String listAuxInput6[]= {"1A1","A11","11A","AA1","A1A","1AA"};
 		
-		for (int i = 0; i < listAuxInput2.length; i++) 
+		for (int i = 0; i < listAuxInput6.length; i++) 
 		{
-			assertEquals(p.inputToCoords(listAuxInput2(i), errorReturn));
+			aux=p.inputToCoords(listAuxInput6[i]);
+			assertEquals(aux[0], -1);
+			assertEquals(aux[1], -1);
+			assertEquals(aux[2], -1);
 		}
 		
 		
 		
 	}
 	
-	
+
 	@Test
+	public void testInputToCoordsWithFlag() { 
+		Partida p = new Partida();
+		
+		//CONJUNT DE TESTOS AMB FLAG
+		//Test de resultats correctes
+		int aux[]= {-1,-1,-1};
+
+		aux=p.inputToCoords("A1/");
+		assertEquals(aux[0], 0);
+		assertEquals(aux[1], 0);
+		assertEquals(aux[2], 1);
+		
+		aux=p.inputToCoords("D3/");
+		assertEquals(aux[0], 3);
+		assertEquals(aux[1], 2);
+		assertEquals(aux[2], 1);
+		
+		aux=p.inputToCoords("B4/");
+		assertEquals(aux[0], 1);
+		assertEquals(aux[1], 3);
+		assertEquals(aux[2], 1);
+		
+		aux=p.inputToCoords("F6/");
+		assertEquals(aux[0], 5);
+		assertEquals(aux[1], 5);
+		assertEquals(aux[2], 1);
+
+		//PARTICIÓ EQUIVALENT RESULTATS CORRECTES MINÚSUCLAS
+		String listAuxInput1[]= {"a1/","d3/","b4/","f6/"};
+		int expectedResult[][]= {{0,0},{3,2},{1,3},{5,5}};
+
+		for (int i = 0; i < listAuxInput1.length; i++) 
+		{
+			aux=p.inputToCoords(listAuxInput1[i]);
+			assertEquals(aux[0], expectedResult[i][0]);
+			assertEquals(aux[1], expectedResult[i][1]);
+			assertEquals(aux[2], 1);
+		}
+		
+		int errorReturn[]= {-1,-1,-1};
+		
+		//PARTICIÓ EQUIVALENT ERROR EN COORD ALFABET (amb valors límits  i frontera)
+		String listAuxInput2[]= {"J1/","Z1/","$1/","€1/"};
+		
+		for (int i = 0; i < listAuxInput2.length; i++) 
+		{
+			aux=p.inputToCoords(listAuxInput2[i]);
+			assertEquals(aux[0], -1);
+			assertEquals(aux[1], -1);
+			assertEquals(aux[2], -1);
+		}
+
+		//PARTICIÓ EQUIVALENT ERROR EN COORD NUMERICA (amb valors límits  i frontera)
+		String listAuxInput3[]= {"A0/","-A4/","A10/","A100/"};
+		
+		for (int i = 0; i < listAuxInput3.length; i++) 
+		{
+			aux=p.inputToCoords(listAuxInput3[i]);
+			assertEquals(aux[0], -1);
+			assertEquals(aux[1], -1);
+			assertEquals(aux[2], -1);
+		}
+
+		//PARTICIÓ EQUIVALENT ERRORS PER VALORS MOLT GRANS O MOLT PETITS 	(amb valors límits  i frontera)
+		String listAuxInput4[]= {"1111111111111111111111111111111111111111111111111111111111111111111/","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/", "$$$$$$$$$$$$$$$$$$$$$$$$/"," /","/"};
+		
+		for (int i = 0; i < listAuxInput4.length; i++) 
+		{
+			aux=p.inputToCoords(listAuxInput4[i]);
+			assertEquals(aux[0], -1);
+			assertEquals(aux[1], -1);
+			assertEquals(aux[2], -1);
+		}
+		
+		//PARTICIÓ EQUIVALENT INERCANVI DE COORDS 
+		String listAuxInput5[]= {"1A/","3D/","4B/","6F/"};
+		
+		for (int i = 0; i < listAuxInput5.length; i++) 
+		{
+			aux=p.inputToCoords(listAuxInput5[i]);
+			assertEquals(aux[0], -1);
+			assertEquals(aux[1], -1);
+			assertEquals(aux[2], -1);
+		}
+				
+	
+		//ERRORS PER CASSOS EXTRANGS
+		String listAuxInput6[]= {"1A1/","A11/","11A/","AA1/","A1A/","1AA/"};
+		
+		for (int i = 0; i < listAuxInput6.length; i++) 
+		{
+			aux=p.inputToCoords(listAuxInput6[i]);
+			assertEquals(aux[0], -1);
+			assertEquals(aux[1], -1);
+			assertEquals(aux[2], -1);
+		}
+	}
+	//@Test
 	public void testGetValueOfTauler() { 
 		fail("Not yet implemented");
 	}
 	
 	
 	
-	@Test
+	//@Test
 	public void testCheckGameIsWin() { 
 		fail("Not yet implemented");
 	}
 	
 	
-	@Test
+	//@Test
 	public void  testUpdateVistaTauler() { 
 		fail("Not yet implemented");
 	}
 	
 	
-	@Test
+	//@Test
 	public void testGetTauler() {
 		fail("Not yet implemented");
 	}
 	
-	@Test
+	//@Test
 	public void testGetPuntuacio() {
 		fail("Not yet implemented");
 	}
