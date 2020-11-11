@@ -17,7 +17,31 @@ public class Partida {//MODEL
 	public Partida(){
 		taulerReal = new Tauler();
 		bombesTotals = taulerReal.countBombes();
+		this.taulerVista=taulerReal.tauler;
+		generateVista();
 	}
+	
+	public void generateVista(){
+		//TO DO
+		
+	}
+	
+	public void mockGenerateVista(){
+		int adj[][] = {
+				{1, -1,  2,  2,  1,  1,  0,  0},
+				{1,  2, -1,  3, -1,  2,  1,  1},
+				{1,  2,  4, -1,  3,  3, -1,  3},
+				{1, -1,  3, -1,  3,  3, -1, -1},
+				{1,  2,  3,  3,  3, -1,  5, -1},
+				{1,  2, -1,  2, -1,  3, -1,  2},
+				{1, -1,  2,  2,  2,  3,  2,  1},
+				{2,  2,  3,  2,  4, -1,  2,  0},
+				{1, -1,  2, -1, -1, -1,  2,  0}
+		};
+		taulerVista=adj;
+
+	}
+	
 	
 	public int processaMoviment(String input) { //return false if bomb is hit
 				
@@ -86,8 +110,10 @@ public class Partida {//MODEL
 	public int getValueOfTauler(int coordx,int coordy)
 	{
 		//Method that gets the value of tauler that the user has input recibed in coordx and coordy
+		//The information taht recibes is in the ranges of the tauler content 
+		//because this validation was done in the method inputToCords
 
-		return 1;
+		return taulerVista[coordx][coordy];
 	}
 	
 	public boolean checkGameIsWin()
