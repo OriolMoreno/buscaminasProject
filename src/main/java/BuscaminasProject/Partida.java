@@ -3,6 +3,9 @@ package BuscaminasProject;
 import java.lang.String;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.LinkedList; 
+import java.util.Queue; 
+
 
 public class Partida {//MODEL
 
@@ -122,7 +125,7 @@ public class Partida {//MODEL
 		return true;
 	}
 	
-	public void updateVistaTauler(int coordx,int coordy)
+	public boolean updateVistaTauler(int coordx,int coordy, int flag)
 	{
 		//Method that updates the taulr that sees the user
 		
@@ -130,10 +133,142 @@ public class Partida {//MODEL
 		
 		//1st: show the coord that have been selected
 		
-		//2nd: show all the coords recursivly that have no bombs surround == that are zeros;  finishing when there is a number 
-
+		//2nd: show all the coords recursivly that have no bombs surround == that are zeros;  finishing when there is a number
+		if( taulerVista[coordx][coordy]!=-2)
+		{
+			
+			return false;
+		}
+		
+		
+		if (flag==0)
+		{		
+			//destapem la casella
+		    taulerVista[coordx][coordy]=taulerReal.adjMatrix[coordx][coordy];
+		    
+			if (taulerReal.adjMatrix[coordx][coordy]==0) 
+			{
+				Queue< Integer > queueCoordsx = new LinkedList<>();
+				Queue< Integer > queueCoordsy = new LinkedList<>();
+				
+				queueCoordsx.add(coordx); 
+				queueCoordsy.add(coordy); 
+	
+				
+			     while (!queueCoordsx.isEmpty()) 
+			     {
+					
+	
+					// extraemos el nodo u de la cola Q y exploramos todos sus nodos adyacentes
+			    	 
+			    	 int coordAuxX = queueCoordsx.remove(); 
+			         int coordAuxY = queueCoordsy.remove(); 
+	
+			         
+			         if(coordAuxX+1<taulerReal.getHeight() && coordAuxY+1<taulerReal.getWidth()) {
+				         if (taulerVista[coordAuxX+1][coordAuxY+1]==-2 && taulerReal.adjMatrix[coordAuxX+1][coordAuxY+1]==0)
+				         {
+				        	 queueCoordsx.add(coordAuxX+1); 
+				 			 queueCoordsy.add(coordAuxY+1); 
+				 			 taulerVista[coordAuxX+1][coordAuxY+1]=taulerReal.adjMatrix[coordAuxX+1][coordAuxY+1];
+				         }
+				 			 taulerVista[coordAuxX+1][coordAuxY+1]=taulerReal.adjMatrix[coordAuxX+1][coordAuxY+1];
+			         }
+			         
+			         
+			         
+			         
+			         if(coordAuxX+1<taulerReal.getHeight()) {
+				         if (taulerVista[coordAuxX+1][coordAuxY]==-2 && taulerReal.adjMatrix[coordAuxX+1][coordAuxY]==0)
+				         {
+				        	 queueCoordsx.add(coordAuxX+1); 
+				        	 queueCoordsy.add(coordAuxY);
+				 			 taulerVista[coordAuxX+1][coordAuxY]=taulerReal.adjMatrix[coordAuxX+1][coordAuxY];
+				         }
+				 			 taulerVista[coordAuxX+1][coordAuxY]=taulerReal.adjMatrix[coordAuxX+1][coordAuxY];
+			         }
+			         
+			         
+			         if(coordAuxX+1<taulerReal.getHeight() && coordAuxY-1>=0) {
+				         if (taulerVista[coordAuxX+1][coordAuxY-1]==-2 && taulerReal.adjMatrix[coordAuxX+1][coordAuxY-1]==0)
+				         {
+				        	 queueCoordsx.add(coordAuxX+1); 
+				        	 queueCoordsy.add(coordAuxY-1);
+				 			 taulerVista[coordAuxX+1][coordAuxY-1]=taulerReal.adjMatrix[coordAuxX+1][coordAuxY-1]; 
+				         }
+				 			 taulerVista[coordAuxX+1][coordAuxY-1]=taulerReal.adjMatrix[coordAuxX+1][coordAuxY-1]; 
+			         }
+			         
+			         if(coordAuxY+1<taulerReal.getWidth()) {
+				         if (taulerVista[coordAuxX][coordAuxY+1]==-2 && taulerReal.adjMatrix[coordAuxX][coordAuxY+1]==0)
+				         {
+				        	 queueCoordsx.add(coordAuxX); 
+				        	 queueCoordsy.add(coordAuxY+1); 
+				 			 taulerVista[coordAuxX][coordAuxY+1]=taulerReal.adjMatrix[coordAuxX][coordAuxY+1];
+				         }
+				 			 taulerVista[coordAuxX][coordAuxY+1]=taulerReal.adjMatrix[coordAuxX][coordAuxY+1];
+				     }
+			         
+			         
+			         if( coordAuxY-1>=0) {
+			        	 if (taulerVista[coordAuxX][coordAuxY-1]==-2 && taulerReal.adjMatrix[coordAuxX][coordAuxY-1]==0)
+				         {
+				        	 queueCoordsx.add(coordAuxX); 
+				        	 queueCoordsy.add(coordAuxY-1);
+				 			 taulerVista[coordAuxX][coordAuxY-1]=taulerReal.adjMatrix[coordAuxX][coordAuxY-1]; 
+				         }
+				 			 taulerVista[coordAuxX][coordAuxY-1]=taulerReal.adjMatrix[coordAuxX][coordAuxY-1]; 
+			         }
+			         
+			         if(coordAuxX-1>=0 && coordAuxY+1<taulerReal.getWidth()) {
+			        	 if (taulerVista[coordAuxX-1][coordAuxY+1]==-2 && taulerReal.adjMatrix[coordAuxX-1][coordAuxY+1]==0)
+				         {
+				        	 queueCoordsx.add(coordAuxX-1); 
+				        	 queueCoordsy.add(coordAuxY+1); 
+				 			 taulerVista[coordAuxX-1][coordAuxY+1]=taulerReal.adjMatrix[coordAuxX-1][coordAuxY+1];
+				         }
+				 			 taulerVista[coordAuxX-1][coordAuxY+1]=taulerReal.adjMatrix[coordAuxX-1][coordAuxY+1];
+			         }	         
+			         
+			         if(coordAuxX-1>=0 && coordAuxY-1>=0) {
+				         if (taulerVista[coordAuxX-1][coordAuxY-1]==-2 && taulerReal.adjMatrix[coordAuxX-1][coordAuxY-1]==0)
+				         {
+				        	 queueCoordsx.add(coordAuxX-1); 
+				        	 queueCoordsy.add(coordAuxY-1); 
+				 			 taulerVista[coordAuxX-1][coordAuxY-1]=taulerReal.adjMatrix[coordAuxX-1][coordAuxY-1];
+				         }
+				 			 taulerVista[coordAuxX-1][coordAuxY-1]=taulerReal.adjMatrix[coordAuxX-1][coordAuxY-1];
+			         }	
+			         
+			         
+			         if(coordAuxX-1>=0 ) {   
+				         if (taulerVista[coordAuxX-1][coordAuxY]==-2 && taulerReal.adjMatrix[coordAuxX-1][coordAuxY]==0)
+				         {
+				        	 queueCoordsx.add(coordAuxX-1); 
+				        	 queueCoordsy.add(coordAuxY); 
+				 			 taulerVista[coordAuxX-1][coordAuxY]=taulerReal.adjMatrix[coordAuxX-1][coordAuxY];
+				         }
+				 			 taulerVista[coordAuxX-1][coordAuxY]=taulerReal.adjMatrix[coordAuxX-1][coordAuxY];
+			         }
+			         
+			     } 
+			}
+			else
+			{
+				if (taulerReal.adjMatrix[coordx][coordy]==-1)
+				{
+					//cas bomba trobada (-1)
+					return true;
+				}
+			}
+		}
+		else 
+		{
+			taulerVista[coordx][coordy]=9;
+		}
 
 		
+		return false;
 	}
 	
 	
