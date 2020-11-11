@@ -277,9 +277,90 @@ public class PartidaTest {
 	
 	
 	
-	//@Test
+	@Test
 	public void testCheckGameIsWin() { 
-		fail("Not yet implemented");
+		Partida p = new Partida();
+		
+		//TEST CASE ANY BOMB WITH FLAG
+		int vistaMockActual[][] = {
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},	
+				{-2,-2,-2,-2,-2,-2,-2,-2},				
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+			};
+		p.taulerVista= vistaMockActual;
+		assertEquals(p.checkGameIsWin(),false);
+
+		
+		//TEST CASE SOME BOMBS WITH FLAG
+		int vistaMockActual2[][] = {
+				{1,  9,  2,  2,  1,  1,  0,  0},
+				{1,  2, -1,  3, -1,  2,  1,  1},
+				{1,  2,  4, -1,  3,  3, -1,  3},
+				{1,  9,  3, -1,  3,  3, -1, -1},
+				{1,  2,  3,  3,  3, -1,  5, -1},
+				{1,  2,  9,  2,  9,  3, -1,  2},
+				{1,  9,  2,  2,  2,  3,  2,  1},
+				{2,  2,  3,  2,  4,  9,  2,  0},
+				{1,  9,  2,  9,  9,  9,  2,  0}
+		};
+		
+		p.taulerVista= vistaMockActual2;
+		assertEquals(p.checkGameIsWin(),false);
+		
+		//TEST CASE ALL BOMBS WITH FLAG MINUS ONE
+		int vistaMockActual3[][] = {
+				{1,  9,  2,  2,  1,  1,  0,  0},
+				{1,  2,  9,  3,  9,  2,  1,  1},
+				{1,  2,  4,  9,  3,  3, -1,  3},
+				{1,  9,  3,  9,  3,  3,  9,  9},
+				{1,  2,  3,  3,  3,  9,  5,  9},
+				{1,  2,  9,  2,  9,  3,  9,  2},
+				{1,  9,  2,  2,  2,  3,  2,  1},
+				{2,  2,  3,  2,  4,  9,  2,  0},
+				{1,  9,  2,  9,  9,  9,  2,  0}
+		};
+		p.taulerVista= vistaMockActual3;
+		assertEquals(p.checkGameIsWin(),false);
+		
+		
+		
+		//TEST CASE ALL BOMBS WITH FLAG MINUS ONE 2nd part
+		int vistaMockActual4[][] = {
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{1,  2,  9,  3,  9,  2,  1,  1},
+				{1,  2,  4,  9,  3,  3, -1,  3},
+				{1,  9,  3,  9,  3,  3,  9,  9},
+				{1,  2,  3,  3,  3,  9,  5,  9},
+				{1,  2,  9,  2,  9,  3,  9,  2},
+				{1,  9,  2,  2,  2,  3,  2,  1},
+				{2,  2,  3,  2,  4,  9,  2,  0},
+				{1,  9,  2,  9,  9,  9,  2,  0}
+		};
+		p.taulerVista= vistaMockActual4;
+		assertEquals(p.checkGameIsWin(),false);
+		
+		//TEST CASE ALL BOMBS WITH FLAG
+		int vistaMockActual5[][] = {
+				{1,  9,  2,  2,  1,  1,  0,  0},
+				{1,  2,  9,  3,  9,  2,  1,  1},
+				{1,  2,  4,  9,  3,  3,  9,  3},
+				{1,  9,  3,  9,  3,  3,  9,  9},
+				{1,  2,  3,  3,  3,  9,  5,  9},
+				{1,  2,  9,  2,  9,  3,  9,  2},
+				{1,  9,  2,  2,  2,  3,  2,  1},
+				{2,  2,  3,  2,  4,  9,  2,  0},
+				{1,  9,  2,  9,  9,  9,  2,  0}
+		};
+		p.taulerVista= vistaMockActual5;
+		assertEquals(p.checkGameIsWin(),true);
+		
+		
 	}
 	
 	
@@ -628,7 +709,7 @@ public class PartidaTest {
 		}
 		
 		
-		//TEST CASE AMB ZEROS AL VOLTANT SELECCIONANT NA CASELLA A ZERO
+		//TEST CASE AMB ZEROS AL VOLTANT SELECCIONANT UNA CASELLA A ZERO
 		int vistaInicial5[][] = {
 				{-2,-2,-2,-2, 1,-2,-2,-2},
 				{-2,-2,-2,-2,-2,-2,-2,-2},
