@@ -20,16 +20,49 @@ public class PartidaTest {
 	@Test
 	public void testGenerateVista() { 
 		Partida p = new Partida();
+		int[][]aux=p.getVistaTauler();
+		assertEquals(p.getWidth(), aux[0].length);
+		assertEquals(p.getHeight(), aux.length);
+
 		
-		assertEquals(p.taulerReal.tauler[0].length, p.taulerVista[0].length);
-		assertEquals(p.taulerReal.tauler.length, p.taulerVista.length);
-		
-		for (int i=0; i<p.taulerReal.tauler.length;i++){
-			for (int j=0; j<p.taulerReal.tauler[0].length;j++){
-				assertEquals(p.taulerVista[i][j], -2);
+		for (int i=0; i<p.getHeight();i++){
+			for (int j=0; j<p.getWidth();j++){
+				assertEquals(aux[i][j], -2);
 			}
 		}
 
+
+	}
+	
+	@Test
+	public void testGetCasellaTaulerVista(){
+
+		Partida p = new Partida();
+		
+		int adj[][] = {
+				{1, -1,  2,  2,  1,  1,  0,  0},
+				{1,  2, -1,  3, -1,  2,  1,  1},
+				{1,  2,  4, -1,  3,  3, -1,  3},
+				{1, -1,  3, -1,  3,  3, -1, -1},
+				{1,  2,  3,  3,  3, -1,  5, -1},
+				{1,  2, -1,  2, -1,  3, -1,  2},
+				{1, -1,  2,  2,  2,  3,  2,  1},
+				{2,  2,  3,  2,  4, -1,  2,  0},
+				{1, -1,  2, -1, -1, -1,  2,  0}
+		};
+		p.setMockVistaTauler(adj);
+		
+		int res = p.getCasellaTaulerVista(0, 0);
+		assertEquals(res, 1);
+		int res_1 = p.getCasellaTaulerVista(1, 0);
+		assertEquals(res_1, 1);
+		int res_2 = p.getCasellaTaulerVista(8, 8);
+		assertEquals(res_2, -11);
+		int res_3 = p.getCasellaTaulerVista(3, 3);
+		assertEquals(res_3, -1);
+		int res_4 = p.getCasellaTaulerVista(8, 6);
+		assertEquals(res_4, 2);
+		
 
 	}
 	
@@ -84,8 +117,6 @@ public class PartidaTest {
 			assertEquals(aux[1], expectedResult[i][1]);
 			assertEquals(aux[2], 0);
 		}
-		
-		int errorReturn[]= {-1,-1,-1};
 		
 		//PARTICIÓ EQUIVALENT ERROR EN COORD ALFABET (amb valors límits  i frontera)
 		String listAuxInput2[]= {"J1","Z1","$1","€1"};
@@ -293,31 +324,31 @@ public class PartidaTest {
 				{-2,-2,-2,-2,-2,-2,-2,-2},
 				{-2,-2,-2,-2,-2,-2,-2,-2},
 			};
-		p.taulerVista= vistaMockActual;
+		p.setMockVistaTauler(vistaMockActual); 
 		assertEquals(p.checkGameIsWin(),false);
 
 		
 		//TEST CASE SOME BOMBS WITH FLAG
 		int vistaMockActual2[][] = {
 				{1,  9,  2,  2,  1,  1,  0,  0},
-				{1,  2, -1,  3, -1,  2,  1,  1},
-				{1,  2,  4, -1,  3,  3, -1,  3},
-				{1,  9,  3, -1,  3,  3, -1, -1},
-				{1,  2,  3,  3,  3, -1,  5, -1},
-				{1,  2,  9,  2,  9,  3, -1,  2},
+				{1,  2, -1,  3, -2,  2,  1,  1},
+				{1,  2,  4, -1,  3,  3, -2,  3},
+				{1,  9,  3, -1,  3,  3, -2, -1},
+				{1,  2,  3,  3,  3, -2,  5, -1},
+				{1,  2,  9,  2,  9,  3, -2,  2},
 				{1,  9,  2,  2,  2,  3,  2,  1},
 				{2,  2,  3,  2,  4,  9,  2,  0},
 				{1,  9,  2,  9,  9,  9,  2,  0}
 		};
 		
-		p.taulerVista= vistaMockActual2;
+		p.setMockVistaTauler(vistaMockActual2 );
 		assertEquals(p.checkGameIsWin(),false);
 		
 		//TEST CASE ALL BOMBS WITH FLAG MINUS ONE
 		int vistaMockActual3[][] = {
 				{1,  9,  2,  2,  1,  1,  0,  0},
 				{1,  2,  9,  3,  9,  2,  1,  1},
-				{1,  2,  4,  9,  3,  3, -1,  3},
+				{1,  2,  4,  9,  3,  3, -2,  3},
 				{1,  9,  3,  9,  3,  3,  9,  9},
 				{1,  2,  3,  3,  3,  9,  5,  9},
 				{1,  2,  9,  2,  9,  3,  9,  2},
@@ -325,7 +356,7 @@ public class PartidaTest {
 				{2,  2,  3,  2,  4,  9,  2,  0},
 				{1,  9,  2,  9,  9,  9,  2,  0}
 		};
-		p.taulerVista= vistaMockActual3;
+		p.setMockVistaTauler(vistaMockActual3 );
 		assertEquals(p.checkGameIsWin(),false);
 		
 		
@@ -334,7 +365,7 @@ public class PartidaTest {
 		int vistaMockActual4[][] = {
 				{-2,-2,-2,-2,-2,-2,-2,-2},
 				{1,  2,  9,  3,  9,  2,  1,  1},
-				{1,  2,  4,  9,  3,  3, -1,  3},
+				{1,  2,  4,  9,  3,  3,  9,  3},
 				{1,  9,  3,  9,  3,  3,  9,  9},
 				{1,  2,  3,  3,  3,  9,  5,  9},
 				{1,  2,  9,  2,  9,  3,  9,  2},
@@ -342,7 +373,7 @@ public class PartidaTest {
 				{2,  2,  3,  2,  4,  9,  2,  0},
 				{1,  9,  2,  9,  9,  9,  2,  0}
 		};
-		p.taulerVista= vistaMockActual4;
+		p.setMockVistaTauler(vistaMockActual4 );
 		assertEquals(p.checkGameIsWin(),false);
 		
 		//TEST CASE ALL BOMBS WITH FLAG
@@ -357,7 +388,7 @@ public class PartidaTest {
 				{2,  2,  3,  2,  4,  9,  2,  0},
 				{1,  9,  2,  9,  9,  9,  2,  0}
 		};
-		p.taulerVista= vistaMockActual5;
+		p.setMockVistaTauler(vistaMockActual5 );
 		assertEquals(p.checkGameIsWin(),true);
 		
 		
@@ -381,7 +412,7 @@ public class PartidaTest {
 				{-2,-2,-2,-2,-2,-2,-2,-2},
 				{-2,-2,-2,-2,-2,-2,-2,-2},
 			};
-		p.taulerVista= vistaInicial;
+		p.setMockVistaTauler(vistaInicial );
 		
 		int expectedTaulerVista[][] = {
 				{-2,-2,-2,-2, 1, 1, 0, 0},
@@ -399,10 +430,11 @@ public class PartidaTest {
 		bombaTrobada=p.updateVistaTauler(0, 6, 0);
 		assertEquals(bombaTrobada, false);
 		
+		int[][]aux=p.getVistaTauler();
 		
-		for (int i=0; i<p.taulerReal.tauler.length;i++){
-			for (int j=0; j<p.taulerReal.tauler[0].length;j++){
-				assertEquals(p.taulerVista[i][j], expectedTaulerVista[i][j]);
+		for (int i=0; i<p.getHeight();i++){
+			for (int j=0; j<p.getWidth();j++){
+				assertEquals(aux[i][j], expectedTaulerVista[i][j]);
 			}
 		}
 
@@ -420,7 +452,7 @@ public class PartidaTest {
 				{-2,-2,-2,-2,-2,-2,-2,-2},
 				{-2,-2,-2,-2,-2,-2,-2,-2},
 			};
-		p.taulerVista= vistaInicial2;
+		p.setMockVistaTauler(vistaInicial2 );
 		
 		int expectedTaulerVista2[][] = {
 				{-2,-1,-2,-2, 1, 1, 0, 0},
@@ -438,9 +470,10 @@ public class PartidaTest {
 		bombaTrobada=p.updateVistaTauler(0, 1, 0);
 		assertEquals(bombaTrobada, true);
 		
-		for (int i=0; i<p.taulerReal.tauler.length;i++){
-			for (int j=0; j<p.taulerReal.tauler[0].length;j++){
-				assertEquals(p.taulerVista[i][j], expectedTaulerVista2[i][j]);
+		aux=p.getVistaTauler();
+		for (int i=0; i<p.getHeight();i++){
+			for (int j=0; j<p.getWidth();j++){
+				assertEquals(aux[i][j], expectedTaulerVista2[i][j]);
 			}
 		}
 		
@@ -457,7 +490,7 @@ public class PartidaTest {
 				{-2,-2,-2,-2,-2,-2,-2,-2},
 				{-2,-2,-2,-2,-2,-2,-2,-2},
 			};
-		p.taulerVista= vistaInicial3;
+		p.setMockVistaTauler(vistaInicial3 );
 		
 		int expectedTaulerVista3[][] = {
 				{-2,-2,-2,-2, 1, 1, 0, 0},
@@ -474,9 +507,10 @@ public class PartidaTest {
 		bombaTrobada=p.updateVistaTauler(7, 6, 0);
 		assertEquals(bombaTrobada, false);
 		
-		for (int i=0; i<p.taulerReal.tauler.length;i++){
-			for (int j=0; j<p.taulerReal.tauler[0].length;j++){
-				assertEquals(p.taulerVista[i][j], expectedTaulerVista3[i][j]);
+		aux=p.getVistaTauler();
+		for (int i=0; i<p.getHeight();i++){
+			for (int j=0; j<p.getWidth();j++){
+				assertEquals(aux[i][j], expectedTaulerVista3[i][j]);
 			}
 		}
 		
@@ -493,7 +527,7 @@ public class PartidaTest {
 				{-2,-2,-2,-2,-2,-2, 2, 0},
 				{-2,-2,-2,-2,-2,-2,-2, 0},
 			};
-		p.taulerVista= vistaInicial4;
+		p.setMockVistaTauler(vistaInicial4 );
 		
 		int expectedTaulerVista4[][] = {
 				{-2,-2,-2,-2, 1, 1, -2,-2},
@@ -511,9 +545,11 @@ public class PartidaTest {
 		bombaTrobada=p.updateVistaTauler(0, 5, 0);
 		assertEquals(bombaTrobada, false);
 		
-		for (int i=0; i<p.taulerReal.tauler.length;i++){
-			for (int j=0; j<p.taulerReal.tauler[0].length;j++){
-				assertEquals(p.taulerVista[i][j], expectedTaulerVista4[i][j]);
+		
+		aux=p.getVistaTauler();
+		for (int i=0; i<p.getHeight();i++){
+			for (int j=0; j<p.getWidth();j++){
+				assertEquals(aux[i][j], expectedTaulerVista4[i][j]);
 			}
 		}
 		
@@ -530,7 +566,7 @@ public class PartidaTest {
 				{-2,-2,-2,-2,-2,-2, 2, 0},
 				{-2,-2,-2,-2,-2,-2,-2, 0},
 			};
-		p.taulerVista= vistaInicial5;
+		p.setMockVistaTauler(vistaInicial5 );
 		
 		int expectedTaulerVista5[][] = {
 				{-2,-2,-2,-2, 1, 1, 0, 0},
@@ -548,11 +584,85 @@ public class PartidaTest {
 		bombaTrobada=p.updateVistaTauler(0, 6, 0);
 		assertEquals(bombaTrobada, false);
 		
-		for (int i=0; i<p.taulerReal.tauler.length;i++){
-			for (int j=0; j<p.taulerReal.tauler[0].length;j++){
-				assertEquals(p.taulerVista[i][j], expectedTaulerVista5[i][j]);
+		
+		aux=p.getVistaTauler();
+		for (int i=0; i<p.getHeight();i++){
+			for (int j=0; j<p.getWidth();j++){
+				assertEquals(aux[i][j], expectedTaulerVista5[i][j]);
 			}
 		}
+		
+		
+		
+		//TEST CASE MOLTS ZEROS AL VOLTANT SELECCIONANT UNA CASELLA A ZERO
+		int taulerMockAux[][]= {
+				{0, 1, 0, 0, 0, 0, 0, 0},
+				{0, 0, 1, 0, 1, 0, 0, 0},
+				{0, 0, 0, 1, 0, 0, 1, 0},
+				{0, 1, 0, 1, 0, 0, 1, 1},
+				{0, 0, 0, 0, 0, 1, 0, 1},
+				{0, 0, 1, 0, 1, 0, 1, 0},
+				{0, 1, 0, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 0, 1, 0, 0},
+				{0, 1, 0, 1, 1, 1, 0, 0}
+		};
+		int adjMatrixMockAux[][]={
+			{1, -1,  2,  2,  1,  1,  0,  0},
+			{1,  2, -1,  3, -1,  2,  1,  1},
+			{1,  2,  4, -1,  3,  3, -1,  3},
+			{1, -1,  3, -1,  3,  3, -1, -1},
+			{1,  2,  3,  3,  3, -1,  5, -1},
+			{1,  2, -1,  2, -1,  3, -1,  2},
+			{1, -1,  2,  2,  2,  3,  2,  1},
+			{2,  2,  3,  2,  4, -1,  2,  0},
+			{1, -1,  2, -1, -1, -1,  2,  0}
+		};
+		
+//		Tauler t = new Tauler();// Tauler t sense mock pero cridatn constructor Mock
+//		
+//		t.setMockTauler(taulerMockAux,adjMatrixMockAux);
+//		
+//		p.setMockTaulerPartida(t);
+//		
+//		int vistaInicial6[][] = {
+//				{-2,-2,-2,-2, 1,-2,-2,-2},
+//				{-2,-2,-2,-2,-2,-2,-2,-2},
+//				{-2,-2,-2,-2,-2,-2,-2,-2},
+//				{-2,-2,-2,-2,-2,-2,-2,-2},	
+//				{-2,-2,-2,-2,-2,-2,-2,-2},				
+//				{-2,-2,-2,-2,-2,-2,-2,-2},
+//				{-2,-2,-2,-2,-2,-2,-2,-2},
+//				{-2,-2,-2,-2,-2,-2, 2, 0},
+//				{-2,-2,-2,-2,-2,-2,-2, 0},
+//			};
+//		p.setMockVistaTauler(vistaInicial6 );
+//		
+//		int expectedTaulerVista6[][] = {
+//				{-2,-2,-2,-2, 1, 1, 0, 0},
+//				{-2,-2,-2,-2,-2, 2, 1, 1},
+//				{-2,-2,-2,-2,-2,-2,-2,-2},
+//				{-2,-2,-2,-2,-2,-2,-2,-2},	
+//				{-2,-2,-2,-2,-2,-2,-2,-2},				
+//				{-2,-2,-2,-2,-2,-2,-2,-2},
+//				{-2,-2,-2,-2,-2,-2,-2,-2},
+//				{-2,-2,-2,-2,-2,-2, 2, 0},
+//				{-2,-2,-2,-2,-2,-2,-2, 0},
+//		};
+//		
+//		
+//		bombaTrobada=p.updateVistaTauler(0, 6, 0);
+//		assertEquals(bombaTrobada, false);
+//		
+//		
+//		aux=p.getVistaTauler();
+//		for (int i=0; i<p.getHeight();i++){
+//			for (int j=0; j<p.getWidth();j++){
+//				assertEquals(aux[i][j], expectedTaulerVista6[i][j]);
+//			}
+//		}
+//	
+//	
+	
 	}
 	
 	@Test
@@ -572,7 +682,7 @@ public class PartidaTest {
 				{-2,-2,-2,-2,-2,-2,-2,-2},
 				{-2,-2,-2,-2,-2,-2,-2,-2},
 			};
-		p.taulerVista= vistaInicial;
+		p.setMockVistaTauler(vistaInicial );
 		
 		int expectedTaulerVista[][] = {
 				{-2,-2,-2,-2, 1, 1, 0, 0},
@@ -590,10 +700,12 @@ public class PartidaTest {
 		bombaTrobada=p.updateVistaTauler(0, 6, 1);
 		assertEquals(bombaTrobada, false);
 		
+		//assertEquals(assertEquals);
 		
-		for (int i=0; i<p.taulerReal.tauler.length;i++){
-			for (int j=0; j<p.taulerReal.tauler[0].length;j++){
-				assertEquals(p.taulerVista[i][j], expectedTaulerVista[i][j]);
+		int [][]aux=p.getVistaTauler();
+		for (int i=0; i<p.getHeight();i++){
+			for (int j=0; j<p.getWidth();j++){
+				assertEquals(aux[i][j], expectedTaulerVista[i][j]);
 			}
 		}
 
@@ -611,7 +723,7 @@ public class PartidaTest {
 				{-2,-2,-2,-2,-2,-2,-2,-2},
 				{-2,-2,-2,-2,-2,-2,-2,-2},
 			};
-		p.taulerVista= vistaInicial2;
+		p.setMockVistaTauler(vistaInicial2 );
 		
 		int expectedTaulerVista2[][] = {
 				{-2, 9,-2,-2, 1, 1, 0, 0},
@@ -629,9 +741,11 @@ public class PartidaTest {
 		bombaTrobada=p.updateVistaTauler(0, 1, 1);
 		assertEquals(bombaTrobada, false);
 		
-		for (int i=0; i<p.taulerReal.tauler.length;i++){
-			for (int j=0; j<p.taulerReal.tauler[0].length;j++){
-				assertEquals(p.taulerVista[i][j], expectedTaulerVista2[i][j]);
+		
+		aux=p.getVistaTauler();
+		for (int i=0; i<p.getHeight();i++){
+			for (int j=0; j<p.getWidth();j++){
+				assertEquals(aux[i][j], expectedTaulerVista2[i][j]);
 			}
 		}
 		
@@ -648,7 +762,7 @@ public class PartidaTest {
 				{-2,-2,-2,-2,-2,-2,-2,-2},
 				{-2,-2,-2,-2,-2,-2,-2,-2},
 			};
-		p.taulerVista= vistaInicial3;
+		p.setMockVistaTauler(vistaInicial3 );
 		
 		int expectedTaulerVista3[][] = {
 				{-2,-2,-2,-2, 1, 1, 0, 0},
@@ -665,9 +779,11 @@ public class PartidaTest {
 		bombaTrobada=p.updateVistaTauler(7, 6, 1);
 		assertEquals(bombaTrobada, false);
 		
-		for (int i=0; i<p.taulerReal.tauler.length;i++){
-			for (int j=0; j<p.taulerReal.tauler[0].length;j++){
-				assertEquals(p.taulerVista[i][j], expectedTaulerVista3[i][j]);
+		
+		aux=p.getVistaTauler();
+		for (int i=0; i<p.getHeight();i++){
+			for (int j=0; j<p.getWidth();j++){
+				assertEquals(aux[i][j], expectedTaulerVista3[i][j]);
 			}
 		}
 		
@@ -684,7 +800,7 @@ public class PartidaTest {
 				{-2,-2,-2,-2,-2,-2, 2, 0},
 				{-2,-2,-2,-2,-2,-2,-2, 0},
 			};
-		p.taulerVista= vistaInicial4;
+		p.setMockVistaTauler(vistaInicial4 );
 		
 		int expectedTaulerVista4[][] = {
 				{-2,-2,-2,-2, 1, 9, -2,-2},
@@ -702,9 +818,11 @@ public class PartidaTest {
 		bombaTrobada=p.updateVistaTauler(0, 5, 1);
 		assertEquals(bombaTrobada, false);
 		
-		for (int i=0; i<p.taulerReal.tauler.length;i++){
-			for (int j=0; j<p.taulerReal.tauler[0].length;j++){
-				assertEquals(p.taulerVista[i][j], expectedTaulerVista4[i][j]);
+		
+		aux=p.getVistaTauler();
+		for (int i=0; i<p.getHeight();i++){
+			for (int j=0; j<p.getWidth();j++){
+				assertEquals(aux[i][j], expectedTaulerVista4[i][j]);
 			}
 		}
 		
@@ -721,7 +839,7 @@ public class PartidaTest {
 				{-2,-2,-2,-2,-2,-2, 2, 0},
 				{-2,-2,-2,-2,-2,-2,-2, 0},
 			};
-		p.taulerVista= vistaInicial5;
+		p.setMockVistaTauler(vistaInicial5 );
 		
 		int expectedTaulerVista5[][] = {
 				{-2,-2,-2,-2, 1,-2, 9,-2},
@@ -739,9 +857,10 @@ public class PartidaTest {
 		bombaTrobada=p.updateVistaTauler(0, 6, 1);
 		assertEquals(bombaTrobada, false);
 		
-		for (int i=0; i<p.taulerReal.tauler.length;i++){
-			for (int j=0; j<p.taulerReal.tauler[0].length;j++){
-				assertEquals(p.taulerVista[i][j], expectedTaulerVista5[i][j]);
+		aux=p.getVistaTauler();
+		for (int i=0; i<p.getHeight();i++){
+			for (int j=0; j<p.getWidth();j++){
+				assertEquals(aux[i][j], expectedTaulerVista5[i][j]);
 			}
 		}
 	}
@@ -755,4 +874,11 @@ public class PartidaTest {
 		fail("Not yet implemented");
 	}
 
+	@Test
+	public void testCountBombes() {
+		Partida p = new Partida();
+		int res = p.getBombesTotals();
+		assertEquals(res, 20);
+	}
+	
 }
