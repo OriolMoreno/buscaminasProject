@@ -2,8 +2,8 @@ package BuscaminasProject;
 
 public class Tauler {//MODEL
 
-	public int tauler[][];
-	public int adjMatrix[][];
+	private int tauler[][];
+	private int adjMatrix[][];
 	
 	Tauler(){
 		this.tauler = this.mockGeneratetauler();
@@ -23,6 +23,14 @@ public class Tauler {//MODEL
 			return tauler[y][x];	
 		}catch (IndexOutOfBoundsException e) {
 			return -1;
+		}
+	}
+	
+	public int getValorAdjMatrix(int x, int y) {
+		try {
+			return adjMatrix[x][y];	
+		}catch (IndexOutOfBoundsException e) {
+			return -11;
 		}
 	}
 	
@@ -66,7 +74,7 @@ public class Tauler {//MODEL
 				{2,  2,  3,  2,  4, -1,  2,  0},
 				{1, -1,  2, -1, -1, -1,  2,  0}
 		};
-		adjMatrix=adj;
+		adjMatrix=(adj);
 	}
 	
 	
@@ -144,6 +152,6 @@ public class Tauler {//MODEL
 		}
 		return total;
 	}
-	
+
 	
 }
