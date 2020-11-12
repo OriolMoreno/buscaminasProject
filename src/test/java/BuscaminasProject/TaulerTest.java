@@ -12,7 +12,7 @@ public class TaulerTest {
 	}
 
 	@Test
-	public void testGetWidth() {
+	public void testgetWidth() {
 		Tauler t = new Tauler();
 		int res = t.getWidth();
 		assertEquals(res, 8);
@@ -38,6 +38,25 @@ public class TaulerTest {
 		assertEquals(res_3, 1);
 		int res_4 = t.getCasella(6, 8);
 		assertEquals(res_4, 0);
+	}
+	
+	
+	
+	@Test
+	public void testGetValorAdjMatrix(){
+		Tauler t = new Tauler();
+		int res = t.getValorAdjMatrix(0, 0);
+		assertEquals(res, 1);
+		int res_1 = t.getValorAdjMatrix(1, 0);
+		assertEquals(res_1, 1);
+		int res_2 = t.getValorAdjMatrix(8, 8);
+		assertEquals(res_2, -11);
+		int res_3 = t.getValorAdjMatrix(3, 3);
+		assertEquals(res_3, -1);
+		int res_4 = t.getValorAdjMatrix(8, 6);
+		assertEquals(res_4, 2);
+		
+
 	}
 	
 	@Test
