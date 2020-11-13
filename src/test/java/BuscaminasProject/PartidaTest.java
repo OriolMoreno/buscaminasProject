@@ -153,25 +153,22 @@ public class PartidaTest {
 		
 		
 		//TEST CASE RANDOM MOVMENTS AND CORRECT MATRIX DEVELOPING
+		Partida p=new Partida();
 		MockInput io = new MockInput(".\\src\\test\\resources\\partida_1.txt");
 		String s = io.readNextMoviment();
-		assertEquals(s, "A1");
+		assertEquals(p.processaMoviment(s), 1);
 		s = io.readNextMoviment();
-		assertEquals(s, "A3");
+		assertEquals(p.processaMoviment(s), 1);
 		s = io.readNextMoviment();
-		assertEquals(s, "I8");
+		assertEquals(p.processaMoviment(s), 1);
 		s = io.readNextMoviment();
-		assertEquals(s, "H8");
+		assertEquals(p.processaMoviment(s), 1);
 		s = io.readNextMoviment();
-		assertEquals(s, "I7");
+		assertEquals(p.processaMoviment(s), 1);
 		s = io.readNextMoviment();
-		assertEquals(s, "I6");
-		s = io.readNextMoviment();
-		assertEquals(s, null);
+		assertEquals(p.processaMoviment(s), -1);
 		
-		Partida p = new Partida();
 		
-		assertEquals(p.processaMoviment(s),1);
 		
 	}
 	
@@ -964,6 +961,7 @@ public class PartidaTest {
 			}
 		}
 	}
+	
 	//@Test
 	public void testGetTauler() {
 		fail("Not yet implemented");
