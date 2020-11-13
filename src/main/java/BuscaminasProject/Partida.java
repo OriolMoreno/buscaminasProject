@@ -11,8 +11,8 @@ public class Partida {//MODEL
 
 	private Tauler taulerReal;
 	/**
-	 * a taulerVista hi haura a cada casella el numero de bombes adjacents, res si no s'ha 'clickat'
-	 * i algun simbol per marcar si hi ha posat una 'bandera' marcant que hi ha una bomba
+	 * a taulerVista hi haura a cada casella el numero de bombes adjacents, -2 si no s'ha 'clickat'
+	 * i el valor 9 per marcar si hi ha posat una 'bandera' marcant que l'usuari creu que hi ha una bomba
 	 */
 	private int[][] taulerVista;
 	private int bombesTotals;
@@ -29,20 +29,24 @@ public class Partida {//MODEL
 		return taulerVista;
 	}
 	
+	
+	
 	public void setMockVistaTauler(int[][] mockTaulerVista) {
 		taulerVista=mockTaulerVista;
 	}
-	
-	
+
 	
 	
 	public int getWidth() {
 		return taulerVista[0].length;
 	}
 	
+	
+	
 	public int getHeight() {
 		return taulerVista.length;
 	}
+	
 	
 	
 	public int getCasellaTaulerVista(int x, int y) {
@@ -52,8 +56,6 @@ public class Partida {//MODEL
 			return -11;
 		}
 	}
-	
-	
 	
 	
 	
@@ -74,22 +76,41 @@ public class Partida {//MODEL
 
 	}
 	
-
-	
+	 
 	
 	public int processaMoviment(String input) { //return false if bomb is hit
 				
 		//method to sanitize input
 		//change the input of string to int coordinates -------- inputToCoords(String input) 
-		//check if there's a bomb, in the input of parameters in TaulerReal ----- getValueOfTauler(int coordx,int coordy)
+		//check if there's a bomb, in the input of parameters in TaulerReal ----- updateVistaTauler(int coordx,int coordy, int flag)
 		//update TaulerVista with the new info and returns 
 		// check if the game its finish ore win ------- checkGameIsWin()
 		//and return:
 		//if in the input there is a bomb ==> return 0 
 		//if in the input there is no bomb ==> return 1  
 		//if in the input there is no bomb + there are no more bombs in the tauler ==> return 2 
-
-		return 0;
+		
+		int gameState=0;
+		
+		int coords[]=inputToCoords(input);
+		
+		if (coords[0]!=-1 && coords[1]!=-1 && coords[2]!=-1 )
+		{
+			
+			if (!updateVistaTauler(coords[0], coords[1], coords[2]))
+			{
+				if(checkGameIsWin()) {
+					gameState=2;
+				}
+				else{gameState=1;}
+			}
+			else 
+			{
+				gameState=-1;
+			}
+		}
+		
+		return gameState;
 	}
 	/**
 	 * 
