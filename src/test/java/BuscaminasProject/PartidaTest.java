@@ -67,13 +67,112 @@ public class PartidaTest {
 	}
 	
 	
-	
-	
-	//@Test
-	public void testProcessaMoviment() {
-		MockInput io = new MockInput(".\\src\\test\\resources\\partida_1.txt");
+	@Test
+	public void testProcessaMovimentCheckParticionsEquivalents() {
+		//Este testeo esta divido segun los possibles erores que podria tener la función dependiendo d elos outputs
+		
+		//TEST CASE BAD INPUTS
 		Partida p = new Partida();
-		fail("Not yet implemented");
+		String listAuxInput1[]= {"J1","Z1","$1","€1","1A","3D","4B","6F","1A1","A11","11A","AA1","A1A","1AA","A0","A-4","A10","A100","1111111111111111111111111111111111111111111111111111111111111111111","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "$$$$$$$$$$$$$$$$$$$$$$$$"," ",""};
+
+		for (int i = 0; i < listAuxInput1.length; i++) 
+		{
+			assertEquals(p.processaMoviment(listAuxInput1[i]),0);
+		}
+		
+		//TEST CASE GAME CONTINUE
+		assertEquals(p.processaMoviment("A1"),1);
+		assertEquals(p.processaMoviment("A2/"),1);
+		assertEquals(p.processaMoviment("A1/"),1);
+		assertEquals(p.processaMoviment("A7"),1);
+		
+		//TEST CASE GAME LOSE (with cas frontera when just one bomb left)
+		int vistaMockActual[][] = {
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},	
+				{-2,-2,-2,-2,-2,-2,-2,-2},				
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+			};
+		p.setMockVistaTauler(vistaMockActual); 
+		assertEquals(p.processaMoviment("A2"),-1);
+		
+		int vistaMockActual2[][] = {
+				{1,  9,  2,  2,  1,  1,  0,  0},
+				{1,  2, -1,  3, -2,  2,  1,  1},
+				{1,  2,  4, -1,  3,  3, -2,  3},
+				{1,  9,  3, -1,  3,  3, -2, -1},
+				{1,  2,  3,  3,  3, -2,  5, -1},
+				{1,  2,  9,  2,  9,  3, -2,  2},
+				{1,  9,  2,  2,  2,  3,  2,  1},
+				{2,  2,  3,  2,  4,  9,  2,  0},
+				{1,  9,  2,  9,  9,  9,  2,  0}
+		};
+		
+		p.setMockVistaTauler(vistaMockActual2 );
+		assertEquals(p.processaMoviment("F7"),-1);
+		
+		int vistaMockActual3[][] = {
+				{1,  9,  2,  2,  1,  1,  0,  0},
+				{1,  2,  9,  3,  9,  2,  1,  1},
+				{1,  2,  4,  9,  3,  3, -2,  3},
+				{1,  9,  3,  9,  3,  3,  9,  9},
+				{1,  2,  3,  3,  3,  9,  5,  9},
+				{1,  2,  9,  2,  9,  3,  9,  2},
+				{1,  9,  2,  2,  2,  3,  2,  1},
+				{2,  2,  3,  2,  4,  9,  2,  0},
+				{1,  9,  2,  9,  9,  9,  2,  0}
+		};
+		p.setMockVistaTauler(vistaMockActual3 );
+		assertEquals(p.processaMoviment("C7"),-1);
+		
+		
+		//TEST CASE LAST CASELLA CHECK TO WIN
+		 int vistaMockActual4[][] = {
+				{1,  9,  2,  2,  1,  1,  0,  0},
+				{1,  2,  9,  3,  9,  2,  1,  1},
+				{1,  2,  4,  9,  3,  3, -2,  3},
+				{1,  9,  3,  9,  3,  3,  9,  9},
+				{1,  2,  3,  3,  3,  9,  5,  9},
+				{1,  2,  9,  2,  9,  3,  9,  2},
+				{1,  9,  2,  2,  2,  3,  2,  1},
+				{2,  2,  3,  2,  4,  9,  2,  0},
+				{1,  9,  2,  9,  9,  9,  2,  0}
+		};		
+		p.setMockVistaTauler(vistaMockActual4 );
+		assertEquals(p.processaMoviment("C7/"),2);
+		
+	}
+	
+	@Test
+	public void testProcessaMovimentRandomMovments() {
+		
+		
+		//TEST CASE RANDOM MOVMENTS AND CORRECT MATRIX DEVELOPING
+		MockInput io = new MockInput(".\\src\\test\\resources\\partida_1.txt");
+		String s = io.readNextMoviment();
+		assertEquals(s, "A1");
+		s = io.readNextMoviment();
+		assertEquals(s, "A3");
+		s = io.readNextMoviment();
+		assertEquals(s, "I8");
+		s = io.readNextMoviment();
+		assertEquals(s, "H8");
+		s = io.readNextMoviment();
+		assertEquals(s, "I7");
+		s = io.readNextMoviment();
+		assertEquals(s, "I6");
+		s = io.readNextMoviment();
+		assertEquals(s, null);
+		
+		Partida p = new Partida();
+		
+		assertEquals(p.processaMoviment(s),1);
+		
 	}
 	
 		
@@ -104,7 +203,7 @@ public class PartidaTest {
 		assertEquals(aux[0], 5);
 		assertEquals(aux[1], 5);
 		assertEquals(aux[2], 0);
-		
+
 		
 		//PARTICIÓ EQUIVALENT RESULTATS CORRECTES MINÚSUCLAS
 		String listAuxInput1[]= {"a1","d3","b4","f6","i8"};
@@ -596,72 +695,73 @@ public class PartidaTest {
 		
 		//TEST CASE MOLTS ZEROS AL VOLTANT SELECCIONANT UNA CASELLA A ZERO
 		int taulerMockAux[][]= {
-				{0, 1, 0, 0, 0, 0, 0, 0},
-				{0, 0, 1, 0, 1, 0, 0, 0},
-				{0, 0, 0, 1, 0, 0, 1, 0},
-				{0, 1, 0, 1, 0, 0, 1, 1},
-				{0, 0, 0, 0, 0, 1, 0, 1},
-				{0, 0, 1, 0, 1, 0, 1, 0},
-				{0, 1, 0, 0, 0, 0, 0, 0},
-				{0, 0, 0, 0, 0, 1, 0, 0},
-				{0, 1, 0, 1, 1, 1, 0, 0}
+				{0, 0, 0, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 0, 0, 0, 0},
 		};
 		int adjMatrixMockAux[][]={
-			{1, -1,  2,  2,  1,  1,  0,  0},
-			{1,  2, -1,  3, -1,  2,  1,  1},
-			{1,  2,  4, -1,  3,  3, -1,  3},
-			{1, -1,  3, -1,  3,  3, -1, -1},
-			{1,  2,  3,  3,  3, -1,  5, -1},
-			{1,  2, -1,  2, -1,  3, -1,  2},
-			{1, -1,  2,  2,  2,  3,  2,  1},
-			{2,  2,  3,  2,  4, -1,  2,  0},
-			{1, -1,  2, -1, -1, -1,  2,  0}
+				{0, 0, 0, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 0, 0, 0, 0},
+		};
+		Tauler mockTauler= new Tauler();
+		
+		mockTauler.setMockTauler(taulerMockAux,adjMatrixMockAux);
+		
+		p.setMockTaulerPartida(mockTauler);
+		
+		
+		int vistaInicial6[][] = {
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},	
+				{-2,-2,-2,-2,-2,-2,-2,-2},				
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+			};
+		p.setMockVistaTauler(vistaInicial6 );
+		
+		int expectedTaulerVista6[][] = {
+				{0, 0, 0, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 0, 0, 0, 0},
 		};
 		
-//		Tauler t = new Tauler();// Tauler t sense mock pero cridatn constructor Mock
-//		
-//		t.setMockTauler(taulerMockAux,adjMatrixMockAux);
-//		
-//		p.setMockTaulerPartida(t);
-//		
-//		int vistaInicial6[][] = {
-//				{-2,-2,-2,-2, 1,-2,-2,-2},
-//				{-2,-2,-2,-2,-2,-2,-2,-2},
-//				{-2,-2,-2,-2,-2,-2,-2,-2},
-//				{-2,-2,-2,-2,-2,-2,-2,-2},	
-//				{-2,-2,-2,-2,-2,-2,-2,-2},				
-//				{-2,-2,-2,-2,-2,-2,-2,-2},
-//				{-2,-2,-2,-2,-2,-2,-2,-2},
-//				{-2,-2,-2,-2,-2,-2, 2, 0},
-//				{-2,-2,-2,-2,-2,-2,-2, 0},
-//			};
-//		p.setMockVistaTauler(vistaInicial6 );
-//		
-//		int expectedTaulerVista6[][] = {
-//				{-2,-2,-2,-2, 1, 1, 0, 0},
-//				{-2,-2,-2,-2,-2, 2, 1, 1},
-//				{-2,-2,-2,-2,-2,-2,-2,-2},
-//				{-2,-2,-2,-2,-2,-2,-2,-2},	
-//				{-2,-2,-2,-2,-2,-2,-2,-2},				
-//				{-2,-2,-2,-2,-2,-2,-2,-2},
-//				{-2,-2,-2,-2,-2,-2,-2,-2},
-//				{-2,-2,-2,-2,-2,-2, 2, 0},
-//				{-2,-2,-2,-2,-2,-2,-2, 0},
-//		};
-//		
-//		
-//		bombaTrobada=p.updateVistaTauler(0, 6, 0);
-//		assertEquals(bombaTrobada, false);
-//		
-//		
-//		aux=p.getVistaTauler();
-//		for (int i=0; i<p.getHeight();i++){
-//			for (int j=0; j<p.getWidth();j++){
-//				assertEquals(aux[i][j], expectedTaulerVista6[i][j]);
-//			}
-//		}
-//	
-//	
+		
+		
+		bombaTrobada=p.updateVistaTauler(5, 5, 0);
+		assertEquals(bombaTrobada, false);
+		
+		
+		aux=p.getVistaTauler();
+		for (int i=0; i<p.getHeight();i++){
+			for (int j=0; j<p.getWidth();j++){
+				assertEquals(aux[i][j], expectedTaulerVista6[i][j]);
+			}
+		}
+	
+	
 	
 	}
 	
@@ -869,10 +969,7 @@ public class PartidaTest {
 		fail("Not yet implemented");
 	}
 	
-	//@Test
-	public void testGetPuntuacio() {
-		fail("Not yet implemented");
-	}
+
 
 	@Test
 	public void testCountBombes() {
