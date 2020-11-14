@@ -1,6 +1,7 @@
 package BuscaminasProject;
 
-import java.util.Random; 
+
+import java.util.Random;
 
 public class Tauler {//MODEL
 
@@ -8,7 +9,7 @@ public class Tauler {//MODEL
 	private int adjMatrix[][];
 	
 	Tauler(){
-		generateTauler();
+		this.generateTauler();
 		this.mockGenerateAdjMatrix();
 	}
 	
@@ -24,7 +25,7 @@ public class Tauler {//MODEL
 		try {
 			return tauler[y][x];	
 		}catch (IndexOutOfBoundsException e) {
-			return -1;
+			return -11;
 		}
 	}
 	
@@ -38,22 +39,31 @@ public class Tauler {//MODEL
 	
 	public void generateTauler(){
 		//TODO
-		this.tauler = new int[9][8];
+		int filas_size=9;
+		int columns_size=8;
+
+		this.tauler = new int[filas_size][columns_size];
 		
-		for (int i=0; i<getHeight();i++){
-			for (int j=0; j<getWidth();j++){
+		for (int i=0; i<filas_size;i++){
+			for (int j=0; j<columns_size;j++){
 				this.tauler[i][j]=0;
 			}
 		}
 		
 		int n_bombes=15;
 		int x, y;
+
+		Random rand1 = new Random(); 
+		Random rand2 = new Random(); 
+
+		
 		while(n_bombes!=0)
 		{
-			x=(int)Math.random() * ( getHeight() - 0 );
-			y=(int)Math.random() * ( getWidth() - 0 );
 			
-			if (this.tauler[x][y]!=-1){
+			 x = rand1.nextInt(filas_size); 
+			 y=rand2.nextInt(columns_size);
+			 
+		    if (this.tauler[x][y]!=-1){
 				this.tauler[x][y]=-1;
 				n_bombes=n_bombes-1;
 			}
