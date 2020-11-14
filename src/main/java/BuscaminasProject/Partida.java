@@ -1,4 +1,4 @@
-package Random;
+package BuscaminasProject;
 
 import java.lang.String;
 import java.util.regex.Matcher;
