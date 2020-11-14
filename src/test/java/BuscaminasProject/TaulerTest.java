@@ -1,4 +1,5 @@
-package BuscaminasProject;
+package Random;
+
 
 import static org.junit.Assert.*;
 
@@ -7,12 +8,26 @@ import org.junit.Test;
 
 public class TaulerTest {
 
-	@Before
-	public void setUp() throws Exception {
-	}
-
 	@Test
-	public void testgetWidth() {
+	public void testMockGeneratetauler() {
+		Tauler t = new Tauler();
+
+		t.mockGeneratetauler();
+		
+		int n_bombes=0;
+		for (int i=0; i<t.getHeight();i++){
+			for (int j=0; j<t.getWidth();j++){
+				
+				if( t.getCasella(i, j)==-1){
+					n_bombes++;
+				}
+			}
+		}
+		assertEquals(n_bombes,15);
+	}
+	
+	@Test
+	public void testGetWidth() {
 		Tauler t = new Tauler();
 		int res = t.getWidth();
 		assertEquals(res, 8);
