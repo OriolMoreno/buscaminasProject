@@ -1,4 +1,4 @@
-package Random;
+package BuscaminasProject;
 
 
 import static org.junit.Assert.*;
