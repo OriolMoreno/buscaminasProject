@@ -1,4 +1,4 @@
-package BuscaminasProject;
+package Random;
 
 import java.lang.String;
 import java.util.regex.Matcher;
@@ -16,10 +16,13 @@ public class Partida {//MODEL
 	 */
 	private int[][] taulerVista;
 	private int bombesTotals;
+	private int flagsUsades;
+
 	
 	public Partida(){
 		taulerReal = new Tauler();
 		bombesTotals = taulerReal.countBombes();
+		flagsUsades=0;
 		generateVista();
 	}
 	
@@ -85,10 +88,16 @@ public class Partida {//MODEL
 		//check if there's a bomb, in the input of parameters in TaulerReal ----- updateVistaTauler(int coordx,int coordy, int flag)
 		//update TaulerVista with the new info and returns 
 		// check if the game its finish ore win ------- checkGameIsWin()
+		
 		//and return:
-		//if in the input there is a bomb ==> return 0 
-		//if in the input there is no bomb ==> return 1  
+		
+		//if normal functioning ==> return 1  
 		//if in the input there is no bomb + there are no more bombs in the tauler ==> return 2 
+		//if trying to put more flags that game permits => return -2 
+		//if bad input typing or out of límits  ==> return 0  
+		//if is the end of the game ==> return -1 
+		
+		
 		
 		int gameState=0;
 		
@@ -96,29 +105,30 @@ public class Partida {//MODEL
 		
 		if (coords[0]!=-1 && coords[1]!=-1 && coords[2]!=-1 )
 		{
-			
-			if (!updateVistaTauler(coords[0], coords[1], coords[2]))
+			int aux=updateVistaTauler(coords[0], coords[1], coords[2]);
+			if (aux!=-2)
 			{
-				if(checkGameIsWin()) {
-					gameState=2;
+				if (aux!=-1)
+				{
+					if(checkGameIsWin()) {
+						gameState=2;
+					}
+					else{gameState=1;}
 				}
-				else{gameState=1;}
+				else 
+				{
+					gameState=-1;
+				}
 			}
 			else 
 			{
-				gameState=-1;
+				gameState=-2;
 			}
 		}
 		
 		return gameState;
 	}
-	/**
-	 * 
-	 * @param input
-	 * @return an int array of length 3, first element is x coordinate,
-	 * 		   second element is y coordinate and third is input is to 
-	 * 		   flag(1) or not(0)
-	 */
+	
 	public int[] inputToCoords(String input) 
 	{
 		
@@ -174,7 +184,7 @@ public class Partida {//MODEL
 			int j = 0;
 			while (j < taulerVista[0].length && gameIsWin)
 			{
-				if ( taulerVista[i][j]==-2 || taulerVista[i][j]==9 && taulerReal.getCasella(j,i)!=1 )
+				if (  taulerVista[i][j]==9 && taulerReal.getCasella(j,i)!=1|| taulerVista[i][j]==-2  )
 				{
 					gameIsWin= false;
 				}
@@ -186,7 +196,7 @@ public class Partida {//MODEL
 		return gameIsWin;
 	}
 	
-	public boolean updateVistaTauler(int coordx,int coordy, int flag)
+	public int updateVistaTauler(int coordx,int coordy, int flag)
 	{
 		//Method that updates the taulr that sees the user
 		
@@ -196,9 +206,9 @@ public class Partida {//MODEL
 		
 		//2nd: show all the coords recursivly that have no bombs surround == that are zeros;  finishing when there is a number
 		
-		boolean partidaAcabada=false;
+		int estatPartida=0;
 		
-		if( taulerVista[coordx][coordy]==-2)
+		if( taulerVista[coordx][coordy]==9||taulerVista[coordx][coordy]==-2  )
 		{
 			
 			if (flag==0)
@@ -336,21 +346,36 @@ public class Partida {//MODEL
 					if (taulerReal.getValorAdjMatrix(coordx,coordy)==-1)
 					{
 						//cas bomba trobada (-1)
-						partidaAcabada= true;
+						estatPartida= -1;
 					}
 				}
 			}
 			else 
 			{
-				taulerVista[coordx][coordy]=9;
+				if (taulerVista[coordx][coordy]!=9)
+				{
+					if(flagsUsades<bombesTotals) 
+					{
+					
+						taulerVista[coordx][coordy]=9;
+					}
+					else 
+					{
+						estatPartida= -2;
+
+					}
+					
+				}
+				else
+				{
+					
+					taulerVista[coordx][coordy]=-2;
+				}
 			}
 		}
 		
-		return partidaAcabada;
+		return estatPartida;
 	}
-	
-	
-	
 	
 	public int getBombesTotals() {
 		return taulerReal.countBombes();
