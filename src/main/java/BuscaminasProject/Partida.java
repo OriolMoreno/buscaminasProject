@@ -174,7 +174,7 @@ public class Partida {//MODEL
 			int j = 0;
 			while (j < taulerVista[0].length && gameIsWin)
 			{
-				if ( taulerVista[i][j]==-2 && taulerReal.getCasella(j,i)==1)
+				if ( taulerVista[i][j]==-2 || taulerVista[i][j]==9 && taulerReal.getCasella(j,i)!=1 )
 				{
 					gameIsWin= false;
 				}
