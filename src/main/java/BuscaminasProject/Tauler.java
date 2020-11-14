@@ -1,12 +1,14 @@
 package BuscaminasProject;
 
+import java.util.Random; 
+
 public class Tauler {//MODEL
 
 	private int tauler[][];
 	private int adjMatrix[][];
 	
 	Tauler(){
-		this.tauler = this.mockGeneratetauler();
+		generateTauler();
 		this.mockGenerateAdjMatrix();
 	}
 	
@@ -34,12 +36,30 @@ public class Tauler {//MODEL
 		}
 	}
 	
-	public int[][] generateTauler(){
+	public void generateTauler(){
 		//TODO
-		int t[][] = {
-				{}
-		};
-		return t;
+		this.tauler = new int[9][8];
+		
+		for (int i=0; i<getHeight();i++){
+			for (int j=0; j<getWidth();j++){
+				this.tauler[i][j]=0;
+			}
+		}
+		
+		int n_bombes=15;
+		int x, y;
+		while(n_bombes!=0)
+		{
+			x=(int)Math.random() * ( getHeight() - 0 );
+			y=(int)Math.random() * ( getWidth() - 0 );
+			
+			if (this.tauler[x][y]!=-1){
+				this.tauler[x][y]=-1;
+				n_bombes=n_bombes-1;
+			}
+			
+		}
+		
 	}
 	
 	public int[][] mockGeneratetauler(){
@@ -153,9 +173,9 @@ public class Tauler {//MODEL
 		return total;
 	}
 	
-	public void setMockTauler(int[][]mockTaulerEspecific, int[][] adjMatrixEspecífic) {
+	public void setMockTauler(int[][]mockTaulerEspecific, int[][] adjMatrixEspecÃ­fic) {
         tauler=mockTaulerEspecific;
-        adjMatrix=adjMatrixEspecífic;
+        adjMatrix=adjMatrixEspecÃ­fic;
    }
 
 	
