@@ -1,6 +1,6 @@
 package BuscaminasProject;
 
-public class MockTauler implements Tauler {
+public class MockTauler extends Tauler {
 	
 	
 	private int tauler[][]= {

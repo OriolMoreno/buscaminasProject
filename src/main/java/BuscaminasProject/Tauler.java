@@ -152,6 +152,11 @@ public class Tauler {//MODEL
 		}
 		return total;
 	}
+	
+	public void setMockTauler(int[][]mockTaulerEspecific, int[][] adjMatrixEspecífic) {
+        tauler=mockTaulerEspecific;
+        adjMatrix=adjMatrixEspecífic;
+   }
 
 	
 }
