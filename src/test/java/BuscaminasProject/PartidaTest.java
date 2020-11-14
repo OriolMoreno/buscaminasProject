@@ -1,22 +1,12 @@
-package BuscaminasProject;
+package Random;
+
 
 import static org.junit.Assert.*;
 
-import org.junit.Before;
 import org.junit.Test;
 
 public class PartidaTest {
 
-	//@Before
-	public void setUp() throws Exception {
-	}
-
-	//@Test
-	public void testPartida() { 
-		fail("Not yet implemented");
-	}
-	
-	
 	@Test
 	public void testGenerateVista() { 
 		Partida p = new Partida();
@@ -30,8 +20,6 @@ public class PartidaTest {
 				assertEquals(aux[i][j], -2);
 			}
 		}
-
-
 	}
 	
 	@Test
@@ -148,7 +136,7 @@ public class PartidaTest {
 		
 	}
 	
-	@Test
+	//@Test
 	public void testProcessaMovimentRandomMovments() {
 		
 		
@@ -494,7 +482,7 @@ public class PartidaTest {
 	@Test
 	public void  testUpdateVistaTaulerWithOutFlag() { 
 		Partida p = new Partida();
-		boolean bombaTrobada=false;
+		int returnUpdate=0;
 		//PARTICIÓ EQUIVALENT DE CASOS SENSE FLAG
 		//TEST CASE CASELLA JA DESTAPADA SENSE FLAG
 		int vistaInicial[][] = {
@@ -523,8 +511,8 @@ public class PartidaTest {
 		};
 		
 		
-		bombaTrobada=p.updateVistaTauler(0, 6, 0);
-		assertEquals(bombaTrobada, false);
+		returnUpdate=p.updateVistaTauler(0, 6, 0);
+		assertEquals(returnUpdate, 0);
 		
 		int[][]aux=p.getVistaTauler();
 		
@@ -563,8 +551,8 @@ public class PartidaTest {
 		};
 		
 		
-		bombaTrobada=p.updateVistaTauler(0, 1, 0);
-		assertEquals(bombaTrobada, true);
+		returnUpdate=p.updateVistaTauler(0, 1, 0);
+		assertEquals(returnUpdate, -1);
 		
 		aux=p.getVistaTauler();
 		for (int i=0; i<p.getHeight();i++){
@@ -600,8 +588,8 @@ public class PartidaTest {
 				{-2,-2,-2,-2,-2,-2,-2,-2},
 		};
 		
-		bombaTrobada=p.updateVistaTauler(7, 6, 0);
-		assertEquals(bombaTrobada, false);
+		returnUpdate=p.updateVistaTauler(7, 6, 0);
+		assertEquals(returnUpdate, 0);
 		
 		aux=p.getVistaTauler();
 		for (int i=0; i<p.getHeight();i++){
@@ -638,8 +626,8 @@ public class PartidaTest {
 		};
 		
 		
-		bombaTrobada=p.updateVistaTauler(0, 5, 0);
-		assertEquals(bombaTrobada, false);
+		returnUpdate=p.updateVistaTauler(0, 5, 0);
+		assertEquals(returnUpdate, 0);
 		
 		
 		aux=p.getVistaTauler();
@@ -677,8 +665,8 @@ public class PartidaTest {
 		};
 		
 		
-		bombaTrobada=p.updateVistaTauler(0, 6, 0);
-		assertEquals(bombaTrobada, false);
+		returnUpdate=p.updateVistaTauler(0, 6, 0);
+		assertEquals(returnUpdate, 0);
 		
 		
 		aux=p.getVistaTauler();
@@ -747,8 +735,8 @@ public class PartidaTest {
 		
 		
 		
-		bombaTrobada=p.updateVistaTauler(5, 5, 0);
-		assertEquals(bombaTrobada, false);
+		returnUpdate=p.updateVistaTauler(5, 5, 0);
+		assertEquals(returnUpdate, 0);
 		
 		
 		aux=p.getVistaTauler();
@@ -765,9 +753,9 @@ public class PartidaTest {
 	@Test
 	public void  testUpdateVistaTaulerWithFlag() { 
 		Partida p = new Partida();
-		boolean bombaTrobada=false;
-		//PARTICIÓ EQUIVALENT DE CASOS SENSE FLAG
-		//TEST CASE CASELLA JA DESTAPADA SENSE FLAG
+		int returnUpdate=0;
+		//PARTICIÓ EQUIVALENT DE CASOS AMB FLAG
+		//TEST CASE CASELLA JA DESTAPADA AMB FLAG
 		int vistaInicial[][] = {
 				{-2,-2,-2,-2, 1, 1, 0, 0},
 				{-2,-2,-2,-2,-2,-2,-2,-2},
@@ -794,8 +782,8 @@ public class PartidaTest {
 		};
 		
 		
-		bombaTrobada=p.updateVistaTauler(0, 6, 1);
-		assertEquals(bombaTrobada, false);
+		returnUpdate=p.updateVistaTauler(0, 6, 1);
+		assertEquals(returnUpdate, 0);
 		
 		//assertEquals(assertEquals);
 		
@@ -835,8 +823,8 @@ public class PartidaTest {
 		};
 		
 		
-		bombaTrobada=p.updateVistaTauler(0, 1, 1);
-		assertEquals(bombaTrobada, false);
+		returnUpdate=p.updateVistaTauler(0, 1, 1);
+		assertEquals(returnUpdate, 0);
 		
 		
 		aux=p.getVistaTauler();
@@ -873,8 +861,8 @@ public class PartidaTest {
 				{-2,-2,-2,-2,-2,-2,-2,-2},
 		};
 		
-		bombaTrobada=p.updateVistaTauler(7, 6, 1);
-		assertEquals(bombaTrobada, false);
+		returnUpdate=p.updateVistaTauler(7, 6, 1);
+		assertEquals(returnUpdate, 0);
 		
 		
 		aux=p.getVistaTauler();
@@ -912,8 +900,8 @@ public class PartidaTest {
 		};
 		
 		
-		bombaTrobada=p.updateVistaTauler(0, 5, 1);
-		assertEquals(bombaTrobada, false);
+		returnUpdate=p.updateVistaTauler(0, 5, 1);
+		assertEquals(returnUpdate, 0);
 		
 		
 		aux=p.getVistaTauler();
@@ -936,6 +924,7 @@ public class PartidaTest {
 				{-2,-2,-2,-2,-2,-2, 2, 0},
 				{-2,-2,-2,-2,-2,-2,-2, 0},
 			};
+		
 		p.setMockVistaTauler(vistaInicial5 );
 		
 		int expectedTaulerVista5[][] = {
@@ -951,8 +940,8 @@ public class PartidaTest {
 		};
 		
 		
-		bombaTrobada=p.updateVistaTauler(0, 6, 1);
-		assertEquals(bombaTrobada, false);
+		returnUpdate=p.updateVistaTauler(0, 6, 1);
+		assertEquals(returnUpdate, 0);
 		
 		aux=p.getVistaTauler();
 		for (int i=0; i<p.getHeight();i++){
@@ -961,6 +950,165 @@ public class PartidaTest {
 			}
 		}
 	}
+	
+	public void testUpdateVistaTaulerFlagsTest() {
+		Partida p = new Partida();
+		int returnUpdate=0;
+		
+		//POSAR UN FLAG QUAN HI HAN 0 COLOCATS
+		int vistaInicial[][] = {
+				{-2,-2,-2,-2, 1,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},	
+				{-2,-2,-2,-2,-2,-2,-2,-2},				
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2, 2, 0},
+				{-2,-2,-2,-2,-2,-2,-2, 0},
+			};
+		p.setMockVistaTauler(vistaInicial );
+		
+		int expectedTaulerVista[][] = {
+				{-2,-2,-2,-2, 1,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},	
+				{-2,-2,-2,-2,-2,-2,-2,-2},				
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2, 2, 0},
+				{-2,-2,-2,-2,-2,-2,-2, 0},
+		};
+		returnUpdate=p.updateVistaTauler(0, 1, 1);
+		assertEquals(returnUpdate, 0);
+		
+		
+		int aux[][]=p.getVistaTauler();
+		for (int i=0; i<p.getHeight();i++){
+			for (int j=0; j<p.getWidth();j++){
+				assertEquals(aux[i][j], expectedTaulerVista[i][j]);
+			}
+		}
+	
+		
+		//POSAR L'ÚLTIM FLAG POSSIBLE
+		int vistaInicial2[][] = {
+				{-2, 9, 9, 9, 9, 9, 9, 9},
+				{ 9, 9, 9, 9, 9, 9, 9, 9},
+				{ 9, 9, 9, 9,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},	
+				{-2,-2,-2,-2,-2,-2,-2,-2},				
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2, 2, 0},
+				{-2,-2,-2,-2,-2,-2,-2, 0},
+			};
+
+		p.setMockVistaTauler(vistaInicial2 );
+		
+		int expectedTaulerVista2[][] = {
+				{9, 9, 9, 9, 9, 9, 9, 9},
+				{ 9, 9, 9, 9, 9, 9, 9, 9},
+				{ 9, 9, 9, 9,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},	
+				{-2,-2,-2,-2,-2,-2,-2,-2},				
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2, 2, 0},
+				{-2,-2,-2,-2,-2,-2,-2, 0},
+		};
+		returnUpdate=p.updateVistaTauler(0, 1, 1);
+		assertEquals(returnUpdate, 0);
+		
+		
+		aux=p.getVistaTauler();
+		for (int i=0; i<p.getHeight();i++){
+			for (int j=0; j<p.getWidth();j++){
+				assertEquals(aux[i][j], expectedTaulerVista2[i][j]);
+			}
+		}
+		
+		
+		//TREURE FLAG QUAN HI HAN ELS MÀXMIS FLAGS COLOCATS
+		int vistaInicial3[][] = {
+				{ 9, 9, 9, 9, 9, 9, 9, 9},
+				{ 9, 9, 9, 9, 9, 9, 9, 9},
+				{ 9, 9, 9, 9,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},	
+				{-2,-2,-2,-2,-2,-2,-2,-2},				
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2, 2, 0},
+				{-2,-2,-2,-2,-2,-2,-2, 0},
+			};
+
+		p.setMockVistaTauler(vistaInicial3 );
+		
+		int expectedTaulerVista3[][] = {
+				{-2, 9, 9, 9, 9, 9, 9, 9},
+				{ 9, 9, 9, 9, 9, 9, 9, 9},
+				{ 9, 9, 9, 9,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},	
+				{-2,-2,-2,-2,-2,-2,-2,-2},				
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2, 2, 0},
+				{-2,-2,-2,-2,-2,-2,-2, 0},
+		};
+		
+		returnUpdate=p.updateVistaTauler(0, 0, 1);
+		assertEquals(returnUpdate, 0);
+		
+		
+		aux=p.getVistaTauler();
+		for (int i=0; i<p.getHeight();i++){
+			for (int j=0; j<p.getWidth();j++){
+				assertEquals(aux[i][j], expectedTaulerVista3[i][j]);
+			}
+		}
+		
+		//INTENTAR SPERAR FLAGS MÀXIMS
+		int vistaInicial4[][] = {
+				{ 9, 9, 9, 9, 9, 9, 9, 9},
+				{ 9, 9, 9, 9, 9, 9, 9, 9},
+				{ 9, 9, 9, 9,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},	
+				{-2,-2,-2,-2,-2,-2,-2,-2},				
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2, 2, 0},
+				{-2,-2,-2,-2,-2,-2,-2, 0},
+			};
+
+		p.setMockVistaTauler(vistaInicial4 );
+		
+		int expectedTaulerVista4[][] = {
+				{ 9, 9, 9, 9, 9, 9, 9, 9},
+				{ 9, 9, 9, 9, 9, 9, 9, 9},
+				{ 9, 9, 9, 9,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},	
+				{-2,-2,-2,-2,-2,-2,-2,-2},				
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2, 2, 0},
+				{-2,-2,-2,-2,-2,-2,-2, 0},
+		};
+		
+		returnUpdate=p.updateVistaTauler(5,5, 1);
+		assertEquals(returnUpdate, -2);
+		
+		
+		aux=p.getVistaTauler();
+		for (int i=0; i<p.getHeight();i++){
+			for (int j=0; j<p.getWidth();j++){
+				assertEquals(aux[i][j], expectedTaulerVista4[i][j]);
+			}
+		}
+		
+		
+	}
+	
 	
 	//@Test
 	public void testGetTauler() {
