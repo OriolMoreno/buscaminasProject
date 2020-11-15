@@ -7,25 +7,20 @@ import java.util.LinkedList;
 import java.util.Queue; 
 
 
-public class Partida {//MODEL
+public class MockPartida {//MODEL
 
-	private Tauler taulerReal;
-	/**
-	 * a taulerVista hi haura a cada casella el numero de bombes adjacents, -2 si no s'ha 'clickat'
-	 * i el valor 9 per marcar si hi ha posat una 'bandera' marcant que l'usuari creu que hi ha una bomba
-	 */
+	private MockTauler taulerReal;
 	private int[][] taulerVista;
 	private int bombesTotals;
 	private int flagsUsades;
 
 	
-	public Partida(){
-		taulerReal = new Tauler();
+	public MockPartida(){
+		taulerReal = new MockTauler();
 		bombesTotals = taulerReal.countBombes();
 		flagsUsades=0;
 		generateVista();
 	}
-	
 	
 	
 	public int[][] getVistaTauler() {
@@ -33,16 +28,19 @@ public class Partida {//MODEL
 	}
 	
 	
-	public int getWidth() {
-		return taulerVista[0].length;
+	public void setMockVistaTauler(int[][] mockTaulerVista) {
+		taulerVista=mockTaulerVista;
 	}
 	
 	
+	public int getWidth() {
+		return taulerVista[0].length;
+	}
+
 	
 	public int getHeight() {
 		return taulerVista.length;
 	}
-	
 	
 	
 	public int getCasellaTaulerVista(int x, int y) {
@@ -52,7 +50,6 @@ public class Partida {//MODEL
 			return -11;
 		}
 	}
-	
 	
 	
 	public void generateVista(){
@@ -72,7 +69,6 @@ public class Partida {//MODEL
 
 	}
 	
-	 
 	
 	public int processaMoviment(String input) { //return false if bomb is hit
 				
@@ -122,6 +118,7 @@ public class Partida {//MODEL
 		return gameState;
 	}
 	
+	
 	public int[] inputToCoords(String input) 
 	{
 		
@@ -155,6 +152,7 @@ public class Partida {//MODEL
 		return coords;
 	}
 	
+	
 	public int getValueOfTauler(int coordx,int coordy)
 	{
 		//Method that gets the value of tauler that the user has input recibed in coordx and coordy
@@ -163,6 +161,7 @@ public class Partida {//MODEL
 
 		return taulerReal.getValorAdjMatrix(coordx,coordy);
 	}
+	
 	
 	public boolean checkGameIsWin()
 	{
@@ -177,7 +176,7 @@ public class Partida {//MODEL
 			int j = 0;
 			while (j < taulerVista[0].length && gameIsWin)
 			{
-				if (  taulerVista[i][j]==9 && taulerReal.getCasella(j,i)!=1|| taulerVista[i][j]==-2  )
+				if ( taulerVista[i][j]==-2 || (taulerVista[i][j]==9 && taulerReal.getCasella(j,i)!=1)  )
 				{
 					gameIsWin= false;
 				}
@@ -188,6 +187,7 @@ public class Partida {//MODEL
 		
 		return gameIsWin;
 	}
+	
 	
 	public int updateVistaTauler(int coordx,int coordy, int flag)
 	{
@@ -370,11 +370,14 @@ public class Partida {//MODEL
 		return estatPartida;
 	}
 	
+	
 	public int getBombesTotals() {
 		return taulerReal.countBombes();
 	}
+
 	
-	
-	
+	public void setMockTaulerPartida(MockTauler mockTauler) {
+		this.taulerReal=mockTauler;
+	}
 	
 }

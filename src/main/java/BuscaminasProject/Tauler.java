@@ -1,6 +1,5 @@
 package BuscaminasProject;
 
-
 import java.util.Random;
 
 public class Tauler {//MODEL
@@ -10,7 +9,7 @@ public class Tauler {//MODEL
 	
 	Tauler(){
 		this.generateTauler();
-		this.mockGenerateAdjMatrix();
+		this.generateAdjMatrix();
 	}
 	
 	public int getWidth() {
@@ -38,7 +37,6 @@ public class Tauler {//MODEL
 	}
 	
 	public void generateTauler(){
-		//TODO
 		int filas_size=9;
 		int columns_size=8;
 
@@ -63,8 +61,8 @@ public class Tauler {//MODEL
 			 x = rand1.nextInt(filas_size); 
 			 y=rand2.nextInt(columns_size);
 			 
-		    if (this.tauler[x][y]!=-1){
-				this.tauler[x][y]=-1;
+		    if (this.tauler[x][y]!=1){
+				this.tauler[x][y]=1;
 				n_bombes=n_bombes-1;
 			}
 			
@@ -72,40 +70,18 @@ public class Tauler {//MODEL
 		
 	}
 	
-	public int[][] mockGeneratetauler(){
-		int t[][] = {
-				{0, 1, 0, 0, 0, 0, 0, 0},
-				{0, 0, 1, 0, 1, 0, 0, 0},
-				{0, 0, 0, 1, 0, 0, 1, 0},
-				{0, 1, 0, 1, 0, 0, 1, 1},
-				{0, 0, 0, 0, 0, 1, 0, 1},
-				{0, 0, 1, 0, 1, 0, 1, 0},
-				{0, 1, 0, 0, 0, 0, 0, 0},
-				{0, 0, 0, 0, 0, 1, 0, 0},
-				{0, 1, 0, 1, 1, 1, 0, 0}
-		};
+	
+	
+	public int[][] generateAdjMatrix(){
+		int t[][] = new int[this.getHeight()][this.getWidth()];
+		for(int y = 0; y < this.getHeight(); y++) {
+			for(int x = 0; x < this.getWidth(); x++) {
+				t[y][x] = this.getNumeroBombesAdjecents(x, y);
+			}
+		}
 		return t;
 	}
 	
-	public void generateAdjMatrix(){
-		//TO DO
-		
-	}
-	
-	public void mockGenerateAdjMatrix(){
-		int adj[][] = {
-				{1, -1,  2,  2,  1,  1,  0,  0},
-				{1,  2, -1,  3, -1,  2,  1,  1},
-				{1,  2,  4, -1,  3,  3, -1,  3},
-				{1, -1,  3, -1,  3,  3, -1, -1},
-				{1,  2,  3,  3,  3, -1,  5, -1},
-				{1,  2, -1,  2, -1,  3, -1,  2},
-				{1, -1,  2,  2,  2,  3,  2,  1},
-				{2,  2,  3,  2,  4, -1,  2,  0},
-				{1, -1,  2, -1, -1, -1,  2,  0}
-		};
-		adjMatrix=(adj);
-	}
 	
 	
 	public int countBombes() {
@@ -183,10 +159,6 @@ public class Tauler {//MODEL
 		return total;
 	}
 	
-	public void setMockTauler(int[][]mockTaulerEspecific, int[][] adjMatrixEspecífic) {
-        tauler=mockTaulerEspecific;
-        adjMatrix=adjMatrixEspecífic;
-   }
-
+	
 	
 }
