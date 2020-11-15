@@ -9,7 +9,7 @@ public class PartidaTest {
 
 	@Test
 	public void testGenerateVista() { 
-		Partida p = new Partida();
+		MockPartida p = new MockPartida();
 		int[][]aux=p.getVistaTauler();
 		assertEquals(p.getWidth(), aux[0].length);
 		assertEquals(p.getHeight(), aux.length);
@@ -22,10 +22,11 @@ public class PartidaTest {
 		}
 	}
 	
+	
 	@Test
 	public void testGetCasellaTaulerVista(){
 
-		Partida p = new Partida();
+		MockPartida p = new MockPartida();
 		
 		int adj[][] = {
 				{1, -1,  2,  2,  1,  1,  0,  0},
@@ -57,11 +58,11 @@ public class PartidaTest {
 	
 	@Test
 	public void testProcessaMovimentCheckParticionsEquivalents() {
-		//Este testeo esta divido segun los possibles erores que podria tener la funciÃ³n dependiendo d elos outputs
+		//Este testeo esta divido segun los possibles erores que podria tener la función dependiendo d elos outputs
 		
 		//TEST CASE BAD INPUTS
-		Partida p = new Partida();
-		String listAuxInput1[]= {"J1","Z1","$1","â‚¬1","1A","3D","4B","6F","1A1","A11","11A","AA1","A1A","1AA","A0","A-4","A10","A100","1111111111111111111111111111111111111111111111111111111111111111111","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "$$$$$$$$$$$$$$$$$$$$$$$$"," ",""};
+		MockPartida p = new MockPartida();
+		String listAuxInput1[]= {"J1","Z1","$1","€1","1A","3D","4B","6F","1A1","A11","11A","AA1","A1A","1AA","A0","A-4","A10","A100","1111111111111111111111111111111111111111111111111111111111111111111","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "$$$$$$$$$$$$$$$$$$$$$$$$"," ",""};
 
 		for (int i = 0; i < listAuxInput1.length; i++) 
 		{
@@ -136,12 +137,11 @@ public class PartidaTest {
 		
 	}
 	
-	//@Test
+	
+	@Test
 	public void testProcessaMovimentRandomMovments() {
-		
-		
 		//TEST CASE RANDOM MOVMENTS AND CORRECT MATRIX DEVELOPING
-		Partida p=new Partida();
+		MockPartida p=new MockPartida();
 		MockInput io = new MockInput(".\\src\\test\\resources\\partida_1.txt");
 		String s = io.readNextMoviment();
 		assertEquals(p.processaMoviment(s), 1);
@@ -163,7 +163,7 @@ public class PartidaTest {
 		
 	@Test
 	public void testInputToCoordsWithoutFlag() { 
-		Partida p = new Partida();
+		MockPartida p = new MockPartida();
 		
 		//CONJUNT DE TESTOS SENSE FLAG
 		//Test de resultats esperats
@@ -190,7 +190,7 @@ public class PartidaTest {
 		assertEquals(aux[2], 0);
 
 		
-		//PARTICIÃ“ EQUIVALENT RESULTATS CORRECTES MINÃšSUCLAS
+		//PARTICIÓ EQUIVALENT RESULTATS CORRECTES MINÚSUCLAS
 		String listAuxInput1[]= {"a1","d3","b4","f6","i8"};
 		int expectedResult[][]= {{0,0},{3,2},{1,3},{5,5},{8,7}};
 
@@ -202,8 +202,8 @@ public class PartidaTest {
 			assertEquals(aux[2], 0);
 		}
 		
-		//PARTICIÃ“ EQUIVALENT ERROR EN COORD ALFABET (amb valors lÃ­mits  i frontera)
-		String listAuxInput2[]= {"J1","Z1","$1","â‚¬1"};
+		//PARTICIÓ EQUIVALENT ERROR EN COORD ALFABET (amb valors límits  i frontera)
+		String listAuxInput2[]= {"J1","Z1","$1","€1"};
 		
 		for (int i = 0; i < listAuxInput2.length; i++) 
 		{
@@ -213,7 +213,7 @@ public class PartidaTest {
 			assertEquals(aux[2], -1);
 		}
 
-		//PARTICIÃ“ EQUIVALENT ERROR EN COORD NUMERICA (amb valors lÃ­mits  i frontera)
+		//PARTICIÓ EQUIVALENT ERROR EN COORD NUMERICA (amb valors límits  i frontera)
 		String listAuxInput3[]= {"A0","A-4","A10","A100"};
 		
 		for (int i = 0; i < listAuxInput3.length; i++) 
@@ -224,7 +224,7 @@ public class PartidaTest {
 			assertEquals(aux[2], -1);
 		}
 
-		//PARTICIÃ“ EQUIVALENT ERRORS PER VALORS MOLT GRANS O MOLT PETITS 	(amb valors lÃ­mits  i frontera)
+		//PARTICIÓ EQUIVALENT ERRORS PER VALORS MOLT GRANS O MOLT PETITS 	(amb valors límits  i frontera)
 		String listAuxInput4[]= {"1111111111111111111111111111111111111111111111111111111111111111111","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "$$$$$$$$$$$$$$$$$$$$$$$$"," ",""};
 		
 		for (int i = 0; i < listAuxInput4.length; i++) 
@@ -235,7 +235,7 @@ public class PartidaTest {
 			assertEquals(aux[2], -1);
 		}
 		
-		//PARTICIÃ“ EQUIVALENT INERCANVI DE COORDS 
+		//PARTICIÓ EQUIVALENT INERCANVI DE COORDS 
 		String listAuxInput5[]= {"1A","3D","4B","6F"};
 		
 		for (int i = 0; i < listAuxInput5.length; i++) 
@@ -265,7 +265,7 @@ public class PartidaTest {
 
 	@Test
 	public void testInputToCoordsWithFlag() { 
-		Partida p = new Partida();
+		MockPartida p = new MockPartida();
 		
 		//CONJUNT DE TESTOS AMB FLAG
 		//Test de resultats correctes
@@ -291,7 +291,7 @@ public class PartidaTest {
 		assertEquals(aux[1], 5);
 		assertEquals(aux[2], 1);
 
-		//PARTICIÃ“ EQUIVALENT RESULTATS CORRECTES MINÃšSUCLAS
+		//PARTICIÓ EQUIVALENT RESULTATS CORRECTES MINÚSUCLAS
 		String listAuxInput1[]= {"a1/","d3/","b4/","f6/"};
 		int expectedResult[][]= {{0,0},{3,2},{1,3},{5,5}};
 
@@ -305,8 +305,8 @@ public class PartidaTest {
 		
 		int errorReturn[]= {-1,-1,-1};
 		
-		//PARTICIÃ“ EQUIVALENT ERROR EN COORD ALFABET (amb valors lÃ­mits  i frontera)
-		String listAuxInput2[]= {"J1/","Z1/","$1/","â‚¬1/"};
+		//PARTICIÓ EQUIVALENT ERROR EN COORD ALFABET (amb valors límits  i frontera)
+		String listAuxInput2[]= {"J1/","Z1/","$1/","€1/"};
 		
 		for (int i = 0; i < listAuxInput2.length; i++) 
 		{
@@ -316,7 +316,7 @@ public class PartidaTest {
 			assertEquals(aux[2], -1);
 		}
 
-		//PARTICIÃ“ EQUIVALENT ERROR EN COORD NUMERICA (amb valors lÃ­mits  i frontera)
+		//PARTICIÓ EQUIVALENT ERROR EN COORD NUMERICA (amb valors límits  i frontera)
 		String listAuxInput3[]= {"A0/","-A4/","A9/","A10/","A100/"};
 		
 		for (int i = 0; i < listAuxInput3.length; i++) 
@@ -327,7 +327,7 @@ public class PartidaTest {
 			assertEquals(aux[2], -1);
 		}
 
-		//PARTICIÃ“ EQUIVALENT ERRORS PER VALORS MOLT GRANS O MOLT PETITS 	(amb valors lÃ­mits  i frontera)
+		//PARTICIÓ EQUIVALENT ERRORS PER VALORS MOLT GRANS O MOLT PETITS 	(amb valors límits  i frontera)
 		String listAuxInput4[]= {"1111111111111111111111111111111111111111111111111111111111111111111/","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/", "$$$$$$$$$$$$$$$$$$$$$$$$/"," /","/"};
 		
 		for (int i = 0; i < listAuxInput4.length; i++) 
@@ -338,7 +338,7 @@ public class PartidaTest {
 			assertEquals(aux[2], -1);
 		}
 		
-		//PARTICIÃ“ EQUIVALENT INERCANVI DE COORDS 
+		//PARTICIÓ EQUIVALENT INERCANVI DE COORDS 
 		String listAuxInput5[]= {"1A/","3D/","4B/","6F/"};
 		
 		for (int i = 0; i < listAuxInput5.length; i++) 
@@ -365,12 +365,12 @@ public class PartidaTest {
 	
 	@Test
 	public void testGetValueOfTauler() { 
-		Partida p = new Partida();
+		MockPartida p = new MockPartida();
 		
-		//La Ãºnica particiÃ³ son els cassos de proba amb valors coorectes ja que en el metode inputToCords ja 
+		//La única partició son els cassos de proba amb valors coorectes ja que en el metode inputToCords ja 
 		// s'ha validat que les coordenades siguin pertanyents al tauler de la partida
 		
-		//Values frontera i possibles values problemÃ tics del mig
+		//Values frontera i possibles values problemàtics del mig
 		assertEquals(p.getValueOfTauler(0, 0), 1);
 		assertEquals(p.getValueOfTauler(8, 7), 0);
 		assertEquals(p.getValueOfTauler(0, 4), 1);
@@ -391,10 +391,9 @@ public class PartidaTest {
 	}
 	
 	
-	
 	@Test
 	public void testCheckGameIsWin() { 
-		Partida p = new Partida();
+		MockPartida p = new MockPartida();
 		
 		//TEST CASE ANY BOMB WITH FLAG
 		int vistaMockActual[][] = {
@@ -475,15 +474,29 @@ public class PartidaTest {
 		p.setMockVistaTauler(vistaMockActual5 );
 		assertEquals(p.checkGameIsWin(),true);
 		
+		int vistaMockActual6[][] = {
+				{9,  9,  2,  2,  1,  1,  0,  0},
+				{1,  2, -1,  3, -2,  2,  1,  1},
+				{1,  2,  4, -1,  3,  3, -2,  3},
+				{1,  9,  3, -1,  3,  3, -2, -1},
+				{1,  2,  3,  3,  3, -2,  5, -1},
+				{1,  2,  9,  2,  9,  3, -2,  2},
+				{1,  9,  2,  2,  2,  3,  2,  1},
+				{2,  2,  3,  2,  4,  9,  2,  0},
+				{1,  9,  2,  9,  9,  9,  2,  0}
+		};
+		
+		p.setMockVistaTauler(vistaMockActual6 );
+		assertEquals(p.checkGameIsWin(),false);
 		
 	}
 	
 	
 	@Test
 	public void  testUpdateVistaTaulerWithOutFlag() { 
-		Partida p = new Partida();
+		MockPartida p = new MockPartida();
 		int returnUpdate=0;
-		//PARTICIÃ“ EQUIVALENT DE CASOS SENSE FLAG
+		//PARTICIÓ EQUIVALENT DE CASOS SENSE FLAG
 		//TEST CASE CASELLA JA DESTAPADA SENSE FLAG
 		int vistaInicial[][] = {
 				{-2,-2,-2,-2, 1, 1, 0, 0},
@@ -701,7 +714,7 @@ public class PartidaTest {
 				{0, 0, 0, 0, 0, 0, 0, 0},
 				{0, 0, 0, 0, 0, 0, 0, 0},
 		};
-		Tauler mockTauler= new Tauler();
+		MockTauler mockTauler= new MockTauler();
 		
 		mockTauler.setMockTauler(taulerMockAux,adjMatrixMockAux);
 		
@@ -750,11 +763,12 @@ public class PartidaTest {
 	
 	}
 	
+	
 	@Test
 	public void  testUpdateVistaTaulerWithFlag() { 
-		Partida p = new Partida();
+		MockPartida p = new MockPartida();
 		int returnUpdate=0;
-		//PARTICIÃ“ EQUIVALENT DE CASOS AMB FLAG
+		//PARTICIÓ EQUIVALENT DE CASOS AMB FLAG
 		//TEST CASE CASELLA JA DESTAPADA AMB FLAG
 		int vistaInicial[][] = {
 				{-2,-2,-2,-2, 1, 1, 0, 0},
@@ -951,8 +965,9 @@ public class PartidaTest {
 		}
 	}
 	
+	
 	public void testUpdateVistaTaulerFlagsTest() {
-		Partida p = new Partida();
+		MockPartida p = new MockPartida();
 		int returnUpdate=0;
 		
 		//POSAR UN FLAG QUAN HI HAN 0 COLOCATS
@@ -992,7 +1007,7 @@ public class PartidaTest {
 		}
 	
 		
-		//POSAR L'ÃšLTIM FLAG POSSIBLE
+		//POSAR L'ÚLTIM FLAG POSSIBLE
 		int vistaInicial2[][] = {
 				{-2, 9, 9, 9, 9, 9, 9, 9},
 				{ 9, 9, 9, 9, 9, 9, 9, 9},
@@ -1030,7 +1045,7 @@ public class PartidaTest {
 		}
 		
 		
-		//TREURE FLAG QUAN HI HAN ELS MÃ€XMIS FLAGS COLOCATS
+		//TREURE FLAG QUAN HI HAN ELS MÀXMIS FLAGS COLOCATS
 		int vistaInicial3[][] = {
 				{ 9, 9, 9, 9, 9, 9, 9, 9},
 				{ 9, 9, 9, 9, 9, 9, 9, 9},
@@ -1068,7 +1083,7 @@ public class PartidaTest {
 			}
 		}
 		
-		//INTENTAR SPERAR FLAGS MÃ€XIMS
+		//INTENTAR SPERAR FLAGS MÀXIMS
 		int vistaInicial4[][] = {
 				{ 9, 9, 9, 9, 9, 9, 9, 9},
 				{ 9, 9, 9, 9, 9, 9, 9, 9},
@@ -1110,16 +1125,15 @@ public class PartidaTest {
 	}
 	
 	
-	//@Test
+	@Test
 	public void testGetTauler() {
 		fail("Not yet implemented");
 	}
-	
 
 
 	@Test
 	public void testCountBombes() {
-		Partida p = new Partida();
+		MockPartida p = new MockPartida();
 		int res = p.getBombesTotals();
 		assertEquals(res, 20);
 	}
