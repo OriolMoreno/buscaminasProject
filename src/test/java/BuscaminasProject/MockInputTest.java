@@ -26,7 +26,7 @@ public class MockInputTest {
 		s = io.readNextMoviment();
 		assertEquals(s, "I6");
 		s = io.readNextMoviment();
-		assertEquals(s, null);
+		assertEquals(s, "");
 	}
 	
 	@Test

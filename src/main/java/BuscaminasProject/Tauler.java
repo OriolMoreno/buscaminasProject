@@ -9,7 +9,7 @@ public class Tauler {//MODEL
 	
 	Tauler(){
 		this.generateTauler();
-		this.generateAdjMatrix();
+		this.adjMatrix = this.generateAdjMatrix();
 	}
 	
 	public int getWidth() {
@@ -59,7 +59,7 @@ public class Tauler {//MODEL
 		{
 			
 			 x = rand1.nextInt(filas_size); 
-			 y=rand2.nextInt(columns_size);
+			 y = rand2.nextInt(columns_size);
 			 
 		    if (this.tauler[x][y]!=1){
 				this.tauler[x][y]=1;

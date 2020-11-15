@@ -29,7 +29,7 @@ public class MockInput {
 		if(nMoviment < this.getNumeroMoviments()) {
 			return inputs.get(nMoviment++);
 		}else {
-			return null;
+			return "";
 		}
 				
 	}
