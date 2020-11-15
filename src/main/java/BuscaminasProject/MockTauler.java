@@ -60,40 +60,6 @@ public class MockTauler {
 		}
 	}
 	
-	public void generateTauler(){
-		//TODO
-		int filas_size=9;
-		int columns_size=8;
-
-		this.tauler = new int[filas_size][columns_size];
-		
-		for (int i=0; i<filas_size;i++){
-			for (int j=0; j<columns_size;j++){
-				this.tauler[i][j]=0;
-			}
-		}
-		
-		int n_bombes=15;
-		int x, y;
-
-		Random rand1 = new Random(); 
-		Random rand2 = new Random(); 
-
-		
-		while(n_bombes!=0)
-		{
-			
-			 x = rand1.nextInt(filas_size); 
-			 y=rand2.nextInt(columns_size);
-			 
-		    if (this.tauler[x][y]!=-1){
-				this.tauler[x][y]=-1;
-				n_bombes=n_bombes-1;
-			}
-			
-		}
-		
-	}
 	
 	public int[][] mockGenerateTauler(){
 		int t[][] = {
@@ -211,9 +177,9 @@ public class MockTauler {
 		return total;
 	}
 	
-	public void setMockTauler(int[][]mockTaulerEspecific, int[][] adjMatrixEspecífic) {
+	public void setMockTauler(int[][]mockTaulerEspecific, int[][] adjMatrixEspecific) {
         tauler=mockTaulerEspecific;
-        adjMatrix=adjMatrixEspecífic;
+        adjMatrix=adjMatrixEspecific;
    }
 
 }

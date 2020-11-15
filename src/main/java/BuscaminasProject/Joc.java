@@ -11,7 +11,7 @@ public class Joc { //CONTROLADOR
 	public static void main(String args[]) {
 		Joc j = new Joc();
 		j.bucleJoc();
-		System.out.println("1Programa finalitzat");
+		System.out.println("Programa finalitzat");
 	}
 	
 	public Joc() {

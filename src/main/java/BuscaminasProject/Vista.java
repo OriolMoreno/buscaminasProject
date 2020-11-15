@@ -85,7 +85,8 @@ public class Vista {
 						+ "		Coordenada Y(files): un valor entre A i Z\n"
 						+ "		Coordenada X(columnes): un valor entre 1 i 9\n"
 						+ "		Flag: / (opcional, per si vols marcar que la casella te una bomba)\n"
-						+ "Exemple 'A1' (cas sense flag) o 'A1/' (cas amb flag)");
+						+ "Exemple 'A1' (cas sense flag) o 'A1/' (cas amb flag)"
+						+ "Per sortir introdueix 'exit'. ");
 	}
 	
 	public void messageInputMenu() {
