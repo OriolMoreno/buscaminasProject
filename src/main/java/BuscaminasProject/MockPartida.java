@@ -12,7 +12,7 @@ public class MockPartida {//MODEL
 	private MockTauler taulerReal;
 	private int[][] taulerVista;
 	private int bombesTotals;
-	private int flagsUsades;
+	public int flagsUsades;
 
 	
 	public MockPartida(){
@@ -176,7 +176,7 @@ public class MockPartida {//MODEL
 			int j = 0;
 			while (j < taulerVista[0].length && gameIsWin)
 			{
-				if ( taulerVista[i][j]==-2 || (taulerVista[i][j]==9 && taulerReal.getCasella(j,i)!=1)  )
+				if (  taulerReal.getCasella(j,i)!=1 && (taulerVista[i][j]==9 || taulerVista[i][j]==-2))
 				{
 					gameIsWin= false;
 				}
