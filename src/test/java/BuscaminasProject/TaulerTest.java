@@ -16,17 +16,23 @@ public class TaulerTest {
 	public void testGenerateTaulerNoMock() {
 		Tauler t = new Tauler();
 
-		int n_bombes=0;
+		int n_bombes=0,acumulador=0;
 		for (int i=0; i<t.getHeight();i++){
 			for (int j=0; j<t.getWidth();j++){
 				
 				if( t.getCasella(j, i)==1){
 					n_bombes=n_bombes+1;
 				}
+				if( t.getCasella(j, i)==0){
+					acumulador++;
+				}
 			}
 		}
 		assertEquals(n_bombes,15);
+		assertEquals(acumulador,72-15);
+
 	}
+	
 	
 	@Test
 	public void testGenerateAdjMatrix() {
@@ -111,7 +117,13 @@ public class TaulerTest {
 	@Test
 	public void testGenerateTaulerMock() {
 		MockTauler t = new MockTauler();
+		//valors frontera
 		assertEquals(t.getCasella(0, 0), 0);
+		assertEquals(t.getCasella(7,8), 0);
+		assertEquals(t.getCasella(7,0), 0);
+		assertEquals(t.getCasella(0,8), 0);
+		
+		//Valors ràndom
 		assertEquals(t.getCasella(0, 3), 0);
 		assertEquals(t.getCasella(3, 0), 0);
 		assertEquals(t.getCasella(1, 3), 1);
