@@ -1,53 +1,60 @@
 package BuscaminasProject;
 
-public class Joc { //CONTROLADOR
+import java.util.Scanner;
 
-	private Historial historial;
+public class Joc { //CONTROLADOR
 	
-	private Partida partida; 
+	private Partida partida;
+	private Vista vista;
+	private Scanner scanner;
 	
-	public boolean novaPartida() {
-		/*
-		int jugant = 1;
-		Partida partida = new Partida();
-		VistaTauler vistaTauler = new VistaTauler();
-		
-		while(jugant==1){
-		    //llegir input
-			if input==quit:
-				jugant=-1
-		    jugant = partida.processaMoviment(input);
-		    vistaTauler.mostraTauler(partida.getTaulerVista());
-		}
-		if (jugant==0)
-				{
-			//miisatge derrota
-		}else 
-		{
-			if (jugant==2)
-			{
-				//miisatge victoria
-				
+	public static void main(String args[]) {
+		Joc j = new Joc();
+		j.bucleJoc();
+		System.out.println("Programa finalitzat");
+	}
+	
+	public Joc() {
+		scanner = new Scanner(System.in);
+		vista = new Vista();
+		this.partida = new Partida();
+	}
+	
+	public void jugarPartida() {
+		this.partida = new Partida();
+		vista.pintaPartida(this.partida);
+		int estatJoc = 1;
+		String input = "";
+		do {
+			input = this.getInput(false); //get input escriu com ha de ser l'input
+			if(!input.equals("exit")) {
+				estatJoc = partida.processaMoviment(input);
+				vista.pintaPartida(this.partida);
+				vista.escriuMessage(estatJoc);	
+			}else {
+				estatJoc = -1;
 			}
-			
-			else //quit game case 
-			{
-				//miisatge ha finalitzat partida
-			}
-		}
-		*/
-		return false;
+		}while (estatJoc == 1 || estatJoc == 0); // input incorrecte = 0, tot be = 1
 	}
 	
-	public void guardarPartida() {
+	public void bucleJoc() {
+		String inputMenu = "";
+		while(!inputMenu.equals("exit")) {
+			vista.menu();
+			inputMenu = this.getInput(true);
+			if(inputMenu.equals("1")) {
+				this.jugarPartida();
+			}
+		}
 		
 	}
 	
-	public void showHistorial() { //mvc??
-		int prova_comit=0;
+	public String getInput(boolean opcioMenuOrPartida) {
+		if(opcioMenuOrPartida) {
+			vista.messageInputMenu();
+		}else {
+			vista.messageInputPartida();
+		}		
+		return scanner.nextLine();
 	}
-	
-	//MockLlegirInputs(){} A2 -- 
-	
-	
 }

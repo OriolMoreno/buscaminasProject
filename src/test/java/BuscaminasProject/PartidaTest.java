@@ -1123,12 +1123,6 @@ public class PartidaTest {
 		
 		
 	}
-	
-	
-	@Test
-	public void testGetTauler() {
-		fail("Not yet implemented");
-	}
 
 
 	@Test
