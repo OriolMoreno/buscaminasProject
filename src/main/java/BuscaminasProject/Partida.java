@@ -53,8 +53,8 @@ public class Partida {//MODEL
 	
 	public void generateVista(){
 		/*
-		  Mètode simple que crea una matriu de la mateixa mida de la matriu tauler de dintre tauler i la inicialitza a -2
-			Aquesta matriu s’actualitzarà cada vegada que el jugador faci un moviment amb la informació referent al tauler que veurà el jugador per pantalla..
+		  Metode simple que crea una matriu de la mateixa mida de la matriu tauler de dintre tauler i la inicialitza a -2
+			Aquesta matriu s'actualitzara cada vegada que el jugador faci un moviment amb la informaci referent al tauler que veure el jugador per pantalla..
 	 	*/
 		
 		taulerVista = new int[taulerReal.getHeight()][taulerReal.getWidth()];
@@ -74,13 +74,13 @@ public class Partida {//MODEL
 	public int processaMoviment(String input) { 
 				
 		/*
-		Mètode que processa el moviment demanat pel jugador a través d’un input de coordenades i flag o no flag. 
+		Metode que processa el moviment demanat pel jugador a traves d'un input de coordenades i flag o no flag. 
 		
 		Es fa un retorna que pot ser:
 		a)	si funciona normal ==> retorna 1
 		b)	si ha guanyat la partida ==> retorna 2
-		c)	si el jugador ha intentat posar més flags de les que el joc permet => retorn -2
-		d)	si l’input es incorrecta o està fora de límits ==> retorna 0
+		c)	si el jugador ha intentat posar mes flags de les que el joc permet => retorn -2
+		d)	si l'input es incorrecta o esta fora de limits ==> retorna 0
 		e)	si a destapat una casella on hi havia una bomba ==> retorna -1
 
 		*/

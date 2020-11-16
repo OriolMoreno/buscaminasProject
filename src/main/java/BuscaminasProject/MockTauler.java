@@ -211,9 +211,9 @@ public class MockTauler {
 		return total;
 	}
 	
-	public void setMockTauler(int[][]mockTaulerEspecific, int[][] adjMatrixEspecífic) {
+	public void setMockTauler(int[][]mockTaulerEspecific, int[][] adjMatrixEspecific) {
         tauler=mockTaulerEspecific;
-        adjMatrix=adjMatrixEspecífic;
+        adjMatrix=adjMatrixEspecific;
    }
 
 }

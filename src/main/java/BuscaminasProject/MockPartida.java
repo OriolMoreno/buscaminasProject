@@ -83,7 +83,7 @@ public class MockPartida {//MODEL
 		//if normal functioning ==> return 1  
 		//if in the input there is no bomb + there are no more bombs in the tauler ==> return 2 
 		//if trying to put more flags that game permits => return -2 
-		//if bad input typing or out of límits  ==> return 0  
+		//if bad input typing or out of limits  ==> return 0  
 		//if is the end of the game ==> return -1 
 		
 		
