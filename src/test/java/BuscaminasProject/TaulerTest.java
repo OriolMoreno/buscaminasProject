@@ -14,12 +14,88 @@ public class TaulerTest {
 	
 	@Test
 	public void testGenerateTaulerNoMock() {
-		Tauler t = new Tauler();
-
+		MockTauler t = new MockTauler();
+		//evitar el loop
+		t.generateTauler(0);
 		int n_bombes=0,acumulador=0;
 		for (int i=0; i<t.getHeight();i++){
 			for (int j=0; j<t.getWidth();j++){
-				
+				if( t.getCasella(j, i)==1){
+					n_bombes=n_bombes+1;
+				}
+				if( t.getCasella(j, i)==0){
+					acumulador++;
+				}
+			}
+		}
+		assertEquals(n_bombes,0);
+		assertEquals(acumulador,72-0);
+		//una passada pel loop
+		t.generateTauler(1);
+		n_bombes=0;acumulador=0;
+		for (int i=0; i<t.getHeight();i++){
+			for (int j=0; j<t.getWidth();j++){
+				if( t.getCasella(j, i)==1){
+					n_bombes=n_bombes+1;
+				}
+				if( t.getCasella(j, i)==0){
+					acumulador++;
+				}
+			}
+		}
+		assertEquals(n_bombes,1);
+		assertEquals(acumulador,72-1);
+		//dos passades pel loop
+		t.generateTauler(2);
+		n_bombes=0;acumulador=0;
+		for (int i=0; i<t.getHeight();i++){
+			for (int j=0; j<t.getWidth();j++){
+				if( t.getCasella(j, i)==1){
+					n_bombes=n_bombes+1;
+				}
+				if( t.getCasella(j, i)==0){
+					acumulador++;
+				}
+			}
+		}
+		assertEquals(n_bombes,2);
+		assertEquals(acumulador,72-2);
+		//m < n passades pel loop
+		t.generateTauler(5);
+		n_bombes=0;acumulador=0;
+		for (int i=0; i<t.getHeight();i++){
+			for (int j=0; j<t.getWidth();j++){
+				if( t.getCasella(j, i)==1){
+					n_bombes=n_bombes+1;
+				}
+				if( t.getCasella(j, i)==0){
+					acumulador++;
+				}
+			}
+		}
+		assertEquals(n_bombes,5);
+		assertEquals(acumulador,72-5);
+		//n-1 passades pel loop
+		t.generateTauler(14);
+		n_bombes=0;acumulador=0;
+		for (int i=0; i<t.getHeight();i++){
+			for (int j=0; j<t.getWidth();j++){
+				if( t.getCasella(j, i)==1){
+					n_bombes=n_bombes+1;
+				}
+				if( t.getCasella(j, i)==0){
+					acumulador++;
+				}
+			}
+		}
+		assertEquals(n_bombes,14);
+		assertEquals(acumulador,72-14);
+		
+		//n passades pel loop
+		t.generateTauler(15);
+		n_bombes=0;acumulador=0;
+		for (int i=0; i<t.getHeight();i++){
+			for (int j=0; j<t.getWidth();j++){
 				if( t.getCasella(j, i)==1){
 					n_bombes=n_bombes+1;
 				}
@@ -30,6 +106,23 @@ public class TaulerTest {
 		}
 		assertEquals(n_bombes,15);
 		assertEquals(acumulador,72-15);
+		
+		//n+1 passades pel loop
+		t.generateTauler(16);
+		n_bombes=0;acumulador=0;
+		for (int i=0; i<t.getHeight();i++){
+			for (int j=0; j<t.getWidth();j++){
+				if( t.getCasella(j, i)==1){
+					n_bombes=n_bombes+1;
+				}
+				if( t.getCasella(j, i)==0){
+					acumulador++;
+				}
+			}
+		}
+		assertEquals(n_bombes,15);
+		assertEquals(acumulador,72-15);
+
 
 	}
 	

@@ -101,6 +101,41 @@ public class MockTauler {
 		return adj;
 	}
 	
+	public void generateTauler(int numeroBombes){
+		int filas_size=9;
+		int columns_size=8;
+
+		this.tauler = new int[filas_size][columns_size];
+		
+		for (int i=0; i<filas_size;i++){
+			for (int j=0; j<columns_size;j++){
+				this.tauler[i][j]=0;
+			}
+		}
+		
+		int n_bombes_max=15;
+		int x, y;
+
+		Random rand1 = new Random(); 
+		Random rand2 = new Random(); 
+
+		
+		while(numeroBombes > 0 && n_bombes_max > 0)
+		{
+			
+			 x = rand1.nextInt(filas_size); 
+			 y = rand2.nextInt(columns_size);
+			 
+		    if (this.tauler[x][y]!=1){
+				this.tauler[x][y]=1;
+				n_bombes_max=n_bombes_max-1;
+				numeroBombes--;
+			}
+			
+		}
+		
+	}
+
 	
 	public int countBombes() {
 		int nBombes = 0;

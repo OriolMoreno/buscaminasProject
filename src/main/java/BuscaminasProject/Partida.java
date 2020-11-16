@@ -27,9 +27,9 @@ public class Partida {//MODEL
 	}
 	
 	
-	public int[][] getVistaTauler() {
+	/*public int[][] getVistaTauler() {
 		return taulerVista;
-	}
+	}*/
 	
 	
 	public int getWidth() {
@@ -150,15 +150,6 @@ public class Partida {//MODEL
 		return coords;
 	}
 
-	
-	public int getValueOfTauler(int coordx,int coordy)
-	{
-		//Method that gets the value of tauler that the user has input recibed in coordx and coordy
-		//The information taht recibes is in the ranges of the tauler content 
-		// this validation was done in the method inputToCords
-
-		return taulerReal.getValorAdjMatrix(coordx,coordy);
-	}
 
 	
 	public boolean checkGameIsWin()
@@ -365,11 +356,6 @@ public class Partida {//MODEL
 		}
 		
 		return estatPartida;
-	}
-	
-	public int getBombesTotals() {
-		
-		return bombesTotals;
 	}
 	
 	
