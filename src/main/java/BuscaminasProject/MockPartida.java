@@ -7,20 +7,16 @@ import java.util.LinkedList;
 import java.util.Queue; 
 
 
-public class Partida {//MODEL
+public class MockPartida {//MODEL
 
-	private Tauler taulerReal;
-	/**
-	 * a taulerVista hi haura a cada casella el numero de bombes adjacents, -2 si no s'ha 'clickat'
-	 * i el valor 9 per marcar si hi ha posat una 'bandera' marcant que l'usuari creu que hi ha una bomba
-	 */
+	private MockTauler taulerReal;
 	private int[][] taulerVista;
 	private int bombesTotals;
-	private int flagsUsades;
+	public int flagsUsades;
 
 	
-	public Partida(){
-		taulerReal = new Tauler();
+	public MockPartida(){
+		taulerReal = new MockTauler();
 		bombesTotals = taulerReal.countBombes();
 		flagsUsades=0;
 		generateVista();
@@ -32,10 +28,15 @@ public class Partida {//MODEL
 	}
 	
 	
+	public void setMockVistaTauler(int[][] mockTaulerVista) {
+		taulerVista=mockTaulerVista;
+	}
+	
+	
 	public int getWidth() {
 		return taulerVista[0].length;
 	}
-	
+
 	
 	public int getHeight() {
 		return taulerVista.length;
@@ -52,10 +53,8 @@ public class Partida {//MODEL
 	
 	
 	public void generateVista(){
-		/*
-		  Metode simple que crea una matriu de la mateixa mida de la matriu tauler de dintre tauler i la inicialitza a -2
-			Aquesta matriu s'actualitzara cada vegada que el jugador faci un moviment amb la informaci referent al tauler que veure el jugador per pantalla..
-	 	*/
+		//is a method that creates a matrix of the same size of tauler and inicializes it to -2
+		//This matrix will be actualized every time the player makes a movment
 		
 		taulerVista = new int[taulerReal.getHeight()][taulerReal.getWidth()];
 
@@ -70,20 +69,23 @@ public class Partida {//MODEL
 
 	}
 	
-	 
-	public int processaMoviment(String input) { 
+	
+	public int processaMoviment(String input) { //return false if bomb is hit
 				
-		/*
-		Metode que processa el moviment demanat pel jugador a traves d'un input de coordenades i flag o no flag. 
+		//method to sanitize input
+		//change the input of string to int coordinates -------- inputToCoords(String input) 
+		//check if there's a bomb, in the input of parameters in TaulerReal ----- updateVistaTauler(int coordx,int coordy, int flag)
+		//update TaulerVista with the new info and returns 
+		// check if the game its finish ore win ------- checkGameIsWin()
 		
-		Es fa un retorna que pot ser:
-		a)	si funciona normal ==> retorna 1
-		b)	si ha guanyat la partida ==> retorna 2
-		c)	si el jugador ha intentat posar mes flags de les que el joc permet => retorn -2
-		d)	si l'input es incorrecta o esta fora de limits ==> retorna 0
-		e)	si a destapat una casella on hi havia una bomba ==> retorna -1
-
-		*/
+		//and return:
+		
+		//if normal functioning ==> return 1  
+		//if in the input there is no bomb + there are no more bombs in the tauler ==> return 2 
+		//if trying to put more flags that game permits => return -2 
+		//if bad input typing or out of limits  ==> return 0  
+		//if is the end of the game ==> return -1 
+		
 		
 		
 		int gameState=0;
@@ -149,17 +151,17 @@ public class Partida {//MODEL
 		}
 		return coords;
 	}
-
+	
 	
 	public int getValueOfTauler(int coordx,int coordy)
 	{
 		//Method that gets the value of tauler that the user has input recibed in coordx and coordy
 		//The information taht recibes is in the ranges of the tauler content 
-		// this validation was done in the method inputToCords
+		//because this validation was done in the method inputToCords
 
 		return taulerReal.getValorAdjMatrix(coordx,coordy);
 	}
-
+	
 	
 	public boolean checkGameIsWin()
 	{
@@ -185,6 +187,7 @@ public class Partida {//MODEL
 		
 		return gameIsWin;
 	}
+	
 	
 	public int updateVistaTauler(int coordx,int coordy, int flag)
 	{
@@ -367,12 +370,14 @@ public class Partida {//MODEL
 		return estatPartida;
 	}
 	
+	
 	public int getBombesTotals() {
-		
-		return bombesTotals;
+		return taulerReal.countBombes();
 	}
+
 	
-	
-	
+	public void setMockTaulerPartida(MockTauler mockTauler) {
+		this.taulerReal=mockTauler;
+	}
 	
 }

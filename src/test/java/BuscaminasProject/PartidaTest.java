@@ -1,43 +1,61 @@
 package BuscaminasProject;
 
+
 import static org.junit.Assert.*;
 
-import org.junit.Before;
 import org.junit.Test;
 
 public class PartidaTest {
 
-	//@Before
-	public void setUp() throws Exception {
-	}
+	
+	@Test
+	public void testGetVistaTauler() { 
+		MockPartida p = new MockPartida();
+		int vistaEsperada[][] = {
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},	
+				{-2,-2,-2,-2,-2,-2,-2,-2},				
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+		};
+		
+		int acumulador=0;
+		int [][]aux=p.getVistaTauler();
+		for (int i=0; i<p.getHeight();i++){
+			for (int j=0; j<p.getWidth();j++){
+				assertEquals(aux[i][j], vistaEsperada[i][j]);
+				acumulador++;
+			}
+		}
+		assertEquals(acumulador,72);
 
-	//@Test
-	public void testPartida() { 
-		fail("Not yet implemented");
 	}
 	
 	
 	@Test
-	public void testGenerateVista() { 
-		Partida p = new Partida();
-		int[][]aux=p.getVistaTauler();
-		assertEquals(p.getWidth(), aux[0].length);
-		assertEquals(p.getHeight(), aux.length);
-
-		
-		for (int i=0; i<p.getHeight();i++){
-			for (int j=0; j<p.getWidth();j++){
-				assertEquals(aux[i][j], -2);
-			}
-		}
-
-
+	public void testGetWidth() {
+		MockPartida p = new MockPartida();
+		int res = p.getWidth();
+		assertEquals(res, 8);
 	}
+	
+	
+	@Test
+	public void testGetHeight() {
+		MockPartida p = new MockPartida();
+		int res = p.getHeight();
+		assertEquals(res, 9);
+	}
+	
 	
 	@Test
 	public void testGetCasellaTaulerVista(){
 
-		Partida p = new Partida();
+		MockPartida p = new MockPartida();
 		
 		int adj[][] = {
 				{1, -1,  2,  2,  1,  1,  0,  0},
@@ -68,12 +86,31 @@ public class PartidaTest {
 	
 	
 	@Test
+	public void testGenerateVista() { 
+		MockPartida p = new MockPartida();
+		int[][]aux=p.getVistaTauler();
+		assertEquals(p.getWidth(), aux[0].length);
+		assertEquals(p.getHeight(), aux.length);
+
+		
+		int acumulador=0;
+		for (int i=0; i<p.getHeight();i++){
+			for (int j=0; j<p.getWidth();j++){
+				assertEquals(aux[i][j], -2);
+				acumulador++;
+			}
+		}
+		assertEquals(acumulador,72);
+	}
+	
+	
+	@Test
 	public void testProcessaMovimentCheckParticionsEquivalents() {
-		//Este testeo esta divido segun los possibles erores que podria tener la función dependiendo d elos outputs
+		//Este testeo esta divido segun los possibles erores que podria tener la funci�n dependiendo d elos outputs
 		
 		//TEST CASE BAD INPUTS
-		Partida p = new Partida();
-		String listAuxInput1[]= {"J1","Z1","$1","€1","1A","3D","4B","6F","1A1","A11","11A","AA1","A1A","1AA","A0","A-4","A10","A100","1111111111111111111111111111111111111111111111111111111111111111111","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "$$$$$$$$$$$$$$$$$$$$$$$$"," ",""};
+		MockPartida p = new MockPartida();
+		String listAuxInput1[]= {"J1","Z1","$1","�1","1A","3D","4B","6F","1A1","A11","11A","AA1","A1A","1AA","A0","A-4","A10","A100","1111111111111111111111111111111111111111111111111111111111111111111","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "$$$$$$$$$$$$$$$$$$$$$$$$"," ",""};
 
 		for (int i = 0; i < listAuxInput1.length; i++) 
 		{
@@ -86,7 +123,7 @@ public class PartidaTest {
 		assertEquals(p.processaMoviment("A1/"),1);
 		assertEquals(p.processaMoviment("A7"),1);
 		
-		//TEST CASE GAME LOSE (with cas frontera when just one bomb left)
+		//TEST CASE GAME LOSE ((amb cas frontera quan totes les bombes sense destapar i una sense destapar + cas d'algunes sense destapar)
 		int vistaMockActual[][] = {
 				{-2,-2,-2,-2,-2,-2,-2,-2},
 				{-2,-2,-2,-2,-2,-2,-2,-2},
@@ -132,7 +169,21 @@ public class PartidaTest {
 		
 		
 		//TEST CASE LAST CASELLA CHECK TO WIN
-		 int vistaMockActual4[][] = {
+		int vistaMockActual41[][] = {
+				{1, -2,  2,  2,  1,  1,  0,  0},
+				{1,  2,  9,  3,  9, -2,  1,  1},
+				{1,  2,  4,  9,  3,  3, -2,  3},
+				{1,  9,  3,  9,  3,  3,  9,  9},
+				{1,  2,  3,  3,  3,  9,  5,  9},
+				{1,  2,  9,  2,  9,  3,  9,  2},
+				{1,  9,  2,  2,  2,  3,  2,  1},
+				{2,  2,  3,  2,  4,  9,  2,  0},
+				{1,  9,  2,  9,  9,  9,  2,  0}
+		};		
+		p.setMockVistaTauler(vistaMockActual41 );
+		assertEquals(p.processaMoviment("C7/"),1);
+		
+		int vistaMockActual4[][] = {
 				{1,  9,  2,  2,  1,  1,  0,  0},
 				{1,  2,  9,  3,  9,  2,  1,  1},
 				{1,  2,  4,  9,  3,  3, -2,  3},
@@ -146,14 +197,57 @@ public class PartidaTest {
 		p.setMockVistaTauler(vistaMockActual4 );
 		assertEquals(p.processaMoviment("C7/"),2);
 		
+		
+		int vistaMockActual5[][] = {
+				{1,  9,  2,  2,  1,  1,  0,  0},
+				{1,  2,  9,  3,  9,  2,  1,  1},
+				{1,  2,  4,  9,  3,  3,  9, -2},
+				{1,  9,  3,  9,  3,  3,  9,  9},
+				{1,  2,  3,  3,  3,  9,  5,  9},
+				{1,  2,  9,  2,  9,  3,  9,  2},
+				{1,  9,  2,  2,  2,  3,  2,  1},
+				{2,  2,  3,  2,  4,  9,  2,  0},
+				{1,  9,  2,  9,  9,  9,  2,  0}
+		};		
+		p.setMockVistaTauler(vistaMockActual5 );
+		assertEquals(p.processaMoviment("C8"),2);
+		
+		//TEST CASE M�S FLAGS DE LOS QUE SE PUEDEN PONER
+		int vistaMockActual6[][] = {
+				{1,  9,  2,  2,  1,  1,  0,  0},
+				{1,  2,  9,  3,  9,  2,  1,  1},
+				{1,  2,  4,  9,  3,  3,  9, -2},
+				{1,  9,  3,  9,  3,  3,  9,  9},
+				{1,  2,  3,  3,  3,  9,  5,  9},
+				{1,  2,  9,  2,  9,  3,  9, -2},
+				{1,  9,  2,  2,  2,  3,  2,  1},
+				{2,  2,  3,  2,  4,  9,  2,  0},
+				{1,  9,  2,  9,  9,  9,  2,  0}
+		};
+		p.flagsUsades=20;
+		p.setMockVistaTauler(vistaMockActual6 );
+		assertEquals(p.processaMoviment("C8/"),-2);
+		
+		int vistaMockActual7[][] = {
+				{1, -2,  2,  2,  1,  1,  0,  0},
+				{1,  2,   -2,  3, -2,  2,  1,  1},
+				{1,  2,  4,  -2,  3,  3,   -2, -2},
+				{1, -2,  3,  -2,  3,  3,   -2,   -2},
+				{1,  2,  3,  3,  3,   -2,  5,   -2},
+				{1,  2,  -2,  2,  -2,  3,   -2, 1},
+				{1,  -2,  2,  2,  2,  3,  2,  1},
+				{2,  2,  3,  2,  4,  -2,  2,  0},
+				{1, -2,  2,  -2, -2, -2,  2,  0}
+		};
+		p.flagsUsades=0;
+		p.setMockVistaTauler(vistaMockActual7);
+		assertEquals(p.processaMoviment("C8"),2);
 	}
-	
+		
 	@Test
 	public void testProcessaMovimentRandomMovments() {
-		
-		
 		//TEST CASE RANDOM MOVMENTS AND CORRECT MATRIX DEVELOPING
-		Partida p=new Partida();
+		MockPartida p=new MockPartida();
 		MockInput io = new MockInput(".\\src\\test\\resources\\partida_1.txt");
 		String s = io.readNextMoviment();
 		assertEquals(p.processaMoviment(s), 1);
@@ -175,7 +269,7 @@ public class PartidaTest {
 		
 	@Test
 	public void testInputToCoordsWithoutFlag() { 
-		Partida p = new Partida();
+		MockPartida p = new MockPartida();
 		
 		//CONJUNT DE TESTOS SENSE FLAG
 		//Test de resultats esperats
@@ -202,7 +296,7 @@ public class PartidaTest {
 		assertEquals(aux[2], 0);
 
 		
-		//PARTICIÓ EQUIVALENT RESULTATS CORRECTES MINÚSUCLAS
+		//PARTICI� EQUIVALENT RESULTATS CORRECTES MIN�SUCLAS
 		String listAuxInput1[]= {"a1","d3","b4","f6","i8"};
 		int expectedResult[][]= {{0,0},{3,2},{1,3},{5,5},{8,7}};
 
@@ -214,8 +308,8 @@ public class PartidaTest {
 			assertEquals(aux[2], 0);
 		}
 		
-		//PARTICIÓ EQUIVALENT ERROR EN COORD ALFABET (amb valors límits  i frontera)
-		String listAuxInput2[]= {"J1","Z1","$1","€1"};
+		//PARTICI� EQUIVALENT ERROR EN COORD ALFABET (amb valors l�mits  i frontera)
+		String listAuxInput2[]= {"J1","Z1","$1","�1"};
 		
 		for (int i = 0; i < listAuxInput2.length; i++) 
 		{
@@ -225,7 +319,7 @@ public class PartidaTest {
 			assertEquals(aux[2], -1);
 		}
 
-		//PARTICIÓ EQUIVALENT ERROR EN COORD NUMERICA (amb valors límits  i frontera)
+		//PARTICI� EQUIVALENT ERROR EN COORD NUMERICA (amb valors l�mits  i frontera)
 		String listAuxInput3[]= {"A0","A-4","A10","A100"};
 		
 		for (int i = 0; i < listAuxInput3.length; i++) 
@@ -236,8 +330,8 @@ public class PartidaTest {
 			assertEquals(aux[2], -1);
 		}
 
-		//PARTICIÓ EQUIVALENT ERRORS PER VALORS MOLT GRANS O MOLT PETITS 	(amb valors límits  i frontera)
-		String listAuxInput4[]= {"1111111111111111111111111111111111111111111111111111111111111111111","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "$$$$$$$$$$$$$$$$$$$$$$$$"," ",""};
+		//PARTICI� EQUIVALENT ERRORS PER VALORS MOLT GRANS O MOLT PETITS 	(amb valors l�mits  i frontera)
+		String listAuxInput4[]= {"111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"," ",""};
 		
 		for (int i = 0; i < listAuxInput4.length; i++) 
 		{
@@ -247,7 +341,7 @@ public class PartidaTest {
 			assertEquals(aux[2], -1);
 		}
 		
-		//PARTICIÓ EQUIVALENT INERCANVI DE COORDS 
+		//PARTICI� EQUIVALENT INERCANVI DE COORDS 
 		String listAuxInput5[]= {"1A","3D","4B","6F"};
 		
 		for (int i = 0; i < listAuxInput5.length; i++) 
@@ -275,9 +369,10 @@ public class PartidaTest {
 	}
 	
 
+	
 	@Test
 	public void testInputToCoordsWithFlag() { 
-		Partida p = new Partida();
+		MockPartida p = new MockPartida();
 		
 		//CONJUNT DE TESTOS AMB FLAG
 		//Test de resultats correctes
@@ -303,7 +398,7 @@ public class PartidaTest {
 		assertEquals(aux[1], 5);
 		assertEquals(aux[2], 1);
 
-		//PARTICIÓ EQUIVALENT RESULTATS CORRECTES MINÚSUCLAS
+		//PARTICI� EQUIVALENT RESULTATS CORRECTES MIN�SUCLAS
 		String listAuxInput1[]= {"a1/","d3/","b4/","f6/"};
 		int expectedResult[][]= {{0,0},{3,2},{1,3},{5,5}};
 
@@ -317,8 +412,8 @@ public class PartidaTest {
 		
 		int errorReturn[]= {-1,-1,-1};
 		
-		//PARTICIÓ EQUIVALENT ERROR EN COORD ALFABET (amb valors límits  i frontera)
-		String listAuxInput2[]= {"J1/","Z1/","$1/","€1/"};
+		//PARTICI� EQUIVALENT ERROR EN COORD ALFABET (amb valors l�mits  i frontera)
+		String listAuxInput2[]= {"J1/","Z1/","$1/","�1/"};
 		
 		for (int i = 0; i < listAuxInput2.length; i++) 
 		{
@@ -328,7 +423,7 @@ public class PartidaTest {
 			assertEquals(aux[2], -1);
 		}
 
-		//PARTICIÓ EQUIVALENT ERROR EN COORD NUMERICA (amb valors límits  i frontera)
+		//PARTICI� EQUIVALENT ERROR EN COORD NUMERICA (amb valors l�mits  i frontera)
 		String listAuxInput3[]= {"A0/","-A4/","A9/","A10/","A100/"};
 		
 		for (int i = 0; i < listAuxInput3.length; i++) 
@@ -339,8 +434,8 @@ public class PartidaTest {
 			assertEquals(aux[2], -1);
 		}
 
-		//PARTICIÓ EQUIVALENT ERRORS PER VALORS MOLT GRANS O MOLT PETITS 	(amb valors límits  i frontera)
-		String listAuxInput4[]= {"1111111111111111111111111111111111111111111111111111111111111111111/","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/", "$$$$$$$$$$$$$$$$$$$$$$$$/"," /","/"};
+		//PARTICI� EQUIVALENT ERRORS PER VALORS MOLT GRANS O MOLT PETITS 	(amb valors l�mits  i frontera)
+		String listAuxInput4[]= {"111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"," ",""};
 		
 		for (int i = 0; i < listAuxInput4.length; i++) 
 		{
@@ -350,7 +445,7 @@ public class PartidaTest {
 			assertEquals(aux[2], -1);
 		}
 		
-		//PARTICIÓ EQUIVALENT INERCANVI DE COORDS 
+		//PARTICI� EQUIVALENT INERCANVI DE COORDS 
 		String listAuxInput5[]= {"1A/","3D/","4B/","6F/"};
 		
 		for (int i = 0; i < listAuxInput5.length; i++) 
@@ -377,17 +472,22 @@ public class PartidaTest {
 	
 	@Test
 	public void testGetValueOfTauler() { 
-		Partida p = new Partida();
+		MockPartida p = new MockPartida();
 		
-		//La única partició son els cassos de proba amb valors coorectes ja que en el metode inputToCords ja 
-		// s'ha validat que les coordenades siguin pertanyents al tauler de la partida
 		
-		//Values frontera i possibles values problemàtics del mig
-		assertEquals(p.getValueOfTauler(0, 0), 1);
-		assertEquals(p.getValueOfTauler(8, 7), 0);
+		//Values frontera i possibles values problem�tics del mig
+		
 		assertEquals(p.getValueOfTauler(0, 4), 1);
 		assertEquals(p.getValueOfTauler(3, 7), -1);
 		assertEquals(p.getValueOfTauler(5, 6), -1);
+		//valors l�mit
+		assertEquals(p.getValueOfTauler(13, 6), -11);
+		assertEquals(p.getValueOfTauler(5, -2), -11);
+		//Valors frontera
+		assertEquals(p.getValueOfTauler(0, 0), 1);
+		assertEquals(p.getValueOfTauler(8, 7), 0);
+		assertEquals(p.getValueOfTauler(0,7), 0);
+		assertEquals(p.getValueOfTauler(8,0), 1);
 		
 		//THE MOCK TAULER
 		//		{1, -1,  2,  2,  1,  1,  0,  0},
@@ -403,12 +503,13 @@ public class PartidaTest {
 	}
 	
 	
-	
 	@Test
 	public void testCheckGameIsWin() { 
-		Partida p = new Partida();
+		MockPartida p = new MockPartida();
 		
-		//TEST CASE ANY BOMB WITH FLAG
+		//PARTICI� GAME IS NO WIN
+		
+		//ALL CASELLAS -2 (cas frontera)
 		int vistaMockActual[][] = {
 				{-2,-2,-2,-2,-2,-2,-2,-2},
 				{-2,-2,-2,-2,-2,-2,-2,-2},
@@ -422,26 +523,74 @@ public class PartidaTest {
 			};
 		p.setMockVistaTauler(vistaMockActual); 
 		assertEquals(p.checkGameIsWin(),false);
-
 		
-		//TEST CASE SOME BOMBS WITH FLAG
-		int vistaMockActual2[][] = {
-				{1,  9,  2,  2,  1,  1,  0,  0},
-				{1,  2, -1,  3, -2,  2,  1,  1},
-				{1,  2,  4, -1,  3,  3, -2,  3},
-				{1,  9,  3, -1,  3,  3, -2, -1},
-				{1,  2,  3,  3,  3, -2,  5, -1},
-				{1,  2,  9,  2,  9,  3, -2,  2},
-				{1,  9,  2,  2,  2,  3,  2,  1},
-				{2,  2,  3,  2,  4,  9,  2,  0},
-				{1,  9,  2,  9,  9,  9,  2,  0}
-		};
-		
-		p.setMockVistaTauler(vistaMockActual2 );
+		//ALL CASELLAS BOMB WITH FLAG and the rest of casellas=-2(cas frontera)
+		int vistaMockActual0[][] = {
+				{-2, 9,-2,-2,-2,-2,-2,-2},
+				{-2,-2, 9,-2, 9,-2,-2,-2},
+				{-2,-2,-2, 9,-2,-2, 9,-2},
+				{-2,-2,-2, 9,-2,-2, 9,-2},
+				{-2,-2,-2, 9,-2,-2, 9,-2},
+				{-2,-2,-2, 9,-2,-2, 9,-2},
+				{-2,-2, 9,-2, 9,-2, 9,-2},
+				{-2, 9,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2, 9,-2,-2},
+				{-2, 9,-2, 9, 9, 9,-2,-2},
+			};
+		p.setMockVistaTauler(vistaMockActual0); 
 		assertEquals(p.checkGameIsWin(),false);
 		
-		//TEST CASE ALL BOMBS WITH FLAG MINUS ONE
+		//TEST CASE ALL BOMBS WITH FLAG AND ONE CASELLA= -2(cas frontera)
+		int vistaMockActual1[][] = {
+				{1,  2,  9,  3,  9,  2,  1,  1},
+				{1,  2,  9,  3,  9,  2,  1,  1},
+				{1,  2,  4,  9,  3,  3,  9,  3},
+				{1,  9,  3,  9,  3,  3,  9,  9},
+				{1,  2,  3,  3,  3,  9,  5,  9},
+				{1,  2,  9,  2,  9,  3,  9,  2},
+				{1,  9,  2,  2,  2,  3,  2,  1},
+				{2,  2,  3,  2,  4,  9,  2,  0},
+				{1,  9,  2,  9,  9,  9,  -2,  0}
+		};
+		p.setMockVistaTauler(vistaMockActual1 );
+		assertEquals(p.checkGameIsWin(),false);
+		
+		//TEST CASE NO BOMBS WITH FLAG AND ONE CASELLA= -2(cas frontera)
+		int vistaMockActual2[][] = {
+				{1,-2,  2,  2,  1,   1,  0,  0},
+				{1,  2, -2,  3, -2,  2,  1,  1},
+				{1,  2,  4, -2,  3,  3, -2,  3},
+				{1,  2,  4, -2,  3,  3, -2,  3},
+				{1,  2,  3,  3,  3, -2,  5, -2},
+				{1,  2, -2,  2, -2,  3, -2,  2},
+				{1, -2,  2,  2,  2,  3,  2,  1},
+				{2,  2,  3,  2,  4, -2,  2,  0},
+				{1, -2,  2, -2, -2, -2,  2,  -2}
+		};
+		
+		p.setMockVistaTauler(vistaMockActual2);
+		assertEquals(p.checkGameIsWin(),false);
+		
+		
+		//PARTICI� GAME IS WIN
+		//TEST CASE ALL BOMBS SENSE OBRIR MENYS UNA QUE ESTA AMB UN FLAG AND ALL CASELLAS obertes (cas frontera)
 		int vistaMockActual3[][] = {
+				{1, -2,  2,  2,  1,  1,  0,  0},
+				{1,  2, -2,  3, -2,  2,  1,  1},
+				{1,  2,  4, -2,  3,  3, -2,  3},
+				{1, -2,  3, -2,  3,  3, -2, -2},
+				{1,  2,  3,  3,  3, -2,  5, -2},
+				{1,  2, -2,  2, -2,  3,  9,  2},
+				{1, -2,  2,  2,  2,  3,  2,  1},
+				{2,  2,  3,  2,  4, -2,  2,  0},
+				{1, -2,  2, -2, -2, -2,  2,  0}
+		};
+		
+		p.setMockVistaTauler(vistaMockActual3 );
+		assertEquals(p.checkGameIsWin(),true);
+		
+		//TEST CASE ALL BOMBS WITH FLAG MINUS ONE AND ALL CASELLAS obertes (cas frontera)
+		int vistaMockActual4[][] = {
 				{1,  9,  2,  2,  1,  1,  0,  0},
 				{1,  2,  9,  3,  9,  2,  1,  1},
 				{1,  2,  4,  9,  3,  3, -2,  3},
@@ -452,27 +601,10 @@ public class PartidaTest {
 				{2,  2,  3,  2,  4,  9,  2,  0},
 				{1,  9,  2,  9,  9,  9,  2,  0}
 		};
-		p.setMockVistaTauler(vistaMockActual3 );
-		assertEquals(p.checkGameIsWin(),false);
-		
-		
-		
-		//TEST CASE ALL BOMBS WITH FLAG MINUS ONE 2nd part
-		int vistaMockActual4[][] = {
-				{-2,-2,-2,-2,-2,-2,-2,-2},
-				{1,  2,  9,  3,  9,  2,  1,  1},
-				{1,  2,  4,  9,  3,  3,  9,  3},
-				{1,  9,  3,  9,  3,  3,  9,  9},
-				{1,  2,  3,  3,  3,  9,  5,  9},
-				{1,  2,  9,  2,  9,  3,  9,  2},
-				{1,  9,  2,  2,  2,  3,  2,  1},
-				{2,  2,  3,  2,  4,  9,  2,  0},
-				{1,  9,  2,  9,  9,  9,  2,  0}
-		};
 		p.setMockVistaTauler(vistaMockActual4 );
-		assertEquals(p.checkGameIsWin(),false);
+		assertEquals(p.checkGameIsWin(),true);
 		
-		//TEST CASE ALL BOMBS WITH FLAG
+		//TEST CASE ALL BOMBS WITH FLAG AND ALL CASELLAS obertes (cas frontera)
 		int vistaMockActual5[][] = {
 				{1,  9,  2,  2,  1,  1,  0,  0},
 				{1,  2,  9,  3,  9,  2,  1,  1},
@@ -487,15 +619,29 @@ public class PartidaTest {
 		p.setMockVistaTauler(vistaMockActual5 );
 		assertEquals(p.checkGameIsWin(),true);
 		
+		//TEST CASE NO BOMBS WITH FLAG AND ALL CASELLAS obertes (cas frontera)
+		int vistaMockActual6[][] = {
+				{1, -2,  2,  2,  1,  1,  0,  0},
+				{1,  2, -2,  3, -2,  2,  1,  1},
+				{1,  2,  4, -2,  3,  3, -2,  3},
+				{1, -2,  3, -2,  3,  3, -2, -2},
+				{1,  2,  3,  3,  3, -2,  5, -2},
+				{1,  2, -2,  2, -2,  3, -2,  2},
+				{1, -2,  2,  2,  2,  3,  2,  1},
+				{2,  2,  3,  2,  4, -2,  2,  0},
+				{1, -2,  2, -2, -2, -2,  2,  0}
+		};
+		p.setMockVistaTauler(vistaMockActual6 );
+		assertEquals(p.checkGameIsWin(),true);
 		
 	}
 	
 	
 	@Test
 	public void  testUpdateVistaTaulerWithOutFlag() { 
-		Partida p = new Partida();
-		boolean bombaTrobada=false;
-		//PARTICIÓ EQUIVALENT DE CASOS SENSE FLAG
+		MockPartida p = new MockPartida();
+		int returnUpdate=0;
+		//PARTICI� EQUIVALENT DE CASOS SENSE FLAG
 		//TEST CASE CASELLA JA DESTAPADA SENSE FLAG
 		int vistaInicial[][] = {
 				{-2,-2,-2,-2, 1, 1, 0, 0},
@@ -523,8 +669,8 @@ public class PartidaTest {
 		};
 		
 		
-		bombaTrobada=p.updateVistaTauler(0, 6, 0);
-		assertEquals(bombaTrobada, false);
+		returnUpdate=p.updateVistaTauler(0, 6, 0);
+		assertEquals(returnUpdate, 0);
 		
 		int[][]aux=p.getVistaTauler();
 		
@@ -563,8 +709,8 @@ public class PartidaTest {
 		};
 		
 		
-		bombaTrobada=p.updateVistaTauler(0, 1, 0);
-		assertEquals(bombaTrobada, true);
+		returnUpdate=p.updateVistaTauler(0, 1, 0);
+		assertEquals(returnUpdate, -1);
 		
 		aux=p.getVistaTauler();
 		for (int i=0; i<p.getHeight();i++){
@@ -600,8 +746,8 @@ public class PartidaTest {
 				{-2,-2,-2,-2,-2,-2,-2,-2},
 		};
 		
-		bombaTrobada=p.updateVistaTauler(7, 6, 0);
-		assertEquals(bombaTrobada, false);
+		returnUpdate=p.updateVistaTauler(7, 6, 0);
+		assertEquals(returnUpdate, 0);
 		
 		aux=p.getVistaTauler();
 		for (int i=0; i<p.getHeight();i++){
@@ -638,8 +784,8 @@ public class PartidaTest {
 		};
 		
 		
-		bombaTrobada=p.updateVistaTauler(0, 5, 0);
-		assertEquals(bombaTrobada, false);
+		returnUpdate=p.updateVistaTauler(0, 5, 0);
+		assertEquals(returnUpdate, 0);
 		
 		
 		aux=p.getVistaTauler();
@@ -677,8 +823,8 @@ public class PartidaTest {
 		};
 		
 		
-		bombaTrobada=p.updateVistaTauler(0, 6, 0);
-		assertEquals(bombaTrobada, false);
+		returnUpdate=p.updateVistaTauler(0, 6, 0);
+		assertEquals(returnUpdate, 0);
 		
 		
 		aux=p.getVistaTauler();
@@ -713,7 +859,7 @@ public class PartidaTest {
 				{0, 0, 0, 0, 0, 0, 0, 0},
 				{0, 0, 0, 0, 0, 0, 0, 0},
 		};
-		Tauler mockTauler= new Tauler();
+		MockTauler mockTauler= new MockTauler();
 		
 		mockTauler.setMockTauler(taulerMockAux,adjMatrixMockAux);
 		
@@ -747,8 +893,8 @@ public class PartidaTest {
 		
 		
 		
-		bombaTrobada=p.updateVistaTauler(5, 5, 0);
-		assertEquals(bombaTrobada, false);
+		returnUpdate=p.updateVistaTauler(5, 5, 0);
+		assertEquals(returnUpdate, 0);
 		
 		
 		aux=p.getVistaTauler();
@@ -762,12 +908,13 @@ public class PartidaTest {
 	
 	}
 	
+	
 	@Test
 	public void  testUpdateVistaTaulerWithFlag() { 
-		Partida p = new Partida();
-		boolean bombaTrobada=false;
-		//PARTICIÓ EQUIVALENT DE CASOS SENSE FLAG
-		//TEST CASE CASELLA JA DESTAPADA SENSE FLAG
+		MockPartida p = new MockPartida();
+		int returnUpdate=0;
+		//PARTICI� EQUIVALENT DE CASOS AMB FLAG
+		//TEST CASE CASELLA JA DESTAPADA AMB FLAG
 		int vistaInicial[][] = {
 				{-2,-2,-2,-2, 1, 1, 0, 0},
 				{-2,-2,-2,-2,-2,-2,-2,-2},
@@ -794,8 +941,8 @@ public class PartidaTest {
 		};
 		
 		
-		bombaTrobada=p.updateVistaTauler(0, 6, 1);
-		assertEquals(bombaTrobada, false);
+		returnUpdate=p.updateVistaTauler(0, 6, 1);
+		assertEquals(returnUpdate, 0);
 		
 		//assertEquals(assertEquals);
 		
@@ -835,8 +982,8 @@ public class PartidaTest {
 		};
 		
 		
-		bombaTrobada=p.updateVistaTauler(0, 1, 1);
-		assertEquals(bombaTrobada, false);
+		returnUpdate=p.updateVistaTauler(0, 1, 1);
+		assertEquals(returnUpdate, 0);
 		
 		
 		aux=p.getVistaTauler();
@@ -873,8 +1020,8 @@ public class PartidaTest {
 				{-2,-2,-2,-2,-2,-2,-2,-2},
 		};
 		
-		bombaTrobada=p.updateVistaTauler(7, 6, 1);
-		assertEquals(bombaTrobada, false);
+		returnUpdate=p.updateVistaTauler(7, 6, 1);
+		assertEquals(returnUpdate, 0);
 		
 		
 		aux=p.getVistaTauler();
@@ -912,8 +1059,8 @@ public class PartidaTest {
 		};
 		
 		
-		bombaTrobada=p.updateVistaTauler(0, 5, 1);
-		assertEquals(bombaTrobada, false);
+		returnUpdate=p.updateVistaTauler(0, 5, 1);
+		assertEquals(returnUpdate, 0);
 		
 		
 		aux=p.getVistaTauler();
@@ -936,6 +1083,7 @@ public class PartidaTest {
 				{-2,-2,-2,-2,-2,-2, 2, 0},
 				{-2,-2,-2,-2,-2,-2,-2, 0},
 			};
+		
 		p.setMockVistaTauler(vistaInicial5 );
 		
 		int expectedTaulerVista5[][] = {
@@ -951,8 +1099,8 @@ public class PartidaTest {
 		};
 		
 		
-		bombaTrobada=p.updateVistaTauler(0, 6, 1);
-		assertEquals(bombaTrobada, false);
+		returnUpdate=p.updateVistaTauler(0, 6, 1);
+		assertEquals(returnUpdate, 0);
 		
 		aux=p.getVistaTauler();
 		for (int i=0; i<p.getHeight();i++){
@@ -962,16 +1110,169 @@ public class PartidaTest {
 		}
 	}
 	
-	//@Test
-	public void testGetTauler() {
-		fail("Not yet implemented");
-	}
 	
+	public void testUpdateVistaTaulerFlagsTest() {
+		MockPartida p = new MockPartida();
+		int returnUpdate=0;
+		
+		//POSAR UN FLAG QUAN HI HAN 0 COLOCATS
+		int vistaInicial[][] = {
+				{-2,-2,-2,-2, 1,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},	
+				{-2,-2,-2,-2,-2,-2,-2,-2},				
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2, 2, 0},
+				{-2,-2,-2,-2,-2,-2,-2, 0},
+			};
+		p.setMockVistaTauler(vistaInicial );
+		
+		int expectedTaulerVista[][] = {
+				{-2,-2,-2,-2, 1,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},	
+				{-2,-2,-2,-2,-2,-2,-2,-2},				
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2, 2, 0},
+				{-2,-2,-2,-2,-2,-2,-2, 0},
+		};
+		returnUpdate=p.updateVistaTauler(0, 1, 1);
+		assertEquals(returnUpdate, 0);
+		
+		
+		int aux[][]=p.getVistaTauler();
+		for (int i=0; i<p.getHeight();i++){
+			for (int j=0; j<p.getWidth();j++){
+				assertEquals(aux[i][j], expectedTaulerVista[i][j]);
+			}
+		}
+	
+		
+		//POSAR L'�LTIM FLAG POSSIBLE
+		int vistaInicial2[][] = {
+				{-2, 9, 9, 9, 9, 9, 9, 9},
+				{ 9, 9, 9, 9, 9, 9, 9, 9},
+				{ 9, 9, 9, 9,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},	
+				{-2,-2,-2,-2,-2,-2,-2,-2},				
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2, 2, 0},
+				{-2,-2,-2,-2,-2,-2,-2, 0},
+			};
+
+		p.setMockVistaTauler(vistaInicial2 );
+		
+		int expectedTaulerVista2[][] = {
+				{9, 9, 9, 9, 9, 9, 9, 9},
+				{ 9, 9, 9, 9, 9, 9, 9, 9},
+				{ 9, 9, 9, 9,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},	
+				{-2,-2,-2,-2,-2,-2,-2,-2},				
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2, 2, 0},
+				{-2,-2,-2,-2,-2,-2,-2, 0},
+		};
+		returnUpdate=p.updateVistaTauler(0, 1, 1);
+		assertEquals(returnUpdate, 0);
+		
+		
+		aux=p.getVistaTauler();
+		for (int i=0; i<p.getHeight();i++){
+			for (int j=0; j<p.getWidth();j++){
+				assertEquals(aux[i][j], expectedTaulerVista2[i][j]);
+			}
+		}
+		
+		
+		//TREURE FLAG QUAN HI HAN ELS M�XMIS FLAGS COLOCATS
+		int vistaInicial3[][] = {
+				{ 9, 9, 9, 9, 9, 9, 9, 9},
+				{ 9, 9, 9, 9, 9, 9, 9, 9},
+				{ 9, 9, 9, 9,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},	
+				{-2,-2,-2,-2,-2,-2,-2,-2},				
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2, 2, 0},
+				{-2,-2,-2,-2,-2,-2,-2, 0},
+			};
+
+		p.setMockVistaTauler(vistaInicial3 );
+		
+		int expectedTaulerVista3[][] = {
+				{-2, 9, 9, 9, 9, 9, 9, 9},
+				{ 9, 9, 9, 9, 9, 9, 9, 9},
+				{ 9, 9, 9, 9,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},	
+				{-2,-2,-2,-2,-2,-2,-2,-2},				
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2, 2, 0},
+				{-2,-2,-2,-2,-2,-2,-2, 0},
+		};
+		
+		returnUpdate=p.updateVistaTauler(0, 0, 1);
+		assertEquals(returnUpdate, 0);
+		
+		
+		aux=p.getVistaTauler();
+		for (int i=0; i<p.getHeight();i++){
+			for (int j=0; j<p.getWidth();j++){
+				assertEquals(aux[i][j], expectedTaulerVista3[i][j]);
+			}
+		}
+		
+		//INTENTAR SPERAR FLAGS M�XIMS
+		int vistaInicial4[][] = {
+				{ 9, 9, 9, 9, 9, 9, 9, 9},
+				{ 9, 9, 9, 9, 9, 9, 9, 9},
+				{ 9, 9, 9, 9,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},	
+				{-2,-2,-2,-2,-2,-2,-2,-2},				
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2, 2, 0},
+				{-2,-2,-2,-2,-2,-2,-2, 0},
+			};
+
+		p.setMockVistaTauler(vistaInicial4 );
+		
+		int expectedTaulerVista4[][] = {
+				{ 9, 9, 9, 9, 9, 9, 9, 9},
+				{ 9, 9, 9, 9, 9, 9, 9, 9},
+				{ 9, 9, 9, 9,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},	
+				{-2,-2,-2,-2,-2,-2,-2,-2},				
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2,-2,-2},
+				{-2,-2,-2,-2,-2,-2, 2, 0},
+				{-2,-2,-2,-2,-2,-2,-2, 0},
+		};
+		
+		returnUpdate=p.updateVistaTauler(5,5, 1);
+		assertEquals(returnUpdate, -2);
+		
+		
+		aux=p.getVistaTauler();
+		for (int i=0; i<p.getHeight();i++){
+			for (int j=0; j<p.getWidth();j++){
+				assertEquals(aux[i][j], expectedTaulerVista4[i][j]);
+			}
+		}
+		
+		
+	}
 
 
 	@Test
 	public void testCountBombes() {
-		Partida p = new Partida();
+		MockPartida p = new MockPartida();
 		int res = p.getBombesTotals();
 		assertEquals(res, 20);
 	}

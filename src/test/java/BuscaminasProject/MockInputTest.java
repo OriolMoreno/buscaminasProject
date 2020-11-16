@@ -1,9 +1,6 @@
 package BuscaminasProject;
 
 import static org.junit.Assert.*;
-
-import java.io.File;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,6 +12,7 @@ public class MockInputTest {
 
 	@Test
 	public void testReadNextMoviment() {
+		
 		MockInput io = new MockInput(".\\src\\test\\resources\\partida_1.txt");
 		String s = io.readNextMoviment();
 		assertEquals(s, "A1");
@@ -29,15 +27,16 @@ public class MockInputTest {
 		s = io.readNextMoviment();
 		assertEquals(s, "I6");
 		s = io.readNextMoviment();
-		assertEquals(s, null);
+		assertEquals(s, "");
+		
 	}
 	
 	@Test
 	public void testGetNumeroMoviments() {
+		
 		MockInput io = new MockInput(".\\src\\test\\resources\\partida_1.txt");
 		int res = io.getNumeroMoviments();
 		assertEquals(6, res);
-		
 		
 	}
 
