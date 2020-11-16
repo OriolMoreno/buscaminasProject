@@ -12,7 +12,7 @@ public class MockPartida {//MODEL
 	private MockTauler taulerReal;
 	private int[][] taulerVista;
 	private int bombesTotals;
-	private int flagsUsades;
+	public int flagsUsades;
 
 	
 	public MockPartida(){
@@ -83,7 +83,7 @@ public class MockPartida {//MODEL
 		//if normal functioning ==> return 1  
 		//if in the input there is no bomb + there are no more bombs in the tauler ==> return 2 
 		//if trying to put more flags that game permits => return -2 
-		//if bad input typing or out of límits  ==> return 0  
+		//if bad input typing or out of limits  ==> return 0  
 		//if is the end of the game ==> return -1 
 		
 		
@@ -176,7 +176,7 @@ public class MockPartida {//MODEL
 			int j = 0;
 			while (j < taulerVista[0].length && gameIsWin)
 			{
-				if ( taulerVista[i][j]==-2 || (taulerVista[i][j]==9 && taulerReal.getCasella(j,i)!=1)  )
+				if (  taulerReal.getCasella(j,i)!=1 && (taulerVista[i][j]==9 || taulerVista[i][j]==-2))
 				{
 					gameIsWin= false;
 				}
