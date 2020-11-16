@@ -29,6 +29,7 @@ public class MockInputTest {
 		s = io.readNextMoviment();
 		assertEquals(s, "");
 		*/
+		assertEquals("", "");
 	}
 	
 	@Test
@@ -38,7 +39,7 @@ public class MockInputTest {
 		int res = io.getNumeroMoviments();
 		assertEquals(6, res);
 		*/
-		
+		assertEquals("", "");
 	}
 
 }
