@@ -19,9 +19,6 @@ public class Vista {
 			case -2:
 				ret = "?";
 				break;
-			case -11:
-				ret = "x";
-				break;
 			case 9:
 				ret = "$";
 				break;
@@ -41,8 +38,12 @@ public class Vista {
 	public void pintaPartida(Partida p) {
 		
 		StringBuilder sb = new StringBuilder();
+		
 		for(int y = 0; y < p.getHeight(); y++) {
-			sb.append("A |");
+			char c = 'A';
+			int lletraNumero = (int) c + y;
+			sb.append(Character.toString((char) lletraNumero));
+			sb.append(" |");
 			for(int x = 0; x < p.getWidth(); x++) {
 				sb.append("_" + this.transformaVista(p.getCasellaTaulerVista(y, x)) + "_|");
 			}	

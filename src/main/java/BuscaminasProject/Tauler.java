@@ -8,7 +8,7 @@ public class Tauler {//MODEL
 	private int adjMatrix[][];
 	
 	Tauler(){
-		this.generateTauler();
+		this.generateTauler(15);
 		this.adjMatrix = this.generateAdjMatrix();
 	}
 	
@@ -36,7 +36,7 @@ public class Tauler {//MODEL
 		}
 	}
 	
-	public void generateTauler(){
+	public void generateTauler(int numeroBombes){
 		int filas_size=9;
 		int columns_size=8;
 
@@ -48,14 +48,14 @@ public class Tauler {//MODEL
 			}
 		}
 		
-		int n_bombes=15;
+		int n_bombes_max=15;
 		int x, y;
 
 		Random rand1 = new Random(); 
 		Random rand2 = new Random(); 
 
 		
-		while(n_bombes!=0)
+		while(numeroBombes > 0 && n_bombes_max > 0)
 		{
 			
 			 x = rand1.nextInt(filas_size); 
@@ -63,7 +63,8 @@ public class Tauler {//MODEL
 			 
 		    if (this.tauler[x][y]!=1){
 				this.tauler[x][y]=1;
-				n_bombes=n_bombes-1;
+				n_bombes_max=n_bombes_max-1;
+				numeroBombes--;
 			}
 			
 		}

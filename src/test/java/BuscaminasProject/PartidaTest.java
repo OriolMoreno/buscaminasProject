@@ -517,7 +517,8 @@ public class PartidaTest {
 	@Test
 	public void testCheckGameIsWin() { 
 		MockPartida p = new MockPartida();
-		
+		//Test per comprovar decision i condition coverage del metode checkGameIsWin()
+		//Es comprova que passa per totes les branques
 		//PARTICI� GAME IS NO WIN
 		
 		//ALL CASELLAS -2 (cas frontera)
