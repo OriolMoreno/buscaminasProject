@@ -70,16 +70,27 @@ public class PartidaTest {
 		};
 		p.setMockVistaTauler(adj);
 		
+		//Valors frontera dintre la matriu
 		int res = p.getCasellaTaulerVista(0, 0);
 		assertEquals(res, 1);
-		int res_1 = p.getCasellaTaulerVista(1, 0);
-		assertEquals(res_1, 1);
-		int res_2 = p.getCasellaTaulerVista(8, 8);
-		assertEquals(res_2, -11);
-		int res_3 = p.getCasellaTaulerVista(3, 3);
-		assertEquals(res_3, -1);
-		int res_4 = p.getCasellaTaulerVista(8, 6);
-		assertEquals(res_4, 2);
+		int res_1 = p.getCasellaTaulerVista(8, 7);
+		assertEquals(res_1,0);
+		
+		//  valors acertats
+		int res_2 = p.getCasellaTaulerVista(3, 3);
+		assertEquals(res_2, -1);
+		int res_3 = p.getCasellaTaulerVista(8, 6);
+		assertEquals(res_3, 2);
+		
+		// valors limit
+		int res_4 = p.getCasellaTaulerVista(3, 8);
+		assertEquals(res_4, -11);
+		int res_5 = p.getCasellaTaulerVista(-1,4);
+		assertEquals(res_5, -11);
+		int res_6 = p.getCasellaTaulerVista(9, 8);
+		assertEquals(res_6, -11);
+		int res_7 = p.getCasellaTaulerVista(-1,-1);
+		assertEquals(res_7, -11);
 		
 
 	}
