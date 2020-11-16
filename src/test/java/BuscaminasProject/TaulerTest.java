@@ -123,7 +123,7 @@ public class TaulerTest {
 		assertEquals(t.getCasella(7,0), 0);
 		assertEquals(t.getCasella(0,8), 0);
 		
-		//Valors ràndom
+		//Valors random
 		assertEquals(t.getCasella(0, 3), 0);
 		assertEquals(t.getCasella(3, 0), 0);
 		assertEquals(t.getCasella(1, 3), 1);
