@@ -26,31 +26,31 @@ public class MockInput {
 		String[] in;
 		switch (file) {
 			case ".\\src\\test\\resources\\joc_buclePartida_1.txt":
-				in = { "1", "exit" };
+				in = new String[] { "1", "exit" };
 				for(int i = 0; i < in.length; i++){
 					inputs.add(in[i]);
 				}
 				break;
 			case ".\\src\\test\\resources\\joc_buclePartida_moviments.txt":
-				in = { "a1", "exit" };
+				in = new String[] { "a1", "exit" };
 				for(int i = 0; i < in.length; i++){
 					inputs.add(in[i]);
 				}
 				break;
 			case ".\\src\\test\\resources\\joc_jugarPartida.txt":
-				in = { "a2" };
+				in = new String[] { "a2" };
 				for(int i = 0; i < in.length; i++){
 					inputs.add(in[i]);
 				}
 				break;
 			case ".\\src\\test\\resources\\joc_jugarPartida_victoria.txt":
-				in = { "A2/","B3/",	"B5/","C4/","C7/","D2/","D4/","D7/","D8/","E6/","E8/","F3/","F5/","F7/","G2/","H6/","I2/","I4/","I5/","I6/","a1","a3","a4","a5","a6","a7","a8","b1","b2","b4","b6","b7","b8","c1","c2","c3","c5","c6","c8","d1","d3","d5","d6","e1","e2","e3","e4","e5","e7","f1","f2","f4","f6","f8","g1","g3","g4","g5","g6","g7","g8","h1","h2","h3","h4","h5","h7","h8","i1","i3","i7","i8" };
+				in = new String[] { "A2/","B3/",	"B5/","C4/","C7/","D2/","D4/","D7/","D8/","E6/","E8/","F3/","F5/","F7/","G2/","H6/","I2/","I4/","I5/","I6/","a1","a3","a4","a5","a6","a7","a8","b1","b2","b4","b6","b7","b8","c1","c2","c3","c5","c6","c8","d1","d3","d5","d6","e1","e2","e3","e4","e5","e7","f1","f2","f4","f6","f8","g1","g3","g4","g5","g6","g7","g8","h1","h2","h3","h4","h5","h7","h8","i1","i3","i7","i8" };
 				for(int i = 0; i < in.length; i++){
 					inputs.add(in[i]);
 				}
 				break;
 			case ".\\src\\test\\resources\\partida_1.txt":
-				in = { "A1", "A3", "I8", "H8", "I7", "I6" };
+				in = new String[] { "A1", "A3", "I8", "H8", "I7", "I6" };
 				for(int i = 0; i < in.length; i++){
 					inputs.add(in[i]);
 				}
