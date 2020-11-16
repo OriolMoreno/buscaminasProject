@@ -12,7 +12,7 @@ public class MockInputTest {
 
 	@Test
 	public void testReadNextMoviment() {
-		/*
+		
 		MockInput io = new MockInput(".\\src\\test\\resources\\partida_1.txt");
 		String s = io.readNextMoviment();
 		assertEquals(s, "A1");
@@ -28,18 +28,16 @@ public class MockInputTest {
 		assertEquals(s, "I6");
 		s = io.readNextMoviment();
 		assertEquals(s, "");
-		*/
-		assertEquals("", "");
+		
 	}
 	
 	@Test
 	public void testGetNumeroMoviments() {
-		/*
+		
 		MockInput io = new MockInput(".\\src\\test\\resources\\partida_1.txt");
 		int res = io.getNumeroMoviments();
 		assertEquals(6, res);
-		*/
-		assertEquals("", "");
+		
 	}
 
 }
