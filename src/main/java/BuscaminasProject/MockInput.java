@@ -12,7 +12,7 @@ public class MockInput {
 	private ArrayList<String> inputs = new ArrayList<String>();
 	
 	public MockInput(String file) {
-		/*fileName = file;
+		fileName = file;
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(fileName));
 			String line;
@@ -22,8 +22,9 @@ public class MockInput {
 			br.close();
 		}catch (IOException e) {
 			e.printStackTrace();
-		}*/
-		String[] in;
+		}
+		/*String[] in;
+		
 		switch (file) {
 			case ".\\src\\test\\resources\\joc_buclePartida_1.txt":
 				in = new String[] { "1", "exit" };
@@ -56,6 +57,7 @@ public class MockInput {
 				}
 				break;
 		}
+		*/
 			
 	}
 	
